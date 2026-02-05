@@ -6,197 +6,258 @@
     <title>2026 국희재 수학학원 | 프리미엄 시간표</title>
     <style>
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        
         :root {
-            --deep-navy: #0a0f1d;
-            --navy-card: #161e2e;
+            --bg-color: #f4f6f8;
+            --navy: #0a0f1d;
             --gold: #c5a059;
-            --gold-light: #eecd88;
             --white: #ffffff;
-            --border: rgba(197, 160, 89, 0.2);
-            --grid-line: rgba(255, 255, 255, 0.05);
+            --text-gray: #64748b;
+            --border-light: #e2e8f0;
         }
-        * { box-sizing: border-box; font-family: 'Pretendard', sans-serif; }
-        body { background-color: var(--deep-navy); margin: 0; color: var(--white); line-height: 1.6; padding-bottom: 100px; }
-        
+
+        body { 
+            background-color: var(--bg-color); 
+            margin: 0; 
+            font-family: 'Pretendard', sans-serif; 
+            color: var(--navy); 
+        }
+
+        /* 헤더 스타일 */
         header { 
-            background: rgba(10, 15, 29, 0.95); padding: 30px 25px; text-align: center;
-            border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 100;
+            background: var(--navy); 
+            padding: 20px 0; 
+            text-align: center; 
+            border-bottom: 4px solid var(--gold);
         }
-        .logo { height: 135px; margin-bottom: 15px; width: auto; }
-        header h1 { font-size: 1.1rem; color: var(--gold); margin: 0; letter-spacing: 3px; font-weight: 800; }
-        
-        .container { max-width: 1200px; margin: 40px auto; padding: 0 15px; }
-        .teacher-section { margin-bottom: 60px; background: rgba(255,255,255,0.02); padding: 30px; border-radius: 20px; border: 1px solid var(--grid-line); }
-        
-        .teacher-header { display: flex; align-items: center; margin-bottom: 25px; }
-        .edu-bar { width: 6px; height: 28px; background: linear-gradient(to bottom, var(--gold-light), var(--gold)); border-radius: 3px; margin-right: 15px; }
-        .teacher-name { font-size: 1.6rem; font-weight: 800; }
-        .teacher-name span { font-size: 0.95rem; color: var(--gold); margin-left: 12px; font-weight: 400; }
+        .logo-text { color: var(--gold); font-weight: 800; font-size: 1.5rem; letter-spacing: 2px; }
 
-        .timetable-scroll { overflow-x: auto; background: var(--navy-card); border-radius: 12px; padding: 15px; border: 1px solid var(--border); }
-        
-        /* [핵심 수정] 시간 열 고정 그리드 설정 */
-        .timetable {
+        .container { 
+            max-width: 1200px; 
+            margin: 40px auto; 
+            padding: 0 20px;
             display: grid;
-            grid-template-columns: 90px repeat(7, 1fr); /* 시간 열 90px 고정, 나머지 7일 균등 배분 */
-            grid-template-rows: 40px repeat(14, 50px);
-            gap: 1px; background-color: var(--grid-line); min-width: 900px; position: relative;
+            grid-template-columns: 1fr 1.5fr; /* 이미지 느낌처럼 2단 구성 */
+            gap: 30px;
         }
-        .cell { background: var(--navy-card); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #64748b; }
-        .cell-h { background: #1f2937; color: var(--gold); font-weight: 800; font-size: 0.85rem; }
-        
-        /* 시간 셀(cell-t) 디자인: 왼쪽 첫 번째 열에 확실히 고정 */
-        .cell-t { 
-            color: var(--white); 
-            font-weight: 700; 
-            background: rgba(197, 160, 89, 0.08); 
-            border-right: 2px solid var(--gold) !important; 
-            grid-column: 1; /* 명시적으로 첫 번째 열에 배치 */
-        }
-        
-        .class-card {
-            padding: 5px; border-radius: 4px; cursor: pointer;
-            display: flex; flex-direction: column; justify-content: center;
-            background: rgba(197, 160, 89, 0.1); border: 1px solid var(--gold);
-            transition: all 0.2s; z-index: 10; text-align: center; margin: 1px;
-        }
-        .class-card:hover { background: var(--gold); color: var(--deep-navy); }
-        .class-card strong { font-size: 0.8rem; margin-bottom: 2px; }
-        .class-card span { font-size: 0.65rem; font-weight: 600; opacity: 0.8; }
-        .online-mark { border: 1px dashed #64748b; background: transparent; color: #64748b; }
 
-        /* 하단 상세페이지 스타일 */
-        .detail-inline { 
-            display: none; margin-top: 20px; padding: 25px; 
-            background: #1e2638; border-radius: 12px; border-left: 5px solid var(--gold);
-            animation: fadeIn 0.4s ease-out;
+        /* 왼쪽: 강사 목록 섹션 */
+        .teacher-list { display: flex; flex-direction: column; gap: 20px; }
+        
+        .teacher-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 6px solid var(--gold);
+            cursor: pointer;
+            transition: transform 0.2s;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-        .detail-grid { display: grid; grid-template-columns: 180px 1fr 1.5fr; gap: 25px; }
-        .detail-img { width: 100%; height: 230px; object-fit: cover; border-radius: 8px; border: 2px solid var(--gold); }
-        .detail-info h3 { margin: 0 0 15px 0; color: var(--gold); font-size: 1.4rem; }
-        .info-item { margin-bottom: 12px; }
-        .info-item label { font-size: 0.75rem; color: var(--gold); font-weight: 700; display: block; margin-bottom: 2px; }
-        .info-item p { margin: 0; font-size: 1rem; color: #e2e8f0; }
+        .teacher-card:hover { transform: translateX(10px); }
 
-        @media (max-width: 768px) { .detail-grid { grid-template-columns: 1fr; } }
+        .profile-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            margin-right: 20px;
+            object-fit: cover;
+            background: #eee;
+        }
+
+        .teacher-info h3 { margin: 0; font-size: 1.2rem; }
+        .teacher-info p { margin: 5px 0 0; color: var(--text-gray); font-size: 0.9rem; }
+
+        /* 오른쪽: 시간표 및 상세 정보 */
+        .content-right { display: flex; flex-direction: column; gap: 30px; }
+
+        .timetable-box {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            overflow-x: auto;
+        }
+
+        .timetable {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            min-width: 500px;
+        }
+
+        .timetable th { background: var(--navy); color: var(--gold); padding: 10px; border: 1px solid var(--border-light); }
+        .timetable td { padding: 10px; text-align: center; border: 1px solid var(--border-light); height: 40px; }
+        .time-col { background: #f8fafc; font-weight: 700; width: 80px; }
+
+        .class-on { background: rgba(197, 160, 89, 0.15); color: var(--navy); font-weight: 700; border: 1px solid var(--gold) !important; border-radius: 4px; }
+
+        /* 상세 정보 카드 */
+        .detail-view {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+            display: none; /* 초기엔 숨김 */
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .detail-header { background: var(--navy); color: var(--gold); padding: 15px 25px; font-weight: 800; }
+        .detail-body { padding: 25px; display: grid; grid-template-columns: 120px 1fr; gap: 20px; }
+        .detail-photo { width: 120px; height: 150px; border-radius: 8px; border: 1px solid var(--gold); object-fit: cover; }
+        
+        .info-row { margin-bottom: 15px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; }
+        .info-row label { display: block; font-size: 0.75rem; color: var(--gold); font-weight: 700; }
+        .info-row p { margin: 5px 0 0; font-size: 1rem; }
+
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <img src="kook_1.png" alt="학원 로고" class="logo" onerror="this.src='https://via.placeholder.com/450x135/0a0f1d/c5a059?text=KOOK+MATH'">
-    <h1>2026 HIGH-END MATHEMATICS</h1>
+    <div class="logo-text">KOOK MATH | 2026 PREMIUM</div>
 </header>
 
 <div class="container">
-    <script>
-        // 공통 그리드 생성 함수: 시간 열을 1번 열에 고정하고 7개의 칸을 생성
-        const hours = ["08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00"];
-        function renderTableBase() {
-            let baseHtml = '<div class="cell cell-h">TIME</div><div class="cell cell-h">월</div><div class="cell cell-h">화</div><div class="cell cell-h">수</div><div class="cell cell-h">목</div><div class="cell cell-h">금</div><div class="cell cell-h">토</div><div class="cell cell-h">일</div>';
-            hours.forEach(h => {
-                baseHtml += `<div class="cell cell-t">${h}</div>`; // 열 1에 배치됨
-                for(let i=0; i<7; i++) {
-                    baseHtml += `<div class="cell"></div>`; // 열 2~8에 배치됨
-                }
-            });
-            return baseHtml;
-        }
-    </script>
-
-    <div class="teacher-section" id="sec-kook">
-        <div class="teacher-header">
-            <div class="edu-bar"></div>
-            <div class="teacher-name">국희재 선생님 <span>의치대반 전문 / 대수 / 공통수학1</span></div>
-        </div>
-        <div class="timetable-scroll">
-            <div class="timetable">
-                <script>document.write(renderTableBase());</script>
-                <div class="class-card" style="grid-column: 2; grid-row: 13 / span 3" onclick="showDetail('kuk_2', 'sec-kook')"><strong>대수 정규반</strong><span>19:00-22:00</span></div>
-                <div class="class-card" style="grid-column: 4; grid-row: 13 / span 3" onclick="showDetail('kuk_2', 'sec-kook')"><strong>대수 정규반</strong><span>19:00-22:00</span></div>
-                <div class="class-card" style="grid-column: 6; grid-row: 13 / span 3" onclick="showDetail('kuk_2', 'sec-kook')"><strong>대수 정규반</strong><span>19:00-22:00</span></div>
-                <div class="class-card" style="grid-column: 7; grid-row: 3 / span 2" onclick="showDetail('kuk_1', 'sec-kook')"><strong>공통수학1</strong><span>09:00-11:00</span></div>
-                <div class="class-card" style="grid-column: 8; grid-row: 3 / span 2" onclick="showDetail('kuk_1', 'sec-kook')"><strong>공통수학1</strong><span>09:00-11:00</span></div>
+    <div class="teacher-list">
+        <h2 style="font-size: 1.1rem; color: var(--text-gray); border-bottom: 2px solid var(--gold); padding-bottom: 10px;">FACULTY</h2>
+        
+        <div class="teacher-card" onclick="showTeacher('kuk')">
+            <img src="kuk_profile.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/70?text=KUK'">
+            <div class="teacher-info">
+                <h3>국희재 선생님</h3>
+                <p>의치대반 전문 / 공통수학1</p>
             </div>
         </div>
-        <div class="detail-inline" id="detail-sec-kook"></div>
+
+        <div class="teacher-card" onclick="showTeacher('kim')">
+            <img src="kim_profile.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/70?text=KIM'">
+            <div class="teacher-info">
+                <h3>김충현 선생님</h3>
+                <p>대수 / 공수 집중반 전문</p>
+            </div>
+        </div>
+
+        <div class="teacher-card" onclick="showTeacher('baek')">
+            <img src="baek_profile.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/70?text=BAEK'">
+            <div class="teacher-info">
+                <h3>백윤성 선생님</h3>
+                <p>수리논술 / 기하·확통 전문</p>
+            </div>
+        </div>
     </div>
 
-    <div class="teacher-section" id="sec-kim">
-        <div class="teacher-header">
-            <div class="edu-bar"></div>
-            <div class="teacher-name">김충현 선생님 <span>대수 / 공수 집중반 전문</span></div>
+    <div class="content-right">
+        <div class="timetable-box">
+            <table class="timetable">
+                <thead>
+                    <tr>
+                        <th class="time-col">TIME</th>
+                        <th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th><th>일</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    </tbody>
+            </table>
         </div>
-        <div class="timetable-scroll">
-            <div class="timetable">
-                <script>document.write(renderTableBase());</script>
-                <div class="class-card" style="grid-column: 7; grid-row: 4 / span 3" onclick="showDetail('kim_1', 'sec-kim')"><strong>대수 집중반</strong><span>10:00-13:00</span></div>
-                <div class="class-card" style="grid-column: 8; grid-row: 4 / span 3" onclick="showDetail('kim_1', 'sec-kim')"><strong>대수 집중반</strong><span>10:00-13:00</span></div>
-                <div class="class-card" style="grid-column: 7; grid-row: 7 / span 3" onclick="showDetail('kim_2', 'sec-kim')"><strong>공수 집중반</strong><span>13:00-16:00</span></div>
-                <div class="class-card" style="grid-column: 8; grid-row: 7 / span 3" onclick="showDetail('kim_2', 'sec-kim')"><strong>공수 집중반</strong><span>13:00-16:00</span></div>
-                <div class="class-card online-mark" style="grid-column: 3; grid-row: 2 / span 13"><strong>온라인 첨삭</strong></div>
-                <div class="class-card online-mark" style="grid-column: 4; grid-row: 2 / span 13"><strong>온라인 첨삭</strong></div>
-            </div>
-        </div>
-        <div class="detail-inline" id="detail-sec-kim"></div>
-    </div>
 
-    <div class="teacher-section" id="sec-baek">
-        <div class="teacher-header">
-            <div class="edu-bar"></div>
-            <div class="teacher-name">백윤성 선생님 <span>수리논술 / 기하·확통 / 첨삭 전문</span></div>
-        </div>
-        <div class="timetable-scroll">
-            <div class="timetable">
-                <script>document.write(renderTableBase());</script>
-                <div class="class-card" style="grid-column: 4; grid-row: 13 / span 3" onclick="showDetail('baek_3', 'sec-baek')"><strong>논술정규반</strong><span>19:00-22:00</span></div>
-                <div class="class-card" style="grid-column: 7; grid-row: 4 / span 3" onclick="showDetail('baek_1', 'sec-baek')"><strong>1:1 첨삭</strong><span>10:00-13:00</span></div>
-                <div class="class-card" style="grid-column: 8; grid-row: 4 / span 3" onclick="showDetail('baek_1', 'sec-baek')"><strong>1:1 첨삭</strong><span>10:00-13:00</span></div>
-                <div class="class-card" style="grid-column: 7; grid-row: 8 / span 2" onclick="showDetail('baek_2', 'sec-baek')"><strong>기하/확통</strong><span>14:00-16:00</span></div>
-                <div class="class-card" style="grid-column: 8; grid-row: 8 / span 2" onclick="showDetail('baek_2', 'sec-baek')"><strong>기하/확통</strong><span>14:00-16:00</span></div>
-                <div class="class-card" style="grid-column: 7; grid-row: 10 / span 3" onclick="showDetail('baek_1', 'sec-baek')"><strong>1:1 첨삭</strong><span>16:00-19:00</span></div>
-                <div class="class-card" style="grid-column: 8; grid-row: 10 / span 3" onclick="showDetail('baek_1', 'sec-baek')"><strong>1:1 첨삭</strong><span>16:00-19:00</span></div>
+        <div id="teacher-detail" class="detail-view">
+            <div class="detail-header" id="det-title">강사 상세 프로필</div>
+            <div class="detail-body">
+                <img id="det-img" src="" class="detail-photo" onerror="this.src='https://via.placeholder.com/120x150?text=PHOTO'">
+                <div class="det-info">
+                    <div class="info-row"><label>담당 과목</label><p id="det-subject"></p></div>
+                    <div class="info-row"><label>수업 시간</label><p id="det-time"></p></div>
+                    <div class="info-row"><label>교재 및 특징</label><p id="det-desc"></p></div>
+                </div>
             </div>
         </div>
-        <div class="detail-inline" id="detail-sec-baek"></div>
     </div>
 </div>
 
 <script>
-    const classData = {
-        'kuk_1': { title: '공통수학1 (의치대반)', teacher: '국희재T', book: '자체교재 + 플래티넘', desc: '최상위권 심화 개념 및 킬러 문항 정복.', etc: '토/일 오전 9시-11시', img: 'kuk.png' },
-        'kuk_2': { title: '대수 정규반 (3월 4일 개강)', teacher: '국희재T', book: '자체교재 + 플래티넘', desc: '대수 영역 내신 고득점 전략 완성.', etc: '월/수/금 저녁 7시-10시', img: 'kuk.png' },
-        'kim_1': { title: '대수 집중반', teacher: '김충현T', book: '주간지 & 손풀이 교재', desc: '실전 응용력 강화.', etc: '토/일 오전 10시-오후 1시', img: 'kim.png' },
-        'kim_2': { title: '공수 집중반', teacher: '김충현T', book: '유형 분석서', desc: '핵심 유형 무한 반복.', etc: '토/일 오후 1시-4시', img: 'kim.png' },
-        'baek_1': { title: '1:1 소수정예 개별첨삭', teacher: '백윤성T', book: '개별 맞춤 프린트', desc: '약점 분석 및 실시간 질문 피드백.', etc: '토/일 오전 10시-1시 / 오후 4시-7시', img: 'baek.png' },
-        'baek_2': { title: '기하/확통 내신대비', teacher: '백윤성T', book: '내신 전략서', desc: '주요 유형 집중 정리.', etc: '토/일 오후 2시-4시', img: 'baek.png' },
-        'baek_3': { title: '논술정규반 (수능완성)', teacher: '백윤성T', book: '논술 전략서', desc: '논리적 답안 작성법.', etc: '수요일 저녁 7시-10시', img: 'baek.png' }
+    const teacherData = {
+        'kuk': {
+            name: '국희재 선생님',
+            subject: '의치대반 / 공통수학1 / 대수',
+            time: '월수금 19:00 - 22:00 (대수), 토일 09:00 (공수)',
+            desc: '자체교재 플래티넘 사용, 최상위권 킬러 문항 정복.',
+            photo: 'kuk_profile.jpg',
+            schedule: { '19-22': [1, 3, 5], '09-11': [6, 7] } 
+        },
+        'kim': {
+            name: '김충현 선생님',
+            subject: '대수 집중반 / 공수 집중반',
+            time: '토일 10:00 - 16:00',
+            desc: '주간지 & 손풀이 교재 제공, 철저한 과제 관리.',
+            photo: 'kim_profile.jpg',
+            schedule: { '10-13': [6, 7], '13-16': [6, 7] }
+        },
+        'baek': {
+            name: '백윤성 선생님',
+            subject: '수리논술 / 기하 / 확통',
+            time: '수 19:00, 토일 10:00 / 14:00',
+            desc: '1:1 대면 첨삭 진행, 논리적 답안 작성법 전수.',
+            photo: 'baek_profile.jpg',
+            schedule: { '19-22': [3], '10-13': [6, 7], '14-16': [6, 7] }
+        }
     };
 
-    function showDetail(id, sectionId) {
-        const item = classData[id];
-        const detailDiv = document.getElementById('detail-' + sectionId);
-        
-        document.querySelectorAll('.detail-inline').forEach(el => el.style.display = 'none');
+    // 시간표 초기 렌더링 (8시 ~ 22시)
+    function renderTable(teacherKey = null) {
+        const tbody = document.getElementById('table-body');
+        tbody.innerHTML = '';
+        const data = teacherKey ? teacherData[teacherKey] : null;
 
-        detailDiv.innerHTML = `
-            <div class="detail-grid">
-                <img src="${item.img}" class="detail-img" onerror="this.src='https://via.placeholder.com/180x230/161e2e/c5a059?text=PHOTO';">
-                <div class="detail-info">
-                    <h3>${item.title}</h3>
-                    <div class="info-item"><label>강사명</label><p>${item.teacher}</p></div>
-                    <div class="info-item"><label>수업시간</label><p>${item.etc}</p></div>
-                </div>
-                <div class="detail-info">
-                    <div class="info-item"><label>교재</label><p>${item.book}</p></div>
-                    <div class="info-item"><label>상세내용</label><p>${item.desc}</p></div>
-                </div>
-            </div>
-        `;
-        detailDiv.style.display = 'block';
-        detailDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        for (let h = 8; h <= 21; h++) {
+            const row = document.createElement('tr');
+            const timeStr = `${String(h).padStart(2, '0')}:00`;
+            let cells = `<td class="time-col">${timeStr}</td>`;
+            
+            for (let d = 1; d <= 7; d++) {
+                let activeClass = "";
+                let content = "";
+                
+                if (data) {
+                    // 간단한 스케줄 매칭 로직
+                    for (let timeRange in data.schedule) {
+                        const [start, end] = timeRange.split('-').map(Number);
+                        if (h >= start && h < end && data.schedule[timeRange].includes(d)) {
+                            activeClass = "class-on";
+                            content = "●";
+                        }
+                    }
+                }
+                cells += `<td class="${activeClass}">${content}</td>`;
+            }
+            row.innerHTML = cells;
+            tbody.appendChild(row);
+        }
     }
+
+    function showTeacher(key) {
+        const data = teacherData[key];
+        renderTable(key);
+        
+        document.getElementById('det-title').innerText = data.name + " 핵심 강의 정보";
+        document.getElementById('det-img').src = data.photo;
+        document.getElementById('det-subject').innerText = data.subject;
+        document.getElementById('det-time').innerText = data.time;
+        document.getElementById('det-desc').innerText = data.desc;
+        
+        document.getElementById('teacher-detail').style.display = 'block';
+    }
+
+    // 처음 실행 시 빈 표 출력
+    renderTable();
 </script>
+
 </body>
 </html>
