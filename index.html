@@ -165,4 +165,83 @@
         ],
         'baek': [
             { name: '수리논술 마스터', day: 3, start: 19, span: 3, cat: 'cat-nonsul', desc: '■ 수요일 오후 7시~10시\n■ 주요 대학 수리논술 합격을 위한 실전 첨삭' },
-            { name: '기하/확통 선택특강', day: 6, start: 14, span: 2, cat: 'cat-nonsul', desc: '■ 토/일 오후
+            { name: '기하/확통 선택특강', day: 6, start: 14, span: 2, cat: 'cat-nonsul', desc: '■ 토/일 오후 2시~4시\n■ 선택과목 완벽 대비' },
+            { name: '기하/확통 선택특강', day: 7, start: 14, span: 2, cat: 'cat-nonsul', desc: '■ 토/일 오후 2시~4시\n■ 선택과목 완벽 대비' },
+            { name: '1:1 소수정예 클리닉', day: 6, start: 10, span: 3, cat: 'cat-private', desc: '■ 개인별 수준과 진도에 맞춘 완전 학습' },
+            { name: '1:1 소수정예 클리닉', day: 7, start: 16, span: 3, cat: 'cat-private', desc: '■ 개인별 수준과 진도에 맞춘 완전 학습' }
+        ]
+    };
+
+    function initLayout() {
+        const axis = document.getElementById('time-axis');
+        for (let i = START_H; i <= END_H; i++) {
+            const label = document.createElement('div');
+            label.className = 'axis-label';
+            label.innerText = `${i}:00`;
+            axis.appendChild(label);
+        }
+        const daysContainer = document.getElementById('days-container');
+        days.forEach((d, i) => {
+            const col = document.createElement('div');
+            col.className = 'day-column';
+            col.id = `day-col-${i + 1}`;
+            col.innerHTML = `<div class="day-header">${d}</div>`;
+            daysContainer.appendChild(col);
+        });
+    }
+
+    function showDetail(name, desc) {
+        const detailBox = document.getElementById('detail-box');
+        document.getElementById('det-name').innerText = name;
+        document.getElementById('det-desc').innerText = desc;
+        detailBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function selectTeacher(key) {
+        document.querySelectorAll('.day-column .class-card').forEach(c => c.remove());
+        const mList = document.getElementById('mobile-class-list');
+        mList.innerHTML = '';
+        document.querySelectorAll('.teacher-card').forEach(c => c.classList.remove('active'));
+        document.getElementById('card-' + key).classList.add('active');
+
+        const mobileGroups = {};
+        teacherData[key].forEach(cls => {
+            const col = document.getElementById(`day-col-${cls.day}`);
+            if(col) {
+                const card = document.createElement('div');
+                card.className = `class-card ${cls.cat}`;
+                card.style.top = `${(cls.start - START_H) * 65 + 60}px`;
+                card.style.height = `${(cls.span * 65) - 6}px`;
+                
+                // 심화 배지 추가
+                let badgeHtml = cls.advanced ? `<span class="badge-advanced">심화 Master</span>` : '';
+                card.innerHTML = `${badgeHtml}${cls.name}<em>${cls.start}:00-${cls.start + cls.span}:00</em>`;
+                card.onclick = () => showDetail(cls.name, cls.desc);
+                col.appendChild(card);
+            }
+
+            const timeStr = `${cls.start}:00~${cls.start + cls.span}:00`;
+            const groupKey = `${cls.name}_${timeStr}`;
+            const dayKor = ['월','화','수','목','금','토','일'][cls.day-1];
+            if (!mobileGroups[groupKey]) {
+                mobileGroups[groupKey] = { name: cls.name, days: [dayKor], time: timeStr, desc: cls.desc, advanced: cls.advanced };
+            } else {
+                mobileGroups[groupKey].days.push(dayKor);
+            }
+        });
+
+        Object.values(mobileGroups).forEach(group => {
+            const mItem = document.createElement('div');
+            mItem.className = 'mobile-item';
+            mItem.onclick = () => showDetail(group.name, group.desc);
+            let mBadgeHtml = group.advanced ? `<span class="m-badge">심화</span>` : '';
+            mItem.innerHTML = `<div class="m-info"><h5>${group.name} ${mBadgeHtml}</h5><p>${group.days.join('')} | ${group.time}</p></div><div style="color:var(--gold);">▶</div>`;
+            mList.appendChild(mItem);
+        });
+    }
+
+    window.onload = () => { initLayout(); selectTeacher('kuk'); };
+</script>
+
+</body>
+</html>
