@@ -26,7 +26,7 @@
             display: grid; grid-template-columns: 280px 1fr; gap: 20px;
         }
 
-        /* 강사 리스트 */
+        /* 강사 리스트 (PC) */
         .teacher-list { position: sticky; top: 10px; height: fit-content; z-index: 100; }
         .teacher-card {
             background: var(--card-navy); padding: 15px; border-radius: 12px;
@@ -38,7 +38,7 @@
         .teacher-info h4 { margin: 0; font-size: 1rem; }
         .teacher-info p { margin: 2px 0 0; font-size: 0.75rem; color: #94a3b8; }
 
-        /* 시간표 본체 (PC전용) */
+        /* 시간표 본체 (PC) */
         .timetable-wrapper {
             background: var(--card-navy); border-radius: 15px; border: 1px solid var(--grid-line);
             position: relative; display: flex; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
@@ -59,7 +59,7 @@
             background: #1e293b; color: var(--gold); font-weight: 800; border-bottom: 1px solid var(--gold);
         }
 
-        /* 수업 카드 (PC용) */
+        /* 수업 카드 (PC) */
         .class-card {
             position: absolute; left: 4px; right: 4px; border-radius: 6px; padding: 8px;
             font-size: 0.8rem; font-weight: 700; color: #fff; cursor: pointer;
@@ -69,16 +69,15 @@
         }
         .class-card em { font-style: normal; font-size: 0.7rem; opacity: 0.9; margin-top: 4px; font-weight: 400; }
 
-        /* 모바일 전용 리스트 스타일 */
+        /* 모바일 리스트 */
         #mobile-class-list { display: none; flex-direction: column; gap: 10px; }
         .mobile-item {
-            background: var(--card-navy); padding: 15px; border-radius: 10px;
-            border-left: 4px solid var(--gold); cursor: pointer;
+            background: var(--card-navy); padding: 16px; border-radius: 12px;
+            border-left: 5px solid var(--gold); cursor: pointer;
             display: flex; justify-content: space-between; align-items: center;
         }
-        .mobile-item .m-info h5 { margin: 0; font-size: 1rem; color: var(--white); }
-        .mobile-item .m-info p { margin: 5px 0 0; font-size: 0.85rem; color: #94a3b8; }
-        .mobile-item .m-tag { font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; color: #fff; }
+        .mobile-item .m-info h5 { margin: 0; font-size: 1.05rem; color: var(--gold); }
+        .mobile-item .m-info p { margin: 4px 0 0; font-size: 0.85rem; color: #cbd5e1; }
 
         /* 카테고리 색상 */
         .cat-algebra { background: #78350f !important; }
@@ -87,18 +86,37 @@
         .cat-calc { background: #064e3b !important; }
 
         /* 상세 정보 */
-        .detail-view { margin-top: 25px; background: var(--card-navy); border-radius: 15px; padding: 20px; border: 1px solid var(--gold); }
+        .detail-view { margin-top: 20px; background: var(--card-navy); border-radius: 15px; padding: 20px; border: 1px solid var(--gold); }
         .detail-content h3 { margin: 0 0 8px 0; color: var(--gold); font-size: 1.2rem; }
         .detail-content p { margin: 0; font-size: 0.95rem; line-height: 1.6; color: #cbd5e1; }
 
-        /* 모바일 대응 */
+        /* 모바일 대응 최적화 */
         @media (max-width: 768px) {
             .container { grid-template-columns: 1fr; margin-top: 10px; }
-            .teacher-list { display: flex; overflow-x: auto; gap: 10px; position: static; padding-bottom: 10px; }
-            .teacher-card { flex: 0 0 160px; margin-bottom: 0; padding: 10px; }
             
-            .timetable-wrapper { display: none; } /* 복잡한 격자 숨김 */
-            #mobile-class-list { display: flex; } /* 리스트형 노출 */
+            /* 강사 리스트를 한 화면에 꽉 차게 배열 */
+            .teacher-list { 
+                position: static; 
+                display: flex; 
+                flex-wrap: wrap; 
+                gap: 8px; 
+                margin-bottom: 15px;
+            }
+            .teacher-card { 
+                flex: 1 1 calc(33.33% - 8px); /* 3명이 한 줄에 나오도록 설정 */
+                min-width: 100px;
+                flex-direction: column; 
+                padding: 12px 5px; 
+                margin-bottom: 0;
+                text-align: center;
+                justify-content: center;
+            }
+            .profile-img { width: 35px; height: 35px; margin-right: 0; margin-bottom: 8px; }
+            .teacher-info h4 { font-size: 0.9rem; }
+            .teacher-info p { display: none; } /* 모바일에서는 부가설명 숨김 */
+
+            .timetable-wrapper { display: none; }
+            #mobile-class-list { display: flex; }
         }
     </style>
 </head>
@@ -177,11 +195,10 @@
             label.innerText = `${i}:00`;
             axis.appendChild(label);
         }
-
         const daysContainer = document.getElementById('days-container');
         days.forEach((d, i) => {
             const col = document.createElement('div');
-            col.className = `day-column`;
+            col.className = 'day-column';
             col.id = `day-col-${i + 1}`;
             col.innerHTML = `<div class="day-header">${d}</div>`;
             daysContainer.appendChild(col);
@@ -193,22 +210,21 @@
         document.getElementById('det-name').innerText = name;
         document.getElementById('det-desc').innerText = desc;
         detailBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        
         detailBox.style.backgroundColor = "rgba(197, 160, 89, 0.2)";
         setTimeout(() => detailBox.style.backgroundColor = "var(--card-navy)", 500);
     }
 
     function selectTeacher(key) {
-        // 1. 초기화
         document.querySelectorAll('.day-column .class-card').forEach(c => c.remove());
-        document.getElementById('mobile-class-list').innerHTML = '';
+        const mList = document.getElementById('mobile-class-list');
+        mList.innerHTML = '';
         document.querySelectorAll('.teacher-card').forEach(c => c.classList.remove('active'));
         document.getElementById('card-' + key).classList.add('active');
 
-        const mList = document.getElementById('mobile-class-list');
+        const currentClasses = teacherData[key];
+        const mobileGroups = {};
 
-        // 2. 데이터 렌더링 (PC & 모바일 동시 생성)
-        teacherData[key].forEach(cls => {
+        currentClasses.forEach(cls => {
             // PC용 카드 생성
             const col = document.getElementById(`day-col-${cls.day}`);
             const card = document.createElement('div');
@@ -221,16 +237,34 @@
             card.onclick = () => showDetail(cls.name, cls.desc);
             col.appendChild(card);
 
-            // 모바일용 리스트 아이템 생성
+            // 모바일용 그룹화 로직
+            const timeStr = `${cls.start}:00~${cls.start + cls.span}:00`;
+            const groupKey = `${cls.name}_${timeStr}`;
+
+            if (!mobileGroups[groupKey]) {
+                mobileGroups[groupKey] = {
+                    name: cls.name,
+                    days: [days[cls.day-1]],
+                    time: timeStr,
+                    desc: cls.desc
+                };
+            } else {
+                mobileGroups[groupKey].days.push(days[cls.day-1]);
+            }
+        });
+
+        // 모바일 리스트 출력
+        Object.values(mobileGroups).forEach(group => {
             const mItem = document.createElement('div');
             mItem.className = 'mobile-item';
-            mItem.onclick = () => showDetail(cls.name, cls.desc);
+            mItem.onclick = () => showDetail(group.name, group.desc);
+            const combinedDays = group.days.join(''); 
             mItem.innerHTML = `
                 <div class="m-info">
-                    <h5>${cls.name}</h5>
-                    <p>${days[cls.day-1]}요일 | ${cls.start}:00 ~ ${cls.start + cls.span}:00</p>
+                    <h5>${group.name}</h5>
+                    <p>${combinedDays} ${group.time}</p>
                 </div>
-                <div class="m-tag ${cls.cat}">${cls.name.split('(')[0]}</div>
+                <div style="color:var(--gold); opacity:0.6;">▶</div>
             `;
             mList.appendChild(mItem);
         });
