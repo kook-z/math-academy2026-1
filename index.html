@@ -3,146 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 국희재수학 봉선점 | 그룹 프리레저 시간표</title>
+    <title>2026 국희재수학 봉선점 | 프리미엄 커리큘럼</title>
     <style>
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
         
         :root {
-            --bg-deep: #050810; 
-            --card-navy: rgba(17, 24, 39, 0.8);
+            --bg-deep: #0b0f1a; 
+            --card-navy: rgba(23, 30, 49, 0.7);
             --gold-gradient: linear-gradient(135deg, #c5a059 0%, #f1d39b 50%, #b38728 100%);
             --gold: #c5a059;
             --white: #ffffff;
             
-            /* 과목별 컬러셋 (이미지 참고하여 임의 설정) */
-            --clr-med: #FFD700;      /* 상단 노랑 */
-            --clr-algebra: #7DD3FC;  /* 중간 파랑 */
-            --clr-practice: #FCA5A5; /* 중간 연빨강 */
-            --clr-nonsul: #D8B4FE;   /* 중간 보라 */
-            --clr-clinic: #6EE7B7;   /* 하단 연초록 */
-            --pfsee-red: #FF3E3E;    /* PFSEE 뱃지 색상 */
+            /* 과목별 선명한 그라데이션 컬러 */
+            --clr-med: linear-gradient(145deg, #FFD700, #F59E0B);      
+            --clr-algebra: linear-gradient(145deg, #7DD3FC, #38BDF8);  
+            --clr-practice: linear-gradient(145deg, #FCA5A5, #F87171); 
+            --clr-nonsul: linear-gradient(145deg, #D8B4FE, #A855F7);   
+            --clr-clinic: linear-gradient(145deg, #6EE7B7, #10B981);   
+            --adv-red: #FF3E3E;      
         }
 
         body { 
-            background-color: var(--bg-deep); margin: 0; font-family: 'Pretendard', sans-serif; color: var(--white); scroll-behavior: smooth; overflow-x: hidden;
-            background-image: radial-gradient(circle at 50% -20%, #1e293b 0%, transparent 50%), 
-                              radial-gradient(circle at 10% 80%, #0f172a 0%, transparent 40%);
+            background-color: var(--bg-deep); margin: 0; font-family: 'Pretendard', sans-serif; color: var(--white); scroll-behavior: smooth;
+            background-image: radial-gradient(circle at 50% -20%, #1e293b 0%, transparent 50%);
             background-attachment: fixed;
         }
 
         header { padding: 60px 0 40px; text-align: center; }
-        .slogan { font-size: 2rem; font-weight: 900; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px; line-height: 1.3;}
-        .subtitle { font-size: 1.5rem; font-weight: 700; color: #cbd5e1; margin-top: 10px;}
+        .slogan { font-size: 2.8rem; font-weight: 900; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1.5px; line-height: 1.2;}
 
-        .container { max-width: 1300px; margin: 0 auto 100px; padding: 0 20px; display: grid; grid-template-columns: 280px 1fr; gap: 30px; }
+        .container { max-width: 1400px; margin: 0 auto 100px; padding: 0 25px; display: grid; grid-template-columns: 320px 1fr; gap: 40px; }
 
-        .teacher-list { position: sticky; top: 20px; height: fit-content; z-index: 100; }
+        /* 강사 프로필 리스트 (이미지 스타일) */
+        .teacher-list { position: sticky; top: 40px; height: fit-content; z-index: 100; }
         .teacher-card {
-            background: var(--card-navy); padding: 20px; border-radius: 20px; display: flex; align-items: center; margin-bottom: 15px;
-            border: 1px solid rgba(255,255,255,0.05); cursor: pointer; transition: 0.3s; backdrop-filter: blur(10px);
+            background: var(--card-navy); padding: 20px; border-radius: 20px; display: flex; align-items: center; margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.05); cursor: pointer; transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            backdrop-filter: blur(15px);
         }
-        .teacher-card.active { border: 2px solid var(--gold); background: rgba(197, 160, 89, 0.15); }
-        .profile-img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--gold); margin-right: 15px; object-fit: cover; }
-        .teacher-info h4 { margin: 0; color: var(--white); font-size: 1.1rem; }
-        .teacher-info p { margin: 2px 0 0; font-size: 0.85rem; color: #94a3b8; }
+        .teacher-card:hover { transform: scale(1.03); border-color: var(--gold); }
+        .teacher-card.active { 
+            background: rgba(197, 160, 89, 0.1); border: 2.5px solid var(--gold); 
+            box-shadow: 0 0 20px rgba(197, 160, 89, 0.3);
+        }
+        .profile-img { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--gold); margin-right: 20px; object-fit: cover; }
+        .teacher-info h4 { margin: 0; font-size: 1.3rem; font-weight: 800; }
+        .teacher-info p { margin: 5px 0 0; font-size: 0.85rem; color: #94a3b8; line-height: 1.4; }
 
-
-        /* 타임테이블 본체 스타일 */
+        /* 타임테이블 Wrapper */
         .timetable-wrapper {
-            background: rgba(15, 23, 42, 0.6); border-radius: 25px; border: 1px solid rgba(255,255,255,0.08);
-            position: relative; display: flex; overflow-x: auto; backdrop-filter: blur(20px);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5); min-height: 980px;
+            background: rgba(15, 23, 42, 0.5); border-radius: 30px; border: 1px solid rgba(255,255,255,0.1);
+            position: relative; display: flex; overflow: hidden; backdrop-filter: blur(20px);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
         }
         
-        .time-axis { width: 70px; background: rgba(0,0,0,0.3); border-right: 1px solid rgba(255,255,255,0.1); padding-top: 60px; flex-shrink: 0; }
-        .axis-label { height: 65px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .time-axis { width: 80px; background: rgba(0,0,0,0.4); border-right: 1px solid rgba(255,255,255,0.1); padding-top: 60px; flex-shrink: 0; }
+        .axis-label { height: 70px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #64748b; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.03); }
 
-        .days-container { display: flex; flex: 1; min-width: 700px; }
+        .days-container { display: flex; flex: 1; position: relative; }
         .day-column { 
             flex: 1; position: relative; border-right: 1px solid rgba(255,255,255,0.05); 
-            background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 100% 65px; 
+            background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 100% 70px; 
         }
-        .day-header { height: 60px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.4); color: #cbd5e1; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .day-header { height: 60px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); color: #cbd5e1; font-weight: 900; font-size: 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
 
-        /* 수업 카드 디자인 */
+        /* 수업 카드 (요일 추가 및 애니메이션 반영) */
         .class-card {
-            position: absolute; left: 4px; right: 4px; border-radius: 12px; padding: 10px; font-size: 0.75rem; font-weight: 800;
+            position: absolute; left: 8px; right: 8px; border-radius: 16px; padding: 12px; font-size: 0.85rem; font-weight: 800; color: #000;
             cursor: pointer; z-index: 10; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-            transition: 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); line-height: 1.3;
+            transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.3);
+            animation: slideIn 0.5s ease-out;
         }
-        .class-card em { font-style: normal; font-size: 0.65rem; opacity: 0.8; margin-top: 4px; font-weight: 500; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        .cat-med { background: linear-gradient(145deg, #FFD700, #F59E0B) !important; color: #000 !important; }
-        .cat-algebra { background: linear-gradient(145deg, #7DD3FC, #38BDF8) !important; color: #000 !important; }
-        .cat-practice { background: linear-gradient(145deg, #FCA5A5, #F87171) !important; color: #000 !important; }
-        .cat-nonsul { background: linear-gradient(145deg, #D8B4FE, #A855F7) !important; color: #000 !important; }
-        .cat-clinic { background: linear-gradient(145deg, #6EE7B7, #10B981) !important; color: #000 !important; }
+        .class-card:hover { transform: translateY(-5px) scale(1.03); z-index: 50; filter: brightness(1.1); }
+        .class-card em { font-style: normal; font-size: 0.75rem; opacity: 0.8; margin-top: 6px; font-weight: 600; }
+        .class-day-label { font-size: 0.7rem; font-weight: 900; background: rgba(0,0,0,0.1); padding: 2px 8px; border-radius: 10px; margin-bottom: 4px; }
 
-        /* PFSEE 뱃지 (이미지 참고) */
-        .badge-pfsee { 
-            position: absolute; top: 4px; right: 4px; background: var(--pfsee-red); color: #fff; font-size: 0.55rem; padding: 1px 4px; border-radius: 3px; font-weight: 900;
-            animation: blink 1s step-start 0s infinite; /* 깜빡임 효과 */
+        /* 뱃지 애니메이션 (깜빡임) */
+        .badge-blink {
+            position: absolute; top: 6px; right: 6px; background: var(--adv-red); color: #fff; font-size: 0.65rem; padding: 2px 8px; border-radius: 4px;
+            font-weight: 900; border: 1.5px solid #fff; box-shadow: 0 0 10px rgba(255,62,62,0.5);
+            animation: blink 0.8s infinite alternate;
         }
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
+        @keyframes blink { from { opacity: 1; transform: scale(1); } to { opacity: 0.6; transform: scale(0.95); } }
 
-        /* 상세 안내 박스 */
-        .detail-view { margin-top: 30px; background: rgba(15, 23, 42, 0.8); border-radius: 20px; padding: 30px; border: 1px solid rgba(197, 160, 89, 0.3); }
-        .detail-content h3 { color: var(--gold); margin: 0 0 10px 0; border-left: 4px solid var(--gold); padding-left: 12px; }
-        .detail-content p { white-space: pre-wrap; line-height: 1.6; color: #cbd5e1; font-size: 0.95rem; }
+        /* 카테고리별 컬러 */
+        .cat-med { background: var(--clr-med) !important; }
+        .cat-algebra { background: var(--clr-algebra) !important; }
+        .cat-practice { background: var(--clr-practice) !important; }
+        .cat-nonsul { background: var(--clr-nonsul) !important; }
+        .cat-clinic { background: var(--clr-clinic) !important; }
 
-        /* 모바일 최적화 */
-        #mobile-class-list { display: none; } /* 기본적으로 숨김 */
+        .detail-view { margin-top: 40px; background: rgba(15, 23, 42, 0.8); border-radius: 24px; padding: 40px; border: 1px solid var(--gold); backdrop-filter: blur(15px); }
+        .detail-content h3 { color: var(--gold); font-size: 1.8rem; margin: 0 0 20px 0; border-left: 5px solid var(--gold); padding-left: 20px; }
+        .detail-content p { white-space: pre-wrap; line-height: 1.8; color: #cbd5e1; font-size: 1.1rem; }
 
-        @media (max-width: 768px) {
-            header { padding: 30px 0 15px; }
-            .slogan { font-size: 1.2rem; }
-            .subtitle { font-size: 1rem; }
-            .container { grid-template-columns: 1fr; gap: 15px; padding: 0 10px; }
-            
-            .teacher-list { display: flex; overflow-x: auto; padding-bottom: 10px; position: static; gap: 8px; }
-            .teacher-card { flex: 0 0 100px; flex-direction: column; padding: 10px; margin-bottom: 0; text-align: center; }
-            .profile-img { margin-right: 0; margin-bottom: 5px; width: 40px; height: 40px; border-width: 1px; }
-            .teacher-info h4 { font-size: 0.9rem; }
-            .teacher-info p { display: none; } /* 모바일에서 직책 숨김 */
-
-            .timetable-wrapper { display: none; } /* 모바일에서 시간표 숨김 */
-            #mobile-class-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
-            
-            .mobile-item { 
-                background: var(--card-navy); padding: 15px; border-radius: 12px; 
-                border-left: 4px solid var(--gold); cursor: pointer;
-            }
-            .mobile-item h5 { margin: 0; font-size: 1rem; color: var(--gold); }
-            .mobile-item p { margin: 5px 0 0; font-size: 0.8rem; color: #cbd5e1; }
-
-            .detail-view { margin-top: 20px; padding: 20px; border-radius: 15px; }
-            .detail-content h3 { font-size: 1.3rem; padding-left: 10px; }
-            .detail-content p { font-size: 0.85rem; }
+        @media (max-width: 1024px) {
+            .container { grid-template-columns: 1fr; }
+            .teacher-list { display: flex; overflow-x: auto; gap: 15px; position: static; padding-bottom: 20px; }
+            .teacher-card { flex: 0 0 240px; flex-direction: column; text-align: center; }
+            .profile-img { margin: 0 0 15px 0; }
+            .timetable-wrapper { display: none; } /* 모바일은 리스트로 대체 가능(여기선 지면상 생략) */
         }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="slogan">2026 국희재수학 봉선점</div>
-    <div class="subtitle">그룹 프리레저 시간표</div>
+    <div class="slogan">2026 국희재수학 봉선점<br>프리미엄 커리큘럼</div>
 </header>
 
 <div class="container">
     <div class="teacher-list">
         <div class="teacher-card active" id="card-kuk" onclick="selectTeacher('kuk')">
-            <img src="https://via.placeholder.com/60x60/334155/fff?text=이학1" class="profile-img">
-            <div class="teacher-info"><h4>이학1</h4><p>15회 9월</p></div>
+            <img src="teacher_kook.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/100?text=KUK'">
+            <div class="teacher-info"><h4>국희재T</h4><p>의치대 입시 전문가<br>대표 원장</p></div>
         </div>
         <div class="teacher-card" id="card-kim" onclick="selectTeacher('kim')">
-            <img src="https://via.placeholder.com/60x60/334155/fff?text=개혁2" class="profile-img">
-            <div class="teacher-info"><h4>개혁2</h4><p>15:02 3/4(20:0:0)</p></div>
+            <img src="teacher_kim.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/100?text=KIM'">
+            <div class="teacher-info"><h4>김충현T</h4><p>고등 대수 마스터<br>수능 실전 전문가</p></div>
         </div>
         <div class="teacher-card" id="card-baek" onclick="selectTeacher('baek')">
-            <img src="https://via.placeholder.com/60x60/334155/fff?text=진락1" class="profile-img">
-            <div class="teacher-info"><h4>진락1</h4><p>15:07 3/20(0:0:0)</p></div>
+            <img src="teacher_baek.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/100?text=BAEK'">
+            <div class="teacher-info"><h4>백윤성T</h4><p>수리논술/선택과목<br>입시 전략가</p></div>
         </div>
     </div>
 
@@ -151,13 +135,10 @@
             <div class="time-axis" id="time-axis"></div>
             <div id="days-container" class="days-container"></div>
         </div>
-        
-        <div id="mobile-class-list"></div>
-
         <div id="detail-box" class="detail-view">
             <div class="detail-content">
                 <h3 id="det-name">강좌 상세 안내</h3>
-                <p id="det-desc">수업을 선택하시면 상세 커리큘럼이 표시됩니다.</p>
+                <p id="det-desc">수업 카드를 선택하시면 국희재수학만의 독보적인 커리큘럼 정보가 표시됩니다.</p>
             </div>
         </div>
     </div>
@@ -166,94 +147,72 @@
 <script>
     const START_H = 8;
     const END_H = 22;
-    // 이미지의 요일 순서에 맞춰 조정 (트럭, 조익, 페르, 데르, 지로)
-    const days = ['Druck', 'Joik', 'Feru', 'Deru', 'Jiro', 'Sat', 'Sun']; 
-    const koreanDays = ['월', '화', '수', '목', '금', '토', '일']; // 모바일 표시용 한국어 요일
-
+    const days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+    const korDays = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'];
+    
+    // 데이터 업데이트 (수업 카드 내 요일 노출을 위해 day 정보 활용)
     const teacherData = {
         'kuk': [
-            { name: 'FFFD MED', day: 1, start: 9, span: 2, cat: 'cat-med', pfsee: true, desc: '■ Druck 오전 9시~11시\n■ 프리레저 심화 과정' },
-            { name: 'R61B4N', day: 4, start: 9, span: 2, cat: 'cat-algebra', pfsee: true, desc: '■ Deru 오전 9시~11시\n■ 심화대수 개념 완성' },
-            { name: '7RDBFLC', day: 1, start: 14, span: 2, cat: 'cat-practice', desc: '■ Druck 오후 2시~4시\n■ 실전 문제 풀이' },
-            { name: 'ALGEBRE', day: 1, start: 18, span: 3, cat: 'cat-algebra', desc: '■ Druck 오후 6시~9시\n■ 심화대수 이론' },
-            { name: 'NI0S PRE', day: 1, start: 15, span: 2, cat: 'cat-nonsul', desc: '■ Druck 오후 3시~5시\n■ 논술 대비 특강' },
-            { name: '06E77', day: 1, start: 17, span: 2, cat: 'cat-clinic', desc: '■ Druck 오후 5시~7시\n■ 개별 클리닉' }
+            { name: '공통수학1 (의치대반)', day: 6, start: 9, span: 2, cat: 'cat-med', adv: true, desc: '■ 의치대 및 SKY 진학을 목표로 하는 최상위권 커리큘럼\n■ 자체 교재 [플래티넘] 고난도 문항 정복' },
+            { name: '공통수학1 (의치대반)', day: 7, start: 9, span: 2, cat: 'cat-med', adv: true, desc: '■ 상동' },
+            { name: '대수 정규반 (심화)', day: 1, start: 19, span: 3, cat: 'cat-algebra', adv: true, desc: '■ 내신 1등급을 결정짓는 압도적 심화 이론\n■ 3월 4일 월요일 대개강' },
+            { name: '대수 정규반 (심화)', day: 3, start: 19, span: 3, cat: 'cat-algebra', adv: true, desc: '■ 상동' },
+            { name: '대수 정규반 (심화)', day: 5, start: 19, span: 3, cat: 'cat-algebra', adv: true, desc: '■ 상동' }
         ],
         'kim': [
-            { name: 'SFASTL', day: 2, start: 14, span: 2, cat: 'cat-algebra', pfsee: true, desc: '■ Joik 오후 2시~4시\n■ 심화대수 집중' },
-            { name: 'FCA576', day: 3, start: 14, span: 2, cat: 'cat-practice', pfsee: true, desc: '■ Feru 오후 2시~4시\n■ 실전 감각 기르기' },
-            { name: 'D8 84PE', day: 4, start: 14, span: 2, cat: 'cat-nonsul', pfsee: true, desc: '■ Deru 오후 2시~4시\n■ 논술 심화' },
-            { name: 'PCASTICE', day: 3, start: 16, span: 2, cat: 'cat-clinic', pfsee: true, desc: '■ Feru 오후 4시~6시\n■ 개인별 학습 코칭' },
-            { name: 'PRACTICE', day: 2, start: 16, span: 2, cat: 'cat-practice', desc: '■ Joik 오후 4시~6시\n■ 문제 연습' },
-            { name: 'D8 518', day: 3, start: 18, span: 2, cat: 'cat-algebra', desc: '■ Feru 오후 6시~8시\n■ 심화 개념 정리' }
+            { name: '대수 집중 실전반', day: 6, start: 10, span: 3, cat: 'cat-practice', adv: true, desc: '■ 수능적 사고 배양 및 고난도 기출 분석\n■ 토/일 오전 집중 몰입 수업' },
+            { name: '대수 집중 실전반', day: 7, start: 10, span: 3, cat: 'cat-practice', adv: true, desc: '■ 상동' },
+            { name: '공수1 집중 유형반', day: 6, start: 13, span: 3, cat: 'cat-clinic', desc: '■ 빈출 유형 완벽 정복 및 실전 개념 정리' },
+            { name: '공수1 집중 유형반', day: 7, start: 13, span: 3, cat: 'cat-clinic', desc: '■ 상동' }
         ],
         'baek': [
-            { name: 'CLINIC', day: 2, start: 19, span: 2, cat: 'cat-clinic', pfsee: true, desc: '■ Joik 오후 7시~9시\n■ 1대1 심층 클리닉' }
+            { name: '수리논술 정규 (수완)', day: 3, start: 19, span: 3, cat: 'cat-nonsul', adv: true, desc: '■ 주요 대학 기출 분석 및 대면 첨삭 지도' },
+            { name: '기하 / 확통 선택', day: 6, start: 14, span: 2, cat: 'cat-algebra', desc: '■ 선택과목 완벽 대비 실전 개념' },
+            { name: '1:1 소수정예 클리닉', day: 6, start: 10, span: 3, cat: 'cat-clinic', desc: '■ 개별 진도 및 질의응답 집중 케어' },
+            { name: '1:1 소수정예 클리닉', day: 7, start: 16, span: 3, cat: 'cat-clinic', desc: '■ 상동' }
         ]
     };
 
     function initLayout() {
         const axis = document.getElementById('time-axis');
-        axis.innerHTML = ''; // 기존 내용 초기화
         for (let i = START_H; i <= END_H; i++) {
             const label = document.createElement('div');
-            label.className = 'axis-label'; 
-            label.innerText = `${i}:00`;
+            label.className = 'axis-label'; label.innerText = `${i}:00`;
             axis.appendChild(label);
         }
-        
-        const daysContainer = document.getElementById('days-container');
-        daysContainer.innerHTML = ''; // 기존 내용 초기화
+        const container = document.getElementById('days-container');
         days.forEach((d, i) => {
             const col = document.createElement('div');
-            col.className = 'day-column'; 
-            col.id = `day-col-${i + 1}`;
+            col.className = 'day-column'; col.id = `day-col-${i + 1}`;
             col.innerHTML = `<div class="day-header">${d}</div>`;
-            daysContainer.appendChild(col);
+            container.appendChild(col);
         });
     }
 
-    function showDetail(name, desc) {
-        document.getElementById('det-name').innerText = name;
-        document.getElementById('det-desc').innerText = desc;
-        document.getElementById('detail-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-
     function selectTeacher(key) {
-        // 모든 카드 제거 (PC용)
         document.querySelectorAll('.day-column .class-card').forEach(c => c.remove());
-        // 모바일 리스트 초기화
-        const mList = document.getElementById('mobile-class-list');
-        mList.innerHTML = '';
-
-        // 활성화된 강사 카드 표시
         document.querySelectorAll('.teacher-card').forEach(c => c.classList.remove('active'));
         document.getElementById('card-' + key).classList.add('active');
 
         teacherData[key].forEach(cls => {
-            // PC용 카드 생성
             const col = document.getElementById(`day-col-${cls.day}`);
             if(col) {
                 const card = document.createElement('div');
                 card.className = `class-card ${cls.cat}`;
-                card.style.top = `${60 + (cls.start - START_H) * 65}px`;
-                card.style.height = `${(cls.span * 65) - 8}px`; // 높이 조정
-
-                let badgeHtml = cls.pfsee ? `<span class="badge-pfsee">PFSEE</span>` : '';
-                // 카드 내용에 요일 추가 (이미지 반영)
-                const classDayText = days[cls.day - 1]; // 배열은 0부터 시작하므로 -1
-                card.innerHTML = `${badgeHtml}${cls.name.replace('\n', '<br>')}<br><em>${classDayText} ${cls.start}:00-${cls.start + cls.span}:00</em>`;
-                card.onclick = () => showDetail(cls.name, cls.desc);
+                card.style.top = `${60 + (cls.start - START_H) * 70}px`;
+                card.style.height = `${(cls.span * 70) - 10}px`;
+                
+                const dayLabel = `<div class="class-day-label">${korDays[cls.day-1]}</div>`;
+                const badge = cls.adv ? `<span class="badge-blink">심화 Master</span>` : '';
+                
+                card.innerHTML = `${badge}${dayLabel}${cls.name}<em>${cls.start}:00-${cls.start + cls.span}:00</em>`;
+                card.onclick = () => {
+                    document.getElementById('det-name').innerText = cls.name;
+                    document.getElementById('det-desc').innerText = cls.desc;
+                    document.getElementById('detail-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                };
                 col.appendChild(card);
             }
-            
-            // 모바일용 리스트 아이템 생성
-            const classDayText = koreanDays[cls.day - 1];
-            const mItem = document.createElement('div');
-            mItem.className = 'mobile-item';
-            mItem.innerHTML = `<h5>${cls.name.replace('\n', ' ')}</h5><p>${classDayText}요일 | ${cls.start}:00 ~ ${cls.start+cls.span}:00</p>`;
-            mItem.onclick = () => showDetail(cls.name, cls.desc);
-            mList.appendChild(mItem);
         });
     }
 
