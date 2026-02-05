@@ -216,4 +216,76 @@
             const col = document.createElement('div');
             col.className = 'day-column';
             col.id = `day-col-${i + 1}`;
-            col.innerHTML = `<div class="day-
+            col.innerHTML = `<div class="day-header">${d}</div>`;
+            daysContainer.appendChild(col);
+        });
+    }
+
+    function showDetail(name, desc) {
+        const detailBox = document.getElementById('detail-box');
+        document.getElementById('det-name').innerText = name;
+        document.getElementById('det-desc').innerText = desc;
+        detailBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        detailBox.style.boxShadow = "0 0 30px rgba(197, 160, 89, 0.4)";
+        setTimeout(() => detailBox.style.boxShadow = "0 0 20px rgba(197, 160, 89, 0.1)", 1000);
+    }
+
+    function selectTeacher(key) {
+        document.querySelectorAll('.day-column .class-card').forEach(c => c.remove());
+        const mList = document.getElementById('mobile-class-list');
+        mList.innerHTML = '';
+        document.querySelectorAll('.teacher-card').forEach(c => c.classList.remove('active'));
+        document.getElementById('card-' + key).classList.add('active');
+
+        const currentClasses = teacherData[key];
+        const mobileGroups = {};
+
+        currentClasses.forEach(cls => {
+            // PC용 카드 생성
+            const col = document.getElementById(`day-col-${cls.day}`);
+            const card = document.createElement('div');
+            card.className = `class-card ${cls.cat}`;
+            const top = (cls.start - START_H) * HOUR_H + 50; 
+            const height = (cls.span * HOUR_H) - 6;
+            card.style.top = `${top}px`;
+            card.style.height = `${height}px`;
+            card.innerHTML = `${cls.name}<em>${cls.start}:00-${cls.start + cls.span}:00</em>`;
+            card.onclick = () => showDetail(cls.name, cls.desc);
+            col.appendChild(card);
+
+            // 모바일 그룹화
+            const timeStr = `${cls.start}:00~${cls.start + cls.span}:00`;
+            const groupKey = `${cls.name}_${timeStr}`;
+            if (!mobileGroups[groupKey]) {
+                mobileGroups[groupKey] = { name: cls.name, days: [days[cls.day-1]], time: timeStr, desc: cls.desc };
+            } else {
+                mobileGroups[groupKey].days.push(days[cls.day-1]);
+            }
+        });
+
+        // 모바일 리스트 렌더링
+        Object.values(mobileGroups).forEach(group => {
+            const mItem = document.createElement('div');
+            mItem.className = 'mobile-item';
+            mItem.onclick = () => showDetail(group.name, group.desc);
+            const combinedDays = group.days.join(''); 
+            mItem.innerHTML = `
+                <div class="m-info">
+                    <h5>${group.name}</h5>
+                    <p>${combinedDays} ${group.time}</p>
+                </div>
+                <div style="color:var(--gold); opacity:0.6;">▶</div>
+            `;
+            mList.appendChild(mItem);
+        });
+    }
+
+    window.onload = () => {
+        initLayout();
+        selectTeacher('kuk');
+    };
+</script>
+
+</body>
+</html>
