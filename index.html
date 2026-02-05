@@ -21,63 +21,56 @@
 
         body { background-color: var(--bg-color); margin: 0; font-family: 'Pretendard', sans-serif; color: var(--navy); }
         
-        /* [수정] 헤더 스타일 - 로고 중심 디자인 */
         header { 
-            background: var(--navy); 
-            padding: 30px 0; 
-            text-align: center; 
-            border-bottom: 4px solid var(--gold);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            background: var(--navy); padding: 25px 0; text-align: center; border-bottom: 4px solid var(--gold);
+            position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
-        .main-logo { 
-            height: 100px; /* 로고 크기 조절 */
-            width: auto;
-            margin-bottom: 10px;
-        }
-        .header-subtext {
-            color: var(--gold);
-            font-size: 0.9rem;
-            letter-spacing: 4px;
-            font-weight: 300;
-            margin: 0;
-            text-transform: uppercase;
-        }
+        .main-logo { height: 80px; width: auto; margin-bottom: 8px; }
+        .header-subtext { color: var(--gold); font-size: 0.8rem; letter-spacing: 4px; font-weight: 300; margin: 0; text-transform: uppercase; }
 
-        .container { max-width: 1400px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: 320px 1fr; gap: 30px; }
+        .container { max-width: 1400px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: 300px 1fr; gap: 30px; }
 
         /* 강사 리스트 */
-        .teacher-list { display: flex; flex-direction: column; gap: 15px; }
+        .teacher-list { display: flex; flex-direction: column; gap: 12px; }
         .teacher-card {
-            background: var(--white); padding: 20px; border-radius: 12px; display: flex; align-items: center;
+            background: var(--white); padding: 15px; border-radius: 12px; display: flex; align-items: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 5px solid #cbd5e1; cursor: pointer; transition: all 0.2s;
         }
         .teacher-card.active { border-left-color: var(--gold); background: #fffcf5; transform: translateX(5px); }
-        .profile-img { width: 60px; height: 60px; border-radius: 50%; margin-right: 15px; border: 2px solid var(--border); object-fit: cover; }
-        .teacher-info h3 { margin: 0; font-size: 1.1rem; }
-        .teacher-info p { margin: 5px 0 0; color: #64748b; font-size: 0.85rem; }
+        .profile-img { width: 55px; height: 55px; border-radius: 50%; margin-right: 15px; border: 2px solid var(--border); object-fit: cover; }
+        .teacher-info h3 { margin: 0; font-size: 1.05rem; }
+        .teacher-info p { margin: 3px 0 0; color: #64748b; font-size: 0.8rem; }
 
-        /* 시간표 영역 */
-        .content-right { display: flex; flex-direction: column; gap: 20px; }
-        .timetable-box { 
-            background: var(--white); padding: 25px; border-radius: 15px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05); overflow-x: auto; 
+        /* [핵심] 시간표 그리드 시스템 */
+        .timetable-container {
+            background: var(--white); border-radius: 15px; padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); position: relative;
         }
-        .timetable { width: 100%; border-collapse: collapse; table-layout: fixed; min-width: 800px; }
-        .timetable th { background: #f1f5f9; color: #475569; padding: 12px; border: 1px solid var(--border); font-size: 0.9rem; }
-        .timetable td { border: 1px solid var(--border); height: 55px; vertical-align: middle; position: relative; }
-        .time-col { background: #f8fafc; font-weight: 700; width: 80px; text-align: center; font-size: 0.8rem; color: #94a3b8; }
+        .timetable-grid {
+            display: grid;
+            /* 1열(시간) + 7열(요일) */
+            grid-template-columns: 80px repeat(7, 1fr);
+            /* 헤더(1줄) + 8시~22시(14줄) */
+            grid-template-rows: 40px repeat(14, 60px); 
+            border: 1px solid var(--border);
+            background-color: var(--border);
+            gap: 1px;
+        }
+        .grid-header { background: #f1f5f9; color: #475569; font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; }
+        .grid-time { background: #f8fafc; color: #94a3b8; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+        .grid-cell { background: white; }
 
-        /* 수업 박스 스타일 */
-        .class-box {
-            position: absolute; top: 2px; left: 2px; right: 2px; bottom: 2px;
-            border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            font-size: 0.75rem; font-weight: 800; line-height: 1.2; text-align: center; 
-            border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: all 0.2s;
+        /* 수업 카드 (병합 스타일) */
+        .class-card {
+            margin: 3px; border-radius: 8px; padding: 8px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-size: 0.8rem; font-weight: 800; text-align: center; cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.2s; z-index: 10;
         }
-        .class-box:hover { filter: brightness(0.92); transform: scale(0.98); }
+        .class-card:hover { transform: scale(0.98); filter: brightness(0.95); }
+        .class-card span { font-size: 0.65rem; font-weight: 500; opacity: 0.8; margin-top: 4px; }
+
         .cat-math1 { background: var(--color-math1); color: var(--text-math1); }
         .cat-algebra { background: var(--color-algebra); color: var(--text-algebra); }
         .cat-nonsul { background: var(--color-nonsul); color: var(--text-nonsul); }
@@ -85,21 +78,15 @@
 
         /* 하단 상세 뷰 */
         .detail-view { 
-            background: var(--white); border-radius: 15px; padding: 30px; 
-            border-top: 5px solid var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            animation: slideUp 0.3s ease-out;
+            background: var(--white); border-radius: 15px; padding: 25px; 
+            border-top: 5px solid var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-top: 20px;
         }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .detail-grid { display: grid; grid-template-columns: 150px 1fr 1fr; gap: 30px; align-items: start; }
-        .detail-photo { width: 150px; height: 180px; border-radius: 12px; object-fit: cover; border: 1px solid var(--border); }
-        
-        .detail-info h2 { margin: 0 0 15px 0; color: var(--navy); border-bottom: 2px solid var(--gold); display: inline-block; padding-bottom: 5px; }
-        .info-item { margin-bottom: 15px; }
-        .info-item label { display: block; font-size: 0.75rem; color: var(--gold); font-weight: 800; margin-bottom: 4px; }
-        .info-item p { margin: 0; font-size: 1rem; color: #334155; line-height: 1.5; }
-
-        .placeholder-text { text-align: center; color: #94a3b8; padding: 40px; font-style: italic; }
+        .detail-grid { display: grid; grid-template-columns: 120px 1fr 1fr; gap: 25px; align-items: start; }
+        .detail-photo { width: 120px; height: 150px; border-radius: 10px; object-fit: cover; border: 1px solid var(--border); }
+        .detail-info h2 { margin: 0 0 10px 0; color: var(--navy); border-bottom: 2px solid var(--gold); display: inline-block; }
+        .info-item { margin-bottom: 12px; }
+        .info-item label { display: block; font-size: 0.7rem; color: var(--gold); font-weight: 800; margin-bottom: 2px; }
+        .info-item p { margin: 0; font-size: 0.95rem; color: #334155; }
 
         @media (max-width: 1000px) { .container { grid-template-columns: 1fr; } }
     </style>
@@ -107,7 +94,7 @@
 <body>
 
 <header>
-    <img src="kook_1.png" alt="국희재 수학학원 로고" class="main-logo" onerror="this.src='https://via.placeholder.com/200x80/0a0f1d/c5a059?text=KOOK+MATH'">
+    <img src="kook_1.png" class="main-logo" onerror="this.src='https://via.placeholder.com/200x80/0a0f1d/c5a059?text=KOOK+MATH'">
     <p class="header-subtext">Premium Mathematics Academy</p>
 </header>
 
@@ -115,134 +102,116 @@
     <div class="teacher-list" id="t-list"></div>
 
     <div class="content-right">
-        <div class="timetable-box">
-            <h3 style="margin: 0 0 15px 0; font-size: 1.1rem;">📅 주간 강의 시간표</h3>
-            <table class="timetable">
-                <thead>
-                    <tr>
-                        <th style="width:70px">TIME</th>
-                        <th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th><th>일</th>
-                    </tr>
-                </thead>
-                <tbody id="table-body"></tbody>
-            </table>
+        <div class="timetable-container" id="timetable-wrapper">
+            <div class="timetable-grid" id="grid-base">
+                </div>
         </div>
 
         <div id="class-detail-view" class="detail-view">
-            <div id="detail-content" class="placeholder-text">
-                시간표에서 수업을 클릭하면 상세 정보가 나타납니다.
+            <div id="detail-content" style="text-align: center; color: #94a3b8; font-style: italic;">
+                수업 카드를 클릭하면 상세 정보를 확인할 수 있습니다.
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    // 강사 및 수업 데이터 (기존 유지)
     const teacherData = {
         'kuk': {
-            name: '국희재 선생님',
-            sub: '의치대반 전문 / 공통수학1 / 대수',
-            photo: 'kuk.png',
+            name: '국희재 선생님', sub: '의치대반 전문', photo: 'kuk.png',
             classes: [
-                { id: 'kuk_alg', name: '대수 정규', days: [1, 3, 5], start: 19, end: 22, cat: 'cat-algebra', 
-                  book: '자체교재 [플래티넘 대수]', target: '고1 최상위권', goal: '내신 1등급 및 킬러문항 정복' },
-                { id: 'kuk_math1', name: '공통수학1', days: [6, 7], start: 9, end: 11, cat: 'cat-math1', 
-                  book: '자체교재 [시그니처 공수]', target: '의치대 준비생', goal: '심화 개념 완벽 정리' }
+                { id: 'k1', name: '대수 정규', day: 1, start: 19, span: 3, cat: 'cat-algebra', book: '플래티넘 대수', target: '고1 최상위', goal: '내신 1등급' },
+                { id: 'k2', name: '대수 정규', day: 3, start: 19, span: 3, cat: 'cat-algebra', book: '플래티넘 대수', target: '고1 최상위', goal: '내신 1등급' },
+                { id: 'k3', name: '대수 정규', day: 5, start: 19, span: 3, cat: 'cat-algebra', book: '플래티넘 대수', target: '고1 최상위', goal: '내신 1등급' },
+                { id: 'k4', name: '공통수학1', day: 6, start: 9, span: 2, cat: 'cat-math1', book: '시그니처 공수', target: '의치대반', goal: '심화 개념 정립' },
+                { id: 'k5', name: '공통수학1', day: 7, start: 9, span: 2, cat: 'cat-math1', book: '시그니처 공수', target: '의치대반', goal: '심화 개념 정립' }
             ]
         },
         'kim': {
-            name: '김충현 선생님',
-            sub: '대수/공수 집중반 전문',
-            photo: 'kim.png',
+            name: '김충현 선생님', sub: '대수/공수 집중반', photo: 'kim.png',
             classes: [
-                { id: 'kim_alg', name: '대수 집중', days: [6, 7], start: 10, end: 13, cat: 'cat-algebra', 
-                  book: '주간지 & 손풀이 교재', target: '개념 완성이 필요한 학생', goal: '유형별 문제풀이 스킬 습득' },
-                { id: 'kim_math1', name: '공수 집중', days: [6, 7], start: 13, end: 16, cat: 'cat-math1', 
-                  book: '유형 분석서 [매뉴얼]', target: '고1 예비 수강생', goal: '핵심 유형 무한 반복 및 숙달' }
-            ]
-        },
-        'baek': {
-            name: '백윤성 선생님',
-            sub: '수리논술/기하/확통 전문',
-            photo: 'baek.png',
-            classes: [
-                { id: 'baek_non', name: '수리논술', days: [3], start: 19, end: 22, cat: 'cat-nonsul', 
-                  book: '대학별 기출 모음집', target: '수시 논술 준비생', goal: '논리적 답안 작성 및 대면 첨삭' },
-                { id: 'baek_calc', name: '기하/확통', days: [6, 7], start: 14, end: 16, cat: 'cat-calc', 
-                  book: '내신 전략서 [전략]', target: '선택과목 대비생', goal: '내신 고득점 핵심 포인트 정리' }
+                { id: 'm1', name: '대수 집중', day: 6, start: 10, span: 3, cat: 'cat-algebra', book: '주간지', target: '고1 정규', goal: '유형 정복' },
+                { id: 'm2', name: '대수 집중', day: 7, start: 10, span: 3, cat: 'cat-algebra', book: '주간지', target: '고1 정규', goal: '유형 정복' },
+                { id: 'm3', name: '공수 집중', day: 6, start: 13, span: 3, cat: 'cat-math1', book: '매뉴얼', target: '예비 고1', goal: '기초 확립' },
+                { id: 'm4', name: '공수 집중', day: 7, start: 13, span: 3, cat: 'cat-math1', book: '매뉴얼', target: '예비 고1', goal: '기초 확립' }
             ]
         }
     };
 
-    function renderTeacherList() {
-        const list = document.getElementById('t-list');
-        for (let key in teacherData) {
-            const t = teacherData[key];
-            const item = document.createElement('div');
-            item.className = 'teacher-card';
-            item.id = `card-${key}`;
-            item.onclick = () => selectTeacher(key);
-            item.innerHTML = `
-                <img src="${t.photo}" class="profile-img" onerror="this.src='https://via.placeholder.com/60'">
-                <div class="teacher-info">
-                    <h3>${t.name}</h3>
-                    <p>${t.sub}</p>
-                </div>
-            `;
-            list.appendChild(item);
+    function initGrid() {
+        const grid = document.getElementById('grid-base');
+        let html = '<div class="grid-header">TIME</div>';
+        const days = ['월','화','수','목','금','토','일'];
+        days.forEach(d => html += `<div class="grid-header">${d}</div>`);
+        
+        for (let h = 8; h <= 21; h++) {
+            html += `<div class="grid-time">${h}:00</div>`;
+            for (let d = 0; d < 7; d++) {
+                html += `<div class="grid-cell"></div>`;
+            }
         }
+        grid.innerHTML = html;
     }
 
     function selectTeacher(key) {
         document.querySelectorAll('.teacher-card').forEach(c => c.classList.remove('active'));
-        document.getElementById(`card-${key}`).classList.add('active');
+        const card = document.getElementById(`card-${key}`);
+        if(card) card.classList.add('active');
 
+        // 기존 카드 제거
+        document.querySelectorAll('.class-card').forEach(c => c.remove());
+        
         const data = teacherData[key];
-        const tbody = document.getElementById('table-body');
-        tbody.innerHTML = '';
+        const grid = document.getElementById('grid-base');
 
-        for (let h = 8; h <= 21; h++) {
-            const row = document.createElement('tr');
-            let cells = `<td class="time-col">${h}:00</td>`;
-            for (let d = 1; d <= 7; d++) {
-                let cellContent = "";
-                data.classes.forEach(c => {
-                    if (c.days.includes(d) && h >= c.start && h < c.end) {
-                        cellContent = `<div class="class-box ${c.cat}" onclick="showClassDetail('${key}', '${c.id}')">${c.name}</div>`;
-                    }
-                });
-                cells += `<td>${cellContent}</td>`;
-            }
-            row.innerHTML = cells;
-            tbody.appendChild(row);
-        }
-        document.getElementById('detail-content').innerHTML = `<div class="placeholder-text">${data.name}의 수업을 클릭하면 상세 내용이 표시됩니다.</div>`;
+        data.classes.forEach(c => {
+            const cardEl = document.createElement('div');
+            cardEl.className = `class-card ${c.cat}`;
+            // grid-column: 요일+1(시간열 때문에 +2), grid-row: 시작시간-8+헤더1(+2)
+            cardEl.style.gridColumn = c.day + 1;
+            cardEl.style.gridRow = `${c.start - 8 + 2} / span ${c.span}`;
+            cardEl.innerHTML = `${c.name}<span>${c.start}:00-${c.start+c.span}:00</span>`;
+            cardEl.onclick = (e) => {
+                e.stopPropagation();
+                showDetail(key, c.id);
+            };
+            grid.appendChild(cardEl);
+        });
     }
 
-    function showClassDetail(tKey, cId) {
-        const teacher = teacherData[tKey];
-        const classInfo = teacher.classes.find(c => c.id === cId);
-        const detailBox = document.getElementById('detail-content');
-
-        detailBox.innerHTML = `
+    function showDetail(tKey, cId) {
+        const t = teacherData[tKey];
+        const c = t.classes.find(item => item.id === cId);
+        const detail = document.getElementById('detail-content');
+        detail.innerHTML = `
             <div class="detail-grid">
-                <img src="${teacher.photo}" class="detail-photo" onerror="this.src='https://via.placeholder.com/150x180'">
+                <img src="teacher_kook.jpg" class="detail-photo" onerror="this.src='https://via.placeholder.com/120x150'">
                 <div class="detail-info">
-                    <h2>${classInfo.name} 상세</h2>
-                    <div class="info-item"><label>담당 강사</label><p>${teacher.name}</p></div>
-                    <div class="info-item"><label>수강 대상</label><p>${classInfo.target}</p></div>
+                    <h2>${c.name} 상세</h2>
+                    <div class="info-item"><label>강사</label><p>${t.name}</p></div>
+                    <div class="info-item"><label>대상</label><p>${c.target}</p></div>
                 </div>
                 <div class="detail-info">
-                    <div class="info-item"><label>주요 교재</label><p>${classInfo.book}</p></div>
-                    <div class="info-item"><label>강의 목표</label><p>${classInfo.goal}</p></div>
+                    <div class="info-item"><label>교재</label><p>${c.book}</p></div>
+                    <div class="info-item"><label>목표</label><p>${c.goal}</p></div>
                 </div>
             </div>
         `;
     }
 
-    renderTeacherList();
+    // 초기화
+    initGrid();
+    const list = document.getElementById('t-list');
+    for (let key in teacherData) {
+        const t = teacherData[key];
+        const item = document.createElement('div');
+        item.className = 'teacher-card';
+        item.id = `card-${key}`;
+        item.onclick = () => selectTeacher(key);
+        item.innerHTML = `<img src="${t.photo}" class="profile-img" onerror="this.src='https://via.placeholder.com/60'"><div class="teacher-info"><h3>${t.name}</h3><p>${t.sub}</p></div>`;
+        list.appendChild(item);
+    }
     selectTeacher('kuk');
 </script>
-
 </body>
 </html>
