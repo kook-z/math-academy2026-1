@@ -11,10 +11,10 @@
             --white: #ffffff;
             --border: #dee2e6;
             /* 과목별 색상 통일 */
-            --math1: #e3f2fd; --math1-text: #0d47a1; --math1-line: #1976d2;
-            --algebra: #f3e5f5; --algebra-text: #4a148c; --algebra-line: #7b1fa2;
-            --nonsul: #fff3e0; --nonsul-text: #e65100; --nonsul-line: #f57c00;
-            --clinic: #e8f5e9; --clinic-text: #1b5e20; --clinic-line: #388e3c;
+            --math1: #eef6ff; --math1-text: #0d47a1; --math1-line: #1976d2;
+            --algebra: #f9f0ff; --algebra-text: #4a148c; --algebra-line: #8338ec;
+            --nonsul: #fff4e6; --nonsul-text: #e65100; --nonsul-line: #fb5607;
+            --clinic: #f0fff4; --clinic-text: #1b5e20; --clinic-line: #06d6a0;
         }
 
         body { font-family: 'Pretendard', sans-serif; background-color: #f4f7f9; margin: 0; padding: 20px; }
@@ -23,76 +23,71 @@
         header { text-align: center; margin-bottom: 30px; }
         header h1 { color: var(--navy); border-bottom: 3px solid var(--gold); display: inline-block; padding-bottom: 5px; font-size: 1.8rem; }
 
-        /* 타임테이블 컨테이너 */
+        /* 타임테이블 레이아웃 고정 */
         .timetable-wrapper {
-            position: relative;
             display: grid;
-            grid-template-columns: 80px repeat(7, 1fr); /* 시간축 + 7일 */
-            grid-template-rows: 50px repeat(14, 60px); /* 헤더 + 09시~22시(14칸) */
+            grid-template-columns: 80px repeat(7, 1fr); 
+            grid-template-rows: 50px repeat(13, 60px); /* 09:00 ~ 22:00 고정 */
             background-color: var(--border);
             border: 2px solid var(--navy);
-            border-radius: 8px;
-            overflow: hidden;
+            position: relative;
         }
 
-        /* 공통 셀 스타일 */
-        .cell { background: white; border: 0.5px solid #eee; display: flex; align-items: center; justify-content: center; position: relative; }
-        .header-cell { background: var(--navy); color: white; font-weight: bold; z-index: 10; border: none; }
+        .cell { background: white; border: 0.1px solid #eee; display: flex; align-items: center; justify-content: center; }
+        .header-cell { background: var(--navy); color: white; font-weight: bold; z-index: 10; }
         .time-cell { background: #f8f9fa; font-size: 0.8rem; font-weight: bold; color: #666; }
 
-        /* 수업 카드 스타일 */
+        /* 수업 카드: 텍스트가 넘쳐도 크기 고정 */
         .class-card {
             position: absolute;
             top: 2px; left: 2px; right: 2px; bottom: 2px;
-            padding: 8px;
+            padding: 6px;
             border-radius: 4px;
             border-left: 4px solid;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             z-index: 20;
-            transition: all 0.2s ease;
+            transition: 0.2s;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            overflow: hidden;
+            justify-content: flex-start;
+            overflow: hidden; /* 글자가 넘치면 숨김 */
         }
         .class-card:hover { transform: scale(1.02); box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 30; }
-        .class-card .teacher { font-weight: 800; font-size: 0.75rem; display: block; margin-bottom: 2px; }
-        .class-card .subject { font-weight: 600; line-height: 1.2; }
+        .class-card .teacher { font-weight: 800; font-size: 0.75rem; margin-bottom: 2px; opacity: 0.8; }
+        .class-card .subject { font-weight: 600; line-height: 1.2; display: block; }
 
-        /* 과목별 클래스 */
+        /* 과목별 스타일 */
         .c-math1 { background: var(--math1); color: var(--math1-text); border-color: var(--math1-line); }
         .c-algebra { background: var(--algebra); color: var(--algebra-text); border-color: var(--algebra-line); }
         .c-nonsul { background: var(--nonsul); color: var(--nonsul-text); border-color: var(--nonsul-line); }
         .c-clinic { background: var(--clinic); color: var(--clinic-text); border-color: var(--clinic-line); }
 
-        /* 하단 상세창 */
-        #detail-view { margin-top: 30px; padding: 25px; border: 2px solid var(--gold); border-radius: 12px; display: none; background: #fff; }
+        /* 상세 정보 섹션 */
+        #detail-view { margin-top: 30px; padding: 25px; border: 2px solid var(--gold); border-radius: 12px; display: none; background: #fff; animation: fadeIn 0.4s; }
         .detail-grid { display: grid; grid-template-columns: 180px 1fr; gap: 25px; }
         .detail-img { width: 100%; height: 220px; background: #eee; border-radius: 8px; object-fit: cover; }
         .info-label { font-weight: bold; color: var(--gold); width: 80px; display: inline-block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <h1>2026학년도 1학기 고등수학 정규반</h1>
+        <h1>2026학년도 1학기 고등수학 타임테이블</h1>
     </header>
 
     <div class="timetable-wrapper">
         <div class="cell header-cell">TIME</div>
-        <div class="cell header-cell">월</div><div class="cell header-cell">화</div>
-        <div class="cell header-cell">수</div><div class="cell header-cell">목</div>
-        <div class="cell header-cell">금</div><div class="cell header-cell">토</div>
-        <div class="cell header-cell">일</div>
+        <div class="cell header-cell">월</div><div class="cell header-cell">화</div><div class="cell header-cell">수</div>
+        <div class="cell header-cell">목</div><div class="cell header-cell">금</div><div class="cell header-cell">토</div><div class="cell header-cell">일</div>
 
         <script>
-            const hours = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
-            for(let i=0; i<14; i++) {
-                // 시간축 셀
+            const hours = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"];
+            for(let i=0; i<13; i++) {
                 document.write(`<div class="cell time-cell" style="grid-row: ${i+2}">${hours[i]}</div>`);
-                // 각 요일별 빈 칸(배경)
                 for(let j=0; j<7; j++) {
                     document.write(`<div class="cell" style="grid-row: ${i+2}; grid-column: ${j+2}"></div>`);
                 }
@@ -102,10 +97,6 @@
         <div class="class-card c-math1" style="grid-column: 7; grid-row: 2 / span 3" onclick="showDetail('kuk_1')">
             <span class="teacher">국희재T</span><span class="subject">공수1 (의치대)</span>
         </div>
-        <div class="class-card c-clinic" style="grid-column: 7; grid-row: 6 / span 3" onclick="showDetail('baek_2')">
-            <span class="teacher">백윤성T</span><span class="subject">1:1 개별첨삭</span>
-        </div>
-
         <div class="class-card c-math1" style="grid-column: 8; grid-row: 2 / span 3" onclick="showDetail('kuk_1')">
             <span class="teacher">국희재T</span><span class="subject">공수1 (의치대)</span>
         </div>
@@ -120,8 +111,12 @@
             <span class="teacher">국희재T</span><span class="subject">대수 정규반</span>
         </div>
 
-        <div class="class-card c-nonsul" style="grid-column: 4; grid-row: 10 / span 4" onclick="showDetail('baek_1')">
+        <div class="class-card c-nonsul" style="grid-column: 4; grid-row: 11 / span 4" onclick="showDetail('baek_1')">
             <span class="teacher">백윤성T</span><span class="subject">논술 정규반</span>
+        </div>
+
+        <div class="class-card c-clinic" style="grid-column: 7; grid-row: 6 / span 3" onclick="showDetail('baek_2')">
+            <span class="teacher">백윤성T</span><span class="subject">1:1 개별첨삭</span>
         </div>
     </div>
 
@@ -130,10 +125,10 @@
             <img id="detail-img" src="" alt="강사" class="detail-img" onerror="this.src='https://via.placeholder.com/180x220?text=No+Photo'">
             <div class="detail-info">
                 <h2 id="detail-title" style="margin:0 0 15px 0; color:var(--navy);"></h2>
-                <div style="margin-bottom:10px;"><span class="info-label">강사명</span> <span id="detail-teacher"></span></div>
-                <div style="margin-bottom:10px;"><span class="info-label">강의특징</span> <span id="detail-desc"></span></div>
-                <div style="margin-bottom:10px;"><span class="info-label">교재</span> <span id="detail-book"></span></div>
-                <div style="margin-bottom:10px;"><span class="info-label">기타</span> <span id="detail-etc"></span></div>
+                <p><span class="info-label">강사명</span> <span id="detail-teacher"></span></p>
+                <p><span class="info-label">특징</span> <span id="detail-desc"></span></p>
+                <p><span class="info-label">교재</span> <span id="detail-book"></span></p>
+                <p><span class="info-label">비고</span> <span id="detail-etc"></span></p>
             </div>
         </div>
     </div>
@@ -141,26 +136,22 @@
 
 <script>
     const data = {
-        'kuk_1': { title: '공통수학1 (의치대반)', teacher: '국희재T', desc: '의치대 진학을 위한 심화 개념 및 고난도 문제 풀이', book: '자체교재 + 플래티넘', etc: '매주 실전 테스트 진행' },
-        'kuk_2': { title: '대수 정규반', teacher: '국희재T', desc: '월/수/금 저녁 집중 케어 수업', book: '자체교재 + 플래티넘', etc: '3월 개강 정규반' },
-        'baek_1': { title: '논술 정규반', teacher: '백윤성T', desc: '수리 논술 기초 및 수능 연계 문항 분석', book: '백윤성 논술 전략서', etc: '1:1 대면 첨삭 포함' },
-        'baek_2': { title: '1:1 개별첨삭 클리닉', teacher: '백윤성T', desc: '학생별 맞춤 진도 및 개별 오답 분석', book: '개인별 맞춤 교재', etc: '소수정예 밀착 관리' }
+        'kuk_1': { title: '공통수학1 (의치대반)', teacher: '국희재T', desc: '의치대 진학을 위한 심화 개념 및 고난도 문제 풀이', book: '자체교재 + 플래티넘', etc: '매주 실전 테스트' },
+        'kuk_2': { title: '대수 정규반', teacher: '국희재T', desc: '월/수/금 저녁 집중 케어 수업', book: '자체교재 + 플래티넘', etc: '3월 개강반' },
+        'baek_1': { title: '논술 정규반', teacher: '백윤성T', desc: '수리 논술 기초 및 수능 연계 분석', book: '논술 전략서', etc: '1:1 대면 첨삭 포함' },
+        'baek_2': { title: '1:1 개별첨삭 클리닉', teacher: '백윤성T', desc: '학생별 맞춤 진도 및 개별 오답 분석', book: '개인별 교재', etc: '밀착 관리반' }
     };
 
     function showDetail(id) {
         const item = data[id];
         if(!item) return;
-
         document.getElementById('detail-title').innerText = item.title;
         document.getElementById('detail-teacher').innerText = item.teacher;
         document.getElementById('detail-desc').innerText = item.desc;
         document.getElementById('detail-book').innerText = item.book;
         document.getElementById('detail-etc').innerText = item.etc;
-        
         const view = document.getElementById('detail-view');
         view.style.display = 'block';
-        
-        // 상세정보 클릭 시 화면 부드럽게 이동
         window.scrollTo({ top: view.offsetTop - 50, behavior: 'smooth' });
     }
 </script>
