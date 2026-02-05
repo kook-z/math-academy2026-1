@@ -3,126 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>강사별 타임테이블 - 2026 고등수학</title>
+    <title>2026 1학기 고등수학 전문학원 시간표</title>
     <style>
         :root {
             --navy: #1a2a44;
             --gold: #c5a059;
-            --bg: #f0f2f5;
-            /* 강사별 포인트 컬러 */
-            --color-kuk: #3a86ff; /* 국희재T - 블루 */
-            --color-baek: #ff006e; /* 백윤성T - 핑크 */
-            --color-kim: #fb5607; /* 김충현T - 오렌지 */
+            --white: #ffffff;
+            --gray: #f4f4f4;
+            --light-gold: #fdf6e3;
+            --text: #333;
         }
 
-        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg); margin: 0; padding: 20px; color: #333; }
-        .container { max-width: 1000px; margin: 0 auto; }
+        body { font-family: 'Pretendard', -apple-system, sans-serif; background-color: #e9ecef; margin: 0; padding: 40px 20px; color: var(--text); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        /* Header & Logo */
+        header { text-align: center; margin-bottom: 60px; }
+        .logo { height: 80px; margin-bottom: 20px; transition: transform 0.3s; }
+        .logo:hover { transform: scale(1.05); }
+        header h1 { color: var(--navy); font-size: 2.4rem; margin: 0; letter-spacing: -1px; }
+        header .divider { width: 60px; height: 3px; background: var(--gold); margin: 15px auto; }
+
+        /* Teacher Section */
+        .teacher-section { background: var(--white); border-radius: 25px; padding: 40px; margin-bottom: 70px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
+        .teacher-section::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 8px; background: linear-gradient(90deg, var(--navy), var(--gold)); }
         
-        header { text-align: center; margin-bottom: 40px; }
-        header h1 { color: var(--navy); font-size: 2rem; border-bottom: 3px solid var(--gold); display: inline-block; padding-bottom: 10px; }
+        .teacher-profile { display: flex; align-items: center; margin-bottom: 30px; }
+        .teacher-thumb { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--gold); object-fit: cover; margin-right: 20px; background: #eee; }
+        .teacher-info h2 { color: var(--navy); margin: 0; font-size: 1.8rem; display: flex; align-items: center; }
+        .teacher-info p { color: var(--gold); margin: 5px 0 0; font-weight: 600; }
 
-        /* 선생님별 섹션 */
-        .teacher-section { background: white; border-radius: 15px; padding: 25px; margin-bottom: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-        .teacher-info { display: flex; align-items: center; margin-bottom: 20px; border-left: 6px solid var(--navy); padding-left: 15px; }
-        .teacher-info h2 { margin: 0; color: var(--navy); font-size: 1.5rem; }
-        .teacher-info span { margin-left: 10px; color: #666; font-size: 0.9rem; }
+        /* Timetable Grid */
+        .timetable { display: grid; grid-template-columns: 100px repeat(7, 1fr); gap: 1px; background-color: #ddd; border: 1px solid #ddd; border-radius: 10px; overflow: hidden; }
+        .cell { background: white; padding: 15px 5px; text-align: center; font-size: 0.9rem; min-height: 70px; display: flex; align-items: center; justify-content: center; }
+        .cell.head { background: var(--navy); color: white; font-weight: 700; }
+        .cell.time { background: #f8f9fa; font-weight: bold; color: var(--navy); border-right: 1px solid #ddd; }
 
-        /* 타임테이블 그리드 */
-        .timetable {
-            display: grid;
-            grid-template-columns: 80px repeat(7, 1fr);
-            grid-template-rows: 40px repeat(13, 50px); /* 09시 ~ 22시 */
-            gap: 1px; background-color: #eee; border: 1px solid #ddd;
-        }
-
-        .cell { background: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #888; }
-        .head { background: #f8f9fa; color: var(--navy); font-weight: bold; border-bottom: 2px solid #ddd; }
-        .time-label { background: #f8f9fa; font-weight: bold; border-right: 2px solid #ddd; }
-
-        /* 수업 카드 */
+        /* Class Card */
         .class-card {
-            position: relative;
-            grid-row-end: span 1; /* 기본값 */
-            margin: 2px;
-            padding: 8px;
+            background-color: var(--light-gold);
+            border-left: 5px solid var(--gold);
+            padding: 10px 5px;
+            margin: 4px;
             border-radius: 6px;
-            color: white;
-            font-weight: 600;
-            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 92%;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-size: 0.88rem;
+            color: var(--navy);
+            font-weight: 700;
         }
+        .class-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(197, 160, 89, 0.4); background-color: var(--navy); color: var(--white); border-left-color: var(--gold); }
+        .class-card span { font-size: 0.75rem; font-weight: 500; margin-top: 5px; opacity: 0.8; }
 
-        /* 강사별 카드 색상 */
-        .bg-kuk { background-color: var(--color-kuk); }
-        .bg-baek { background-color: var(--color-baek); }
-        .bg-kim { background-color: var(--color-kim); }
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); }
+        .modal-content { background: white; margin: 5% auto; padding: 0; border-radius: 20px; width: 90%; max-width: 800px; position: relative; overflow: hidden; animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .close-btn { position: absolute; right: 20px; top: 15px; font-size: 35px; cursor: pointer; color: var(--white); z-index: 10; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        
+        .modal-header { background: var(--navy); color: white; padding: 40px; display: flex; align-items: center; gap: 30px; }
+        .modal-teacher-img { width: 200px; height: 260px; object-fit: cover; border-radius: 12px; border: 4px solid var(--gold); box-shadow: 0 10px 20px rgba(0,0,0,0.2); background: #eee; }
+        .modal-header-text h3 { font-size: 2rem; margin: 0; color: var(--gold); }
+        .modal-header-text p { font-size: 1.2rem; margin: 10px 0 0; }
 
-        .class-card small { font-weight: normal; font-size: 0.75rem; margin-top: 3px; opacity: 0.9; }
+        .modal-body { padding: 40px; background: white; }
+        .info-row { display: flex; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        .info-row:last-child { border: none; }
+        .info-label { width: 120px; font-weight: 800; color: var(--navy); display: flex; align-items: center; }
+        .info-value { flex: 1; font-size: 1.05rem; color: #555; }
 
+        @media (max-width: 768px) {
+            .modal-header { flex-direction: column; text-align: center; padding: 30px; }
+            .modal-teacher-img { width: 150px; height: 200px; }
+            .timetable { font-size: 0.7rem; }
+            .teacher-profile { flex-direction: column; text-align: center; }
+            .teacher-thumb { margin-right: 0; margin-bottom: 15px; }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <h1>2026학년도 고등수학 강사별 시간표</h1>
+        <img src="kook_1.png" alt="학원 로고" class="logo" onerror="this.src='https://via.placeholder.com/200x80?text=LOGO'">
+        <h1>2026학년도 1학기 시간표</h1>
+        <div class="divider"></div>
     </header>
 
     <div class="teacher-section">
-        <div class="teacher-info">
-            <h2>국희재 선생님</h2>
-            <span>공통수학1 / 대수 / 의치대반 전문</span>
+        <div class="teacher-profile">
+            <img src="teacher_kook" alt="국희재T" class="teacher-thumb" onerror="this.src='https://via.placeholder.com/80?text=Kuk'">
+            <div class="teacher-info">
+                <h2>국희재 선생님</h2>
+                <p>의치대반 전문 | 공통수학1 & 대수</p>
+            </div>
         </div>
-        <div class="timetable" id="table-kuk">
+        <div class="timetable">
             <div class="cell head">TIME</div><div class="cell head">월</div><div class="cell head">화</div><div class="cell head">수</div><div class="cell head">목</div><div class="cell head">금</div><div class="cell head">토</div><div class="cell head">일</div>
-            
-            <div class="cell time-label" style="grid-row: 2">09:00</div>
-            <div class="cell time-label" style="grid-row: 6">13:00</div>
-            <div class="cell time-label" style="grid-row: 12">19:00</div>
-
-            <div class="class-card bg-kuk" style="grid-column: 7; grid-row: 2 / span 3;">공수1 (의치대)<small>09:00-12:00</small></div>
-            <div class="class-card bg-kuk" style="grid-column: 8; grid-row: 2 / span 3;">공수1 (의치대)<small>09:00-12:00</small></div>
-            <div class="class-card bg-kuk" style="grid-column: 2; grid-row: 12 / span 3;">대수 정규반<small>19:00-22:00</small></div>
-            <div class="class-card bg-kuk" style="grid-column: 4; grid-row: 12 / span 3;">대수 정규반<small>19:00-22:00</small></div>
-            <div class="class-card bg-kuk" style="grid-column: 6; grid-row: 12 / span 3;">대수 정규반<small>19:00-22:00</small></div>
+            <div class="cell time">오전</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            <div class="cell"><div class="class-card" onclick="openModal('kuk_1')">공통수학1 (의치대)<span>09:00 - 11:00</span></div></div>
+            <div class="cell"><div class="class-card" onclick="openModal('kuk_1')">공통수학1 (의치대)<span>09:00 - 11:00</span></div></div>
+            <div class="cell time">저녁</div>
+            <div class="cell"><div class="class-card" onclick="openModal('kuk_2')">대수 정규반<span>19:00 - 22:00</span></div></div>
+            <div class="cell"></div>
+            <div class="cell"><div class="class-card" onclick="openModal('kuk_2')">대수 정규반<span>19:00 - 22:00</span></div></div>
+            <div class="cell"></div>
+            <div class="cell"><div class="class-card" onclick="openModal('kuk_2')">대수 정규반<span>19:00 - 22:00</span></div></div>
+            <div class="cell"></div><div class="cell"></div>
         </div>
     </div>
 
     <div class="teacher-section">
-        <div class="teacher-info">
-            <h2>백윤성 선생님</h2>
-            <span>수리논술 / 기하 / 확통 / 1:1 첨삭</span>
+        <div class="teacher-profile">
+            <img src="teacher_kim" alt="김충현T" class="teacher-thumb" onerror="this.src='https://via.placeholder.com/80?text=Kim'">
+            <div class="teacher-info">
+                <h2>김충현 선생님</h2>
+                <p>대수 실전 | 공통수학 집중반</p>
+            </div>
         </div>
         <div class="timetable">
             <div class="cell head">TIME</div><div class="cell head">월</div><div class="cell head">화</div><div class="cell head">수</div><div class="cell head">목</div><div class="cell head">금</div><div class="cell head">토</div><div class="cell head">일</div>
-            
-            <div class="cell time-label" style="grid-row: 7">14:00</div>
-            <div class="cell time-label" style="grid-row: 11">18:00</div>
-
-            <div class="class-card bg-baek" style="grid-column: 4; grid-row: 11 / span 4;">논술 정규반<small>18:00-22:00</small></div>
-            <div class="class-card bg-baek" style="grid-column: 7; grid-row: 7 / span 3;">1:1 개별첨삭<small>14:00-17:00</small></div>
-            <div class="class-card bg-baek" style="grid-column: 8; grid-row: 7 / span 3;">1:1 개별첨삭<small>14:00-17:00</small></div>
+            <div class="cell time">오전</div><div class="cell"></div>
+            <div class="cell" style="font-size:0.7rem; color:#999; line-height:1.2;">영상첨삭<br>& 온라인제출</div>
+            <div class="cell" style="font-size:0.7rem; color:#999; line-height:1.2;">영상첨삭<br>& 온라인제출</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"><div class="class-card" onclick="openModal('kim_1')">대수 집중반<span>10:00 - 13:00</span></div></div>
+            <div class="cell"><div class="class-card" onclick="openModal('kim_1')">대수 집중반<span>10:00 - 13:00</span></div></div>
+            <div class="cell time">오후</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            <div class="cell"><div class="class-card" onclick="openModal('kim_2')">공수 집중반<span>13:00 - 16:00</span></div></div>
+            <div class="cell"><div class="class-card" onclick="openModal('kim_2')">공수 집중반<span>13:00 - 16:00</span></div></div>
         </div>
     </div>
 
     <div class="teacher-section">
-        <div class="teacher-info">
-            <h2>김충현 선생님</h2>
-            <span>대수 집중반 / 공통수학 실전</span>
+        <div class="teacher-profile">
+            <img src="teacher_baek" alt="백윤성T" class="teacher-thumb" onerror="this.src='https://via.placeholder.com/80?text=Baek'">
+            <div class="teacher-info">
+                <h2>백윤성 선생님</h2>
+                <p>수리논술 | 기하·확통 | 소수정예 첨삭</p>
+            </div>
         </div>
         <div class="timetable">
             <div class="cell head">TIME</div><div class="cell head">월</div><div class="cell head">화</div><div class="cell head">수</div><div class="cell head">목</div><div class="cell head">금</div><div class="cell head">토</div><div class="cell head">일</div>
-            
-            <div class="cell time-label" style="grid-row: 5">12:00</div>
-
-            <div class="class-card bg-kim" style="grid-column: 7; grid-row: 5 / span 2;">대수 집중반<small>12:00-14:00</small></div>
+            <div class="cell time">오전</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            <div class="cell"><div class="class-card" onclick="openModal('baek_1')">1:1 개별첨삭<span>10:00 - 13:00</span></div></div>
+            <div class="cell"><div class="class-card" onclick="openModal('baek_1')">1:1 개별첨삭<span>10:00 - 13:00</span></div></div>
+            <div class="cell time">오후</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+            <div class="cell" style="flex-direction:column; gap:5px;">
+                <div class="class-card" onclick="openModal('baek_2')">기하/확통<span>14:00 - 16:00</span></div>
+                <div class="class-card" onclick="openModal('baek_1')">1:1 첨삭<span>16:00 - 19:00</span></div>
+            </div>
+            <div class="cell" style="flex-direction:column; gap:5px;">
+                <div class="class-card" onclick="openModal('baek_2')">기하/확통<span>14:00 - 16:00</span></div>
+                <div class="class-card" onclick="openModal('baek_1')">1:1 첨삭<span>16:00 - 19:00</span></div>
+            </div>
+            <div class="cell time">저녁</div><div class="cell"></div><div class="cell"></div>
+            <div class="cell"><div class="class-card" onclick="openModal('baek_3')">논술정규반<span>19:00 - 22:00</span></div></div>
+            <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
         </div>
     </div>
 </div>
 
-</body>
-</html>
+<div id="classModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <div class="modal-header">
+            <img id="modalImg" src="" alt="선생님" class="modal-teacher-img">
+            <div class="modal-header-text">
+                <h3 id="modalTitle">수업명</h3>
+                <p id="modalTeacherName">선생님 성함</p>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="info-row"><div class="info-label">강의 상세</div><div class="info-value" id="modalContent"></div></div>
+            <div class="info-row"><div class="info-label">사용 교재</div><div class="info-value" id="modalBook"></div></div>
+            <div class="info-row"><div class="info-label">비고 사항</div><div class="info-value" id="modalEtc"></div></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const data = {
+        'kuk_1': { title: '공통수학1 (의치대반)', teacher: '국희재 선생님', img: 'teacher_kook', book: '자체교재 + 플래티넘', content: '의치대 진학을 목표로 하는 학생들을 위한 심화 과정입니다. 공통수학1의 핵심 개념 정립과 고난도 문항 분석을 집중적으로 수행합니다.', etc: '토/일 오전 9시 수업' },
+        'kuk_2': { title: '대수 정규반', teacher: '국희재 선생님', img: 'teacher_kook', book: '자체교재 + 플래티넘', content: '3월 4일 개강! 대수 영역의 철저한 내신 대비와 수능 기초를 다지는 정규 과정입니다.', etc: '월/수/금 저녁 7시-10시' },
+        'kim_1': { title: '대수 집중반', teacher: '김충현 선생님', img: 'teacher_kim', book: '김충현T 시크릿 주간지', content: '대수 파트의 실전 응용력을 기르는 집중 훈련 과정입니다. 고득점을 위한 유형별 풀이법을 전수합니다.', etc: '토/일 오전 10시-오후 1시' },
