@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 국희재 수학학원 | 프리미엄 시간표</title>
+    <title>2026 국희재수학_봉선점 | 2026년 1학년 시간표</title>
     <style>
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
         
@@ -26,7 +26,7 @@
             display: grid; grid-template-columns: 280px 1fr; gap: 20px;
         }
 
-        /* 강사 리스트 - 모바일 대응 */
+        /* 강사 리스트 */
         .teacher-list { position: sticky; top: 10px; height: fit-content; z-index: 100; }
         .teacher-card {
             background: var(--card-navy); padding: 15px; border-radius: 12px;
@@ -38,28 +38,16 @@
         .teacher-info h4 { margin: 0; font-size: 1rem; }
         .teacher-info p { margin: 2px 0 0; font-size: 0.75rem; color: #94a3b8; }
 
-        /* 모바일 요일 선택 탭 (PC에선 숨김) */
-        .mobile-day-tabs {
-            display: none; gap: 5px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 5px;
-        }
-        .day-tab {
-            flex: 1; padding: 10px; background: var(--card-navy); border: 1px solid var(--grid-line);
-            color: #94a3b8; border-radius: 8px; text-align: center; font-size: 0.85rem; cursor: pointer;
-        }
-        .day-tab.active { background: var(--gold); color: var(--bg-deep); font-weight: 800; border-color: var(--gold); }
-
-        /* 시간표 본체 */
+        /* 시간표 본체 (PC전용) */
         .timetable-wrapper {
             background: var(--card-navy); border-radius: 15px; border: 1px solid var(--grid-line);
             position: relative; display: flex; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
-
         .time-axis { width: 60px; background: #1e293b; display: flex; flex-direction: column; padding-top: 50px; flex-shrink: 0; }
         .axis-label { 
             height: var(--hour-height); display: flex; align-items: center; justify-content: center;
             font-size: 0.7rem; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-
         .days-container { display: flex; flex: 1; position: relative; }
         .day-column { 
             flex: 1; position: relative; border-right: 1px solid var(--grid-line); 
@@ -71,7 +59,7 @@
             background: #1e293b; color: var(--gold); font-weight: 800; border-bottom: 1px solid var(--gold);
         }
 
-        /* 수업 카드 */
+        /* 수업 카드 (PC용) */
         .class-card {
             position: absolute; left: 4px; right: 4px; border-radius: 6px; padding: 8px;
             font-size: 0.8rem; font-weight: 700; color: #fff; cursor: pointer;
@@ -81,6 +69,18 @@
         }
         .class-card em { font-style: normal; font-size: 0.7rem; opacity: 0.9; margin-top: 4px; font-weight: 400; }
 
+        /* 모바일 전용 리스트 스타일 */
+        #mobile-class-list { display: none; flex-direction: column; gap: 10px; }
+        .mobile-item {
+            background: var(--card-navy); padding: 15px; border-radius: 10px;
+            border-left: 4px solid var(--gold); cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .mobile-item .m-info h5 { margin: 0; font-size: 1rem; color: var(--white); }
+        .mobile-item .m-info p { margin: 5px 0 0; font-size: 0.85rem; color: #94a3b8; }
+        .mobile-item .m-tag { font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; color: #fff; }
+
+        /* 카테고리 색상 */
         .cat-algebra { background: #78350f !important; }
         .cat-math1 { background: #1e3a8a !important; }
         .cat-nonsul { background: #334155 !important; }
@@ -91,21 +91,14 @@
         .detail-content h3 { margin: 0 0 8px 0; color: var(--gold); font-size: 1.2rem; }
         .detail-content p { margin: 0; font-size: 0.95rem; line-height: 1.6; color: #cbd5e1; }
 
-        /* 모바일용 미디어 쿼리 */
+        /* 모바일 대응 */
         @media (max-width: 768px) {
             .container { grid-template-columns: 1fr; margin-top: 10px; }
-            .teacher-list { display: flex; overflow-x: auto; gap: 10px; position: static; padding-bottom: 5px; }
-            .teacher-card { flex: 0 0 180px; margin-bottom: 0; padding: 10px; }
-            .profile-img { width: 35px; height: 35px; margin-right: 8px; }
+            .teacher-list { display: flex; overflow-x: auto; gap: 10px; position: static; padding-bottom: 10px; }
+            .teacher-card { flex: 0 0 160px; margin-bottom: 0; padding: 10px; }
             
-            .mobile-day-tabs { display: flex; }
-            
-            /* 모바일에서는 선택되지 않은 요일 컬럼은 숨김 */
-            .day-column { display: none; }
-            .day-column.active { display: block; flex: 1; }
-            
-            .day-header { display: none; } /* 탭이 대신하므로 헤더 숨김 */
-            .time-axis { width: 50px; }
+            .timetable-wrapper { display: none; } /* 복잡한 격자 숨김 */
+            #mobile-class-list { display: flex; } /* 리스트형 노출 */
         }
     </style>
 </head>
@@ -117,27 +110,27 @@
 
 <div class="container">
     <div class="teacher-list">
-        <div class="teacher-card" id="card-kuk" onclick="selectTeacher('kuk')">
-            <img src="teacher_kook.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/50?text=KUK'">
+        <div class="teacher-card active" id="card-kuk" onclick="selectTeacher('kuk')">
+            <img src="https://via.placeholder.com/50?text=KUK" class="profile-img">
             <div class="teacher-info"><h4>국희재T</h4><p>의치대반 전문</p></div>
         </div>
         <div class="teacher-card" id="card-kim" onclick="selectTeacher('kim')">
-            <img src="teacher_kim.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/50?text=KIM'">
+            <img src="https://via.placeholder.com/50?text=KIM" class="profile-img">
             <div class="teacher-info"><h4>김충현T</h4><p>대수/공수 집중</p></div>
         </div>
         <div class="teacher-card" id="card-baek" onclick="selectTeacher('baek')">
-            <img src="teacher_baek.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/50?text=BAEK'">
+            <img src="https://via.placeholder.com/50?text=BAEK" class="profile-img">
             <div class="teacher-info"><h4>백윤성T</h4><p>논술/기하</p></div>
         </div>
     </div>
 
     <div class="content-right">
-        <div class="mobile-day-tabs" id="mobile-tabs"></div>
-
         <div class="timetable-wrapper">
             <div class="time-axis" id="time-axis"></div>
             <div id="days-container" class="days-container"></div>
         </div>
+
+        <div id="mobile-class-list"></div>
 
         <div id="detail-box" class="detail-view">
             <div class="detail-content">
@@ -153,14 +146,12 @@
     const END_H = 22;
     const HOUR_H = 65;
     const days = ['월', '화', '수', '목', '금', '토', '일'];
-    let currentTeacher = 'kuk';
-    let currentDay = new Date().getDay() || 7; // 오늘 요일 (일요일은 7)
-
+    
     const teacherData = {
         'kuk': [
-            { name: '대수 정규', day: 1, start: 19, span: 3, cat: 'cat-algebra', desc: '최상위권 킬러 문항 정복 과정. 자체교재 플래티넘 활용.' },
-            { name: '대수 정규', day: 3, start: 19, span: 3, cat: 'cat-algebra', desc: '최상위권 킬러 문항 정복 과정. 자체교재 플래티넘 활용.' },
-            { name: '대수 정규', day: 5, start: 19, span: 3, cat: 'cat-algebra', desc: '최상위권 킬러 문항 정복 과정. 자체교재 플래티넘 활용.' },
+            { name: '대수(중2/중3)', day: 1, start: 19, span: 3, cat: 'cat-algebra', desc: '최상위권 킬러 문항 정복 과정. 자체교재 플래티넘 활용.' },
+            { name: '대수(중2/중3)', day: 3, start: 19, span: 3, cat: 'cat-algebra', desc: '최상위권 킬러 문항 정복 과정. 자체교재 플래티넘 활용.' },
+            { name: '대수(중2/중3)', day: 5, start: 19, span: 3, cat: 'cat-algebra', desc: '최상위권 킬러 문항 정복 과정. 자체교재 플래티넘 활용.' },
             { name: '공통수학1', day: 6, start: 9, span: 2, cat: 'cat-math1', desc: '의치대 준비를 위한 공수1 심화 마스터 과정입니다.' },
             { name: '공통수학1', day: 7, start: 9, span: 2, cat: 'cat-math1', desc: '의치대 준비를 위한 공수1 심화 마스터 과정입니다.' }
         ],
@@ -179,7 +170,6 @@
     };
 
     function initLayout() {
-        // 시간축
         const axis = document.getElementById('time-axis');
         for (let i = START_H; i <= END_H; i++) {
             const label = document.createElement('div');
@@ -188,67 +178,61 @@
             axis.appendChild(label);
         }
 
-        // 요일 컬럼 & 모바일 탭
         const daysContainer = document.getElementById('days-container');
-        const tabsContainer = document.getElementById('mobile-tabs');
-
         days.forEach((d, i) => {
-            const dayNum = i + 1;
-            // 컬럼 생성
             const col = document.createElement('div');
-            col.className = `day-column ${dayNum === currentDay ? 'active' : ''}`;
-            col.id = `day-col-${dayNum}`;
+            col.className = `day-column`;
+            col.id = `day-col-${i + 1}`;
             col.innerHTML = `<div class="day-header">${d}</div>`;
             daysContainer.appendChild(col);
-
-            // 탭 생성
-            const tab = document.createElement('div');
-            tab.className = `day-tab ${dayNum === currentDay ? 'active' : ''}`;
-            tab.id = `tab-${dayNum}`;
-            tab.innerText = d;
-            tab.onclick = () => switchDay(dayNum);
-            tabsContainer.appendChild(tab);
         });
     }
 
-    function switchDay(dayNum) {
-        currentDay = dayNum;
-        document.querySelectorAll('.day-column').forEach(c => c.classList.remove('active'));
-        document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+    function showDetail(name, desc) {
+        const detailBox = document.getElementById('detail-box');
+        document.getElementById('det-name').innerText = name;
+        document.getElementById('det-desc').innerText = desc;
+        detailBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
         
-        document.getElementById(`day-col-${dayNum}`).classList.add('active');
-        document.getElementById(`tab-${dayNum}`).classList.add('active');
+        detailBox.style.backgroundColor = "rgba(197, 160, 89, 0.2)";
+        setTimeout(() => detailBox.style.backgroundColor = "var(--card-navy)", 500);
     }
 
     function selectTeacher(key) {
-        currentTeacher = key;
+        // 1. 초기화
         document.querySelectorAll('.day-column .class-card').forEach(c => c.remove());
+        document.getElementById('mobile-class-list').innerHTML = '';
         document.querySelectorAll('.teacher-card').forEach(c => c.classList.remove('active'));
         document.getElementById('card-' + key).classList.add('active');
 
+        const mList = document.getElementById('mobile-class-list');
+
+        // 2. 데이터 렌더링 (PC & 모바일 동시 생성)
         teacherData[key].forEach(cls => {
+            // PC용 카드 생성
             const col = document.getElementById(`day-col-${cls.day}`);
             const card = document.createElement('div');
             card.className = `class-card ${cls.cat}`;
-            
             const top = (cls.start - START_H) * HOUR_H + 50; 
             const height = (cls.span * HOUR_H) - 6;
-
             card.style.top = `${top}px`;
             card.style.height = `${height}px`;
             card.innerHTML = `${cls.name}<em>${cls.start}:00-${cls.start + cls.span}:00</em>`;
-
-            card.onclick = () => {
-                const detailBox = document.getElementById('detail-box');
-                document.getElementById('det-name').innerText = cls.name;
-                document.getElementById('det-desc').innerText = cls.desc;
-                detailBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                
-                detailBox.style.backgroundColor = "rgba(197, 160, 89, 0.1)";
-                setTimeout(() => detailBox.style.backgroundColor = "var(--card-navy)", 500);
-            };
-
+            card.onclick = () => showDetail(cls.name, cls.desc);
             col.appendChild(card);
+
+            // 모바일용 리스트 아이템 생성
+            const mItem = document.createElement('div');
+            mItem.className = 'mobile-item';
+            mItem.onclick = () => showDetail(cls.name, cls.desc);
+            mItem.innerHTML = `
+                <div class="m-info">
+                    <h5>${cls.name}</h5>
+                    <p>${days[cls.day-1]}요일 | ${cls.start}:00 ~ ${cls.start + cls.span}:00</p>
+                </div>
+                <div class="m-tag ${cls.cat}">${cls.name.split('(')[0]}</div>
+            `;
+            mList.appendChild(mItem);
         });
     }
 
