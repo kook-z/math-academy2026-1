@@ -3,113 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 국희재 수학학원 | 프리미엄 대시보드</title>
+    <title>2026 국희재 수학학원 | 프리미엄 시간표</title>
     <style>
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
         
         :root {
-            --bg-color: #f8fafc;
+            --bg-color: #f4f6f8;
             --navy: #0a0f1d;
             --gold: #c5a059;
             --white: #ffffff;
-            --border: #e2e8f0;
-            --color-math1: #e0f2fe; --text-math1: #0369a1; 
-            --color-algebra: #fef3c7; --text-algebra: #92400e; 
-            --color-nonsul: #f1f5f9; --text-nonsul: #475569; 
-            --color-calc: #dcfce7; --text-calc: #166534; 
+            --text-gray: #64748b;
+            --border-light: #e2e8f0;
         }
 
-        body { background-color: var(--bg-color); margin: 0; font-family: 'Pretendard', sans-serif; color: var(--navy); }
-        
+        body { 
+            background-color: var(--bg-color); 
+            margin: 0; 
+            font-family: 'Pretendard', sans-serif; 
+            color: var(--navy); 
+        }
+
+        /* 헤더 스타일 */
         header { 
-            background: var(--navy); padding: 25px 0; text-align: center; border-bottom: 4px solid var(--gold);
-            position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            background: var(--navy); 
+            padding: 20px 0; 
+            text-align: center; 
+            border-bottom: 4px solid var(--gold);
         }
-        .main-logo { height: 80px; width: auto; margin-bottom: 8px; }
-        .header-subtext { color: var(--gold); font-size: 0.8rem; letter-spacing: 4px; font-weight: 300; margin: 0; text-transform: uppercase; }
+        .logo-text { color: var(--gold); font-weight: 800; font-size: 1.5rem; letter-spacing: 2px; }
 
-        .container { max-width: 1400px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: 300px 1fr; gap: 30px; }
-
-        /* 강사 리스트 */
-        .teacher-list { display: flex; flex-direction: column; gap: 12px; }
-        .teacher-card {
-            background: var(--white); padding: 15px; border-radius: 12px; display: flex; align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 5px solid #cbd5e1; cursor: pointer; transition: all 0.2s;
-        }
-        .teacher-card.active { border-left-color: var(--gold); background: #fffcf5; transform: translateX(5px); }
-        .profile-img { width: 55px; height: 55px; border-radius: 50%; margin-right: 15px; border: 2px solid var(--border); object-fit: cover; }
-        .teacher-info h3 { margin: 0; font-size: 1.05rem; }
-        .teacher-info p { margin: 3px 0 0; color: #64748b; font-size: 0.8rem; }
-
-        /* [핵심] 시간표 그리드 시스템 */
-        .timetable-container {
-            background: var(--white); border-radius: 15px; padding: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05); position: relative;
-        }
-        .timetable-grid {
+        .container { 
+            max-width: 1200px; 
+            margin: 40px auto; 
+            padding: 0 20px;
             display: grid;
-            /* 1열(시간) + 7열(요일) */
-            grid-template-columns: 80px repeat(7, 1fr);
-            /* 헤더(1줄) + 8시~22시(14줄) */
-            grid-template-rows: 40px repeat(14, 60px); 
-            border: 1px solid var(--border);
-            background-color: var(--border);
-            gap: 1px;
+            grid-template-columns: 1fr 1.5fr; /* 이미지 느낌처럼 2단 구성 */
+            gap: 30px;
         }
-        .grid-header { background: #f1f5f9; color: #475569; font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; }
-        .grid-time { background: #f8fafc; color: #94a3b8; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-        .grid-cell { background: white; }
 
-        /* 수업 카드 (병합 스타일) */
-        .class-card {
-            margin: 3px; border-radius: 8px; padding: 8px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            font-size: 0.8rem; font-weight: 800; text-align: center; cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05);
-            transition: transform 0.2s; z-index: 10;
+        /* 왼쪽: 강사 목록 섹션 */
+        .teacher-list { display: flex; flex-direction: column; gap: 20px; }
+        
+        .teacher-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 6px solid var(--gold);
+            cursor: pointer;
+            transition: transform 0.2s;
         }
-        .class-card:hover { transform: scale(0.98); filter: brightness(0.95); }
-        .class-card span { font-size: 0.65rem; font-weight: 500; opacity: 0.8; margin-top: 4px; }
+        .teacher-card:hover { transform: translateX(10px); }
 
-        .cat-math1 { background: var(--color-math1); color: var(--text-math1); }
-        .cat-algebra { background: var(--color-algebra); color: var(--text-algebra); }
-        .cat-nonsul { background: var(--color-nonsul); color: var(--text-nonsul); }
-        .cat-calc { background: var(--color-calc); color: var(--text-calc); }
-
-        /* 하단 상세 뷰 */
-        .detail-view { 
-            background: var(--white); border-radius: 15px; padding: 25px; 
-            border-top: 5px solid var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-top: 20px;
+        .profile-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            margin-right: 20px;
+            object-fit: cover;
+            background: #eee;
         }
-        .detail-grid { display: grid; grid-template-columns: 120px 1fr 1fr; gap: 25px; align-items: start; }
-        .detail-photo { width: 120px; height: 150px; border-radius: 10px; object-fit: cover; border: 1px solid var(--border); }
-        .detail-info h2 { margin: 0 0 10px 0; color: var(--navy); border-bottom: 2px solid var(--gold); display: inline-block; }
-        .info-item { margin-bottom: 12px; }
-        .info-item label { display: block; font-size: 0.7rem; color: var(--gold); font-weight: 800; margin-bottom: 2px; }
-        .info-item p { margin: 0; font-size: 0.95rem; color: #334155; }
 
-        @media (max-width: 1000px) { .container { grid-template-columns: 1fr; } }
+        .teacher-info h3 { margin: 0; font-size: 1.2rem; }
+        .teacher-info p { margin: 5px 0 0; color: var(--text-gray); font-size: 0.9rem; }
+
+        /* 오른쪽: 시간표 및 상세 정보 */
+        .content-right { display: flex; flex-direction: column; gap: 30px; }
+
+        .timetable-box {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            overflow-x: auto;
+        }
+
+        .timetable {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            min-width: 500px;
+        }
+
+        .timetable th { background: var(--navy); color: var(--gold); padding: 10px; border: 1px solid var(--border-light); }
+        .timetable td { padding: 10px; text-align: center; border: 1px solid var(--border-light); height: 40px; }
+        .time-col { background: #f8fafc; font-weight: 700; width: 80px; }
+
+        .class-on { background: rgba(197, 160, 89, 0.15); color: var(--navy); font-weight: 700; border: 1px solid var(--gold) !important; border-radius: 4px; }
+
+        /* 상세 정보 카드 */
+        .detail-view {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+            display: none; /* 초기엔 숨김 */
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .detail-header { background: var(--navy); color: var(--gold); padding: 15px 25px; font-weight: 800; }
+        .detail-body { padding: 25px; display: grid; grid-template-columns: 120px 1fr; gap: 20px; }
+        .detail-photo { width: 120px; height: 150px; border-radius: 8px; border: 1px solid var(--gold); object-fit: cover; }
+        
+        .info-row { margin-bottom: 15px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; }
+        .info-row label { display: block; font-size: 0.75rem; color: var(--gold); font-weight: 700; }
+        .info-row p { margin: 5px 0 0; font-size: 1rem; }
+
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <img src="kook_1.png" class="main-logo" onerror="this.src='https://via.placeholder.com/200x80/0a0f1d/c5a059?text=KOOK+MATH'">
-    <p class="header-subtext">Premium Mathematics Academy</p>
+    <div class="logo-text">KOOK MATH | 2026 PREMIUM</div>
 </header>
 
 <div class="container">
-    <div class="teacher-list" id="t-list"></div>
-
-    <div class="content-right">
-        <div class="timetable-container" id="timetable-wrapper">
-            <div class="timetable-grid" id="grid-base">
-                </div>
+    <div class="teacher-list">
+        <h2 style="font-size: 1.1rem; color: var(--text-gray); border-bottom: 2px solid var(--gold); padding-bottom: 10px;">FACULTY</h2>
+        
+        <div class="teacher-card" onclick="showTeacher('kuk')">
+            <img src="kuk_profile.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/70?text=KUK'">
+            <div class="teacher-info">
+                <h3>국희재 선생님</h3>
+                <p>의치대반 전문 / 공통수학1</p>
+            </div>
         </div>
 
-        <div id="class-detail-view" class="detail-view">
-            <div id="detail-content" style="text-align: center; color: #94a3b8; font-style: italic;">
-                수업 카드를 클릭하면 상세 정보를 확인할 수 있습니다.
+        <div class="teacher-card" onclick="showTeacher('kim')">
+            <img src="kim_profile.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/70?text=KIM'">
+            <div class="teacher-info">
+                <h3>김충현 선생님</h3>
+                <p>대수 / 공수 집중반 전문</p>
+            </div>
+        </div>
+
+        <div class="teacher-card" onclick="showTeacher('baek')">
+            <img src="baek_profile.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/70?text=BAEK'">
+            <div class="teacher-info">
+                <h3>백윤성 선생님</h3>
+                <p>수리논술 / 기하·확통 전문</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-right">
+        <div class="timetable-box">
+            <table class="timetable">
+                <thead>
+                    <tr>
+                        <th class="time-col">TIME</th>
+                        <th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th><th>일</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    </tbody>
+            </table>
+        </div>
+
+        <div id="teacher-detail" class="detail-view">
+            <div class="detail-header" id="det-title">강사 상세 프로필</div>
+            <div class="detail-body">
+                <img id="det-img" src="" class="detail-photo" onerror="this.src='https://via.placeholder.com/120x150?text=PHOTO'">
+                <div class="det-info">
+                    <div class="info-row"><label>담당 과목</label><p id="det-subject"></p></div>
+                    <div class="info-row"><label>수업 시간</label><p id="det-time"></p></div>
+                    <div class="info-row"><label>교재 및 특징</label><p id="det-desc"></p></div>
+                </div>
             </div>
         </div>
     </div>
@@ -118,100 +185,80 @@
 <script>
     const teacherData = {
         'kuk': {
-            name: '국희재 선생님', sub: '의치대반 전문', photo: 'kuk.png',
-            classes: [
-                { id: 'k1', name: '대수 정규', day: 1, start: 19, span: 3, cat: 'cat-algebra', book: '플래티넘 대수', target: '고1 최상위', goal: '내신 1등급' },
-                { id: 'k2', name: '대수 정규', day: 3, start: 19, span: 3, cat: 'cat-algebra', book: '플래티넘 대수', target: '고1 최상위', goal: '내신 1등급' },
-                { id: 'k3', name: '대수 정규', day: 5, start: 19, span: 3, cat: 'cat-algebra', book: '플래티넘 대수', target: '고1 최상위', goal: '내신 1등급' },
-                { id: 'k4', name: '공통수학1', day: 6, start: 9, span: 2, cat: 'cat-math1', book: '시그니처 공수', target: '의치대반', goal: '심화 개념 정립' },
-                { id: 'k5', name: '공통수학1', day: 7, start: 9, span: 2, cat: 'cat-math1', book: '시그니처 공수', target: '의치대반', goal: '심화 개념 정립' }
-            ]
+            name: '국희재 선생님',
+            subject: '의치대반 / 공통수학1 / 대수',
+            time: '월수금 19:00 - 22:00 (대수), 토일 09:00 (공수)',
+            desc: '자체교재 플래티넘 사용, 최상위권 킬러 문항 정복.',
+            photo: 'kuk_profile.jpg',
+            schedule: { '19-22': [1, 3, 5], '09-11': [6, 7] } 
         },
         'kim': {
-            name: '김충현 선생님', sub: '대수/공수 집중반', photo: 'kim.png',
-            classes: [
-                { id: 'm1', name: '대수 집중', day: 6, start: 10, span: 3, cat: 'cat-algebra', book: '주간지', target: '고1 정규', goal: '유형 정복' },
-                { id: 'm2', name: '대수 집중', day: 7, start: 10, span: 3, cat: 'cat-algebra', book: '주간지', target: '고1 정규', goal: '유형 정복' },
-                { id: 'm3', name: '공수 집중', day: 6, start: 13, span: 3, cat: 'cat-math1', book: '매뉴얼', target: '예비 고1', goal: '기초 확립' },
-                { id: 'm4', name: '공수 집중', day: 7, start: 13, span: 3, cat: 'cat-math1', book: '매뉴얼', target: '예비 고1', goal: '기초 확립' }
-            ]
+            name: '김충현 선생님',
+            subject: '대수 집중반 / 공수 집중반',
+            time: '토일 10:00 - 16:00',
+            desc: '주간지 & 손풀이 교재 제공, 철저한 과제 관리.',
+            photo: 'kim_profile.jpg',
+            schedule: { '10-13': [6, 7], '13-16': [6, 7] }
+        },
+        'baek': {
+            name: '백윤성 선생님',
+            subject: '수리논술 / 기하 / 확통',
+            time: '수 19:00, 토일 10:00 / 14:00',
+            desc: '1:1 대면 첨삭 진행, 논리적 답안 작성법 전수.',
+            photo: 'baek_profile.jpg',
+            schedule: { '19-22': [3], '10-13': [6, 7], '14-16': [6, 7] }
         }
     };
 
-    function initGrid() {
-        const grid = document.getElementById('grid-base');
-        let html = '<div class="grid-header">TIME</div>';
-        const days = ['월','화','수','목','금','토','일'];
-        days.forEach(d => html += `<div class="grid-header">${d}</div>`);
-        
+    // 시간표 초기 렌더링 (8시 ~ 22시)
+    function renderTable(teacherKey = null) {
+        const tbody = document.getElementById('table-body');
+        tbody.innerHTML = '';
+        const data = teacherKey ? teacherData[teacherKey] : null;
+
         for (let h = 8; h <= 21; h++) {
-            html += `<div class="grid-time">${h}:00</div>`;
-            for (let d = 0; d < 7; d++) {
-                html += `<div class="grid-cell"></div>`;
+            const row = document.createElement('tr');
+            const timeStr = `${String(h).padStart(2, '0')}:00`;
+            let cells = `<td class="time-col">${timeStr}</td>`;
+            
+            for (let d = 1; d <= 7; d++) {
+                let activeClass = "";
+                let content = "";
+                
+                if (data) {
+                    // 간단한 스케줄 매칭 로직
+                    for (let timeRange in data.schedule) {
+                        const [start, end] = timeRange.split('-').map(Number);
+                        if (h >= start && h < end && data.schedule[timeRange].includes(d)) {
+                            activeClass = "class-on";
+                            content = "●";
+                        }
+                    }
+                }
+                cells += `<td class="${activeClass}">${content}</td>`;
             }
+            row.innerHTML = cells;
+            tbody.appendChild(row);
         }
-        grid.innerHTML = html;
     }
 
-    function selectTeacher(key) {
-        document.querySelectorAll('.teacher-card').forEach(c => c.classList.remove('active'));
-        const card = document.getElementById(`card-${key}`);
-        if(card) card.classList.add('active');
-
-        // 기존 카드 제거
-        document.querySelectorAll('.class-card').forEach(c => c.remove());
-        
+    function showTeacher(key) {
         const data = teacherData[key];
-        const grid = document.getElementById('grid-base');
-
-        data.classes.forEach(c => {
-            const cardEl = document.createElement('div');
-            cardEl.className = `class-card ${c.cat}`;
-            // grid-column: 요일+1(시간열 때문에 +2), grid-row: 시작시간-8+헤더1(+2)
-            cardEl.style.gridColumn = c.day + 1;
-            cardEl.style.gridRow = `${c.start - 8 + 2} / span ${c.span}`;
-            cardEl.innerHTML = `${c.name}<span>${c.start}:00-${c.start+c.span}:00</span>`;
-            cardEl.onclick = (e) => {
-                e.stopPropagation();
-                showDetail(key, c.id);
-            };
-            grid.appendChild(cardEl);
-        });
+        renderTable(key);
+        
+        document.getElementById('det-title').innerText = data.name + " 핵심 강의 정보";
+        document.getElementById('det-img').src = data.photo;
+        document.getElementById('det-subject').innerText = data.subject;
+        document.getElementById('det-time').innerText = data.time;
+        document.getElementById('det-desc').innerText = data.desc;
+        
+        document.getElementById('teacher-detail').style.display = 'block';
     }
 
-    function showDetail(tKey, cId) {
-        const t = teacherData[tKey];
-        const c = t.classes.find(item => item.id === cId);
-        const detail = document.getElementById('detail-content');
-        detail.innerHTML = `
-            <div class="detail-grid">
-                <img src="teacher_kook.jpg" class="detail-photo" onerror="this.src='https://via.placeholder.com/120x150'">
-                <div class="detail-info">
-                    <h2>${c.name} 상세</h2>
-                    <div class="info-item"><label>강사</label><p>${t.name}</p></div>
-                    <div class="info-item"><label>대상</label><p>${c.target}</p></div>
-                </div>
-                <div class="detail-info">
-                    <div class="info-item"><label>교재</label><p>${c.book}</p></div>
-                    <div class="info-item"><label>목표</label><p>${c.goal}</p></div>
-                </div>
-            </div>
-        `;
-    }
-
-    // 초기화
-    initGrid();
-    const list = document.getElementById('t-list');
-    for (let key in teacherData) {
-        const t = teacherData[key];
-        const item = document.createElement('div');
-        item.className = 'teacher-card';
-        item.id = `card-${key}`;
-        item.onclick = () => selectTeacher(key);
-        item.innerHTML = `<img src="${t.photo}" class="profile-img" onerror="this.src='https://via.placeholder.com/60'"><div class="teacher-info"><h3>${t.name}</h3><p>${t.sub}</p></div>`;
-        list.appendChild(item);
-    }
-    selectTeacher('kuk');
+    // 처음 실행 시 빈 표 출력
+    renderTable();
 </script>
+
 </body>
 </html>
+
