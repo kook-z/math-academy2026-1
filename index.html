@@ -122,22 +122,22 @@
 
 <header>
     <img src="kook_1.png" alt="국희재수학" class="logo-img" onerror="this.src='https://via.placeholder.com/200x60/111827/c5a059?text=KOOK+MATH';">
-    <div class="slogan">국희재수학전문학원_봉선점<br>2026년 1학기 커리큘럼</div>
+    <div class="slogan">의치대 합격의 증명, 봉선 국희재수학<br>2026 프리미엄 커리큘럼</div>
 </header>
 
 <div class="main-container">
     <div class="teacher-sidebar">
         <div class="teacher-card active" onclick="updateView('kuk', this)">
             <div class="profile-wrap"><img src="teacher_kook.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/60/1e293b/c5a059?text=국';"></div>
-            <div class="teacher-info"><h4>국희재T</h4><p>의치대 및 SKY / 최상위권 전문</p></div>
+            <div class="teacher-info"><h4>국희재T</h4><p>의치대 전문가</p></div>
         </div>
         <div class="teacher-card" onclick="updateView('kim', this)">
             <div class="profile-wrap"><img src="teacher_kim.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/60/1e293b/c5a059?text=김';"></div>
-            <div class="teacher-info"><h4>김충현T</h4><p>고등 내신 마스터</p></div>
+            <div class="teacher-info"><h4>김충현T</h4><p>대수 마스터</p></div>
         </div>
         <div class="teacher-card" onclick="updateView('baek', this)">
             <div class="profile-wrap"><img src="teacher_baek.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/60/1e293b/c5a059?text=백';"></div>
-            <div class="teacher-info"><h4>백윤성T</h4><p>서울대 의대 수리논술 2회 합격</p></div>
+            <div class="teacher-info"><h4>백윤성T</h4><p>논술/심화</p></div>
         </div>
     </div>
 
@@ -162,20 +162,20 @@
 
     const teacherData = {
         'kuk': [
-            { name: '공통수학1 \n(의치대반)', day: 6, start: 9, span: 2, cat: 'cat-med', badge: '심화 Master', groupDay: '토일', desc: '■ 토/일 오전 9시~11시\n■ 최상위 의치대 목표 전용 플래티넘 커리큘럼' },
-            { name: '공통수학1 \n(의치대반)', day: 7, start: 9, span: 2, cat: 'cat-med', badge: '심화 Master', groupDay: '토일', desc: '■ 상동' },
-            { name: '대수 \n(중2/중3)', day: 1, start: 19, span: 3, cat: 'cat-algebra', badge: '심화 Master', groupDay: '월수금', desc: '■ 월/수/금 오후 7시~10시 (3월 4일 대개강)\n■ 압도적 깊이의 심화 이론 분석' },
-            { name: '대수 \n(중2/중3)', day: 3, start: 19, span: 3, cat: 'cat-algebra', badge: '심화 Master', groupDay: '월수금', desc: '■ 상동' },
-            { name: '대수 \n(중2/중3)', day: 5, start: 19, span: 3, cat: 'cat-algebra', badge: '심화 Master', groupDay: '월수금', desc: '■ 상동' }
+            { name: '공통수학1 (의치대반)', day: 6, start: 9, span: 2, cat: 'cat-med', badge: '심화 Master', groupDay: '토일', desc: '■ 토/일 오전 9시~11시\n■ 최상위 의치대 목표 전용 플래티넘 커리큘럼' },
+            { name: '공통수학1 (의치대반)', day: 7, start: 9, span: 2, cat: 'cat-med', badge: '심화 Master', groupDay: '토일', desc: '■ 상동' },
+            { name: '대수 정규반 (심화)', day: 1, start: 19, span: 3, cat: 'cat-algebra', badge: '심화 Master', groupDay: '월수금', desc: '■ 월/수/금 오후 7시~10시 (3월 4일 대개강)\n■ 압도적 깊이의 심화 이론 분석' },
+            { name: '대수 정규반 (심화)', day: 3, start: 19, span: 3, cat: 'cat-algebra', badge: '심화 Master', groupDay: '월수금', desc: '■ 상동' },
+            { name: '대수 정규반 (심화)', day: 5, start: 19, span: 3, cat: 'cat-algebra', badge: '심화 Master', groupDay: '월수금', desc: '■ 상동' }
         ],
         'kim': [
             { name: '대수 집중반', day: 6, start: 10, span: 3, cat: 'cat-practice', groupDay: '토일', desc: '■ 토/일 오전 10시~1시\n■ 대수 핵심 개념 완벽 정리 및 기출 훈련' },
             { name: '대수 집중반', day: 7, start: 10, span: 3, cat: 'cat-practice', groupDay: '토일', desc: '■ 상동' },
-            { name: '공통수학1 \n집중반', day: 6, start: 13, span: 3, cat: 'cat-clinic', groupDay: '토일', desc: '■ 토/일 오후 1시~4시\n■ 공통수학1 필수 유형 집중 보강' },
-            { name: '공통수학1 \n집중반', day: 7, start: 13, span: 3, cat: 'cat-clinic', groupDay: '토일', desc: '■ 상동' }
+            { name: '공수1 집중반', day: 6, start: 13, span: 3, cat: 'cat-clinic', groupDay: '토일', desc: '■ 토/일 오후 1시~4시\n■ 공통수학1 필수 유형 집중 보강' },
+            { name: '공수1 집중반', day: 7, start: 13, span: 3, cat: 'cat-clinic', groupDay: '토일', desc: '■ 상동' }
         ],
         'baek': [
-            { name: '수리논술 정규반 \n(수완점)', day: 3, start: 19, span: 3, cat: 'cat-nonsul', badge: '논술전형', groupDay: '수요일', desc: '■ 수요일 저녁 7시~10시\n■ 주요 대학 기출 분석 및 대면 첨삭 지도' },
+            { name: '수리논술 정규 (수완)', day: 3, start: 19, span: 3, cat: 'cat-nonsul', badge: '논술전형', groupDay: '수요일', desc: '■ 수요일 저녁 7시~10시\n■ 주요 대학 기출 분석 및 대면 첨삭 지도' },
             { name: '기하 / 확통', day: 6, start: 14, span: 2, cat: 'cat-algebra', groupDay: '토일', desc: '■ 토/일 오후 2시~4시\n■ 선택과목 전략적 실전 개념 완성' },
             { name: '기하 / 확통', day: 7, start: 14, span: 2, cat: 'cat-algebra', groupDay: '토일', desc: '■ 상동' },
             { name: '1:1 소수정예 클리닉', day: 6, start: 10, span: 3, cat: 'cat-clinic', badge: '개별진도', groupDay: '토일', desc: '■ 오전 10시~1시\n■ 개별 맞춤 진도 및 밀착 질의응답' },
@@ -202,4 +202,64 @@
     }
 
     function updateView(key, el) {
-        document.querySelectorAll('.class
+        document.querySelectorAll('.class-card').forEach(c => c.remove());
+        const mList = document.getElementById('mobile-list');
+        mList.innerHTML = '';
+
+        if(el) {
+            document.querySelectorAll('.teacher-card').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        const rawData = teacherData[key];
+        
+        // PC 렌더링
+        rawData.forEach(cls => {
+            const col = document.getElementById('col-' + cls.day);
+            if(col) {
+                const card = document.createElement('div');
+                card.className = 'class-card ' + cls.cat;
+                card.style.top = (60 + (cls.start - 8) * 65) + 'px';
+                card.style.height = (cls.span * 65 - 10) + 'px';
+                
+                const badgeHtml = cls.badge ? `<span class="badge-blink">${cls.badge}</span>` : '';
+                card.innerHTML = badgeHtml + '<div class="class-day-tag">' + cls.groupDay + '</div>' + 
+                                cls.name + '<em>' + cls.start + ':00-' + (cls.start + cls.span) + ':00</em>';
+                card.onclick = () => showDetail(cls);
+                col.appendChild(card);
+            }
+        });
+
+        // 모바일 병합 렌더링
+        const mobileMerged = rawData.reduce((acc, curr) => {
+            const id = curr.name + curr.start; 
+            if (!acc[id]) acc[id] = { ...curr, days: [korDays[curr.day-1]] };
+            else if (!acc[id].days.includes(korDays[curr.day-1])) acc[id].days.push(korDays[curr.day-1]);
+            return acc;
+        }, {});
+
+        Object.values(mobileMerged).forEach(cls => {
+            const item = document.createElement('div');
+            item.className = 'mobile-item';
+            const badgeHtml = cls.badge ? `<span class="m-badge">${cls.badge}</span>` : '';
+            item.innerHTML = `<h5>${cls.name} ${badgeHtml}</h5>
+                              <p>${cls.days.join(', ')} | ${cls.start}:00 ~ ${cls.start + cls.span}:00</p>`;
+            item.onclick = () => showDetail(cls);
+            mList.appendChild(item);
+        });
+    }
+
+    function showDetail(cls) {
+        document.getElementById('det-name').innerText = cls.name;
+        document.getElementById('det-desc').innerText = cls.desc;
+        document.getElementById('detail-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        initFramework();
+        updateView('kuk');
+    });
+</script>
+
+</body>
+</html>
