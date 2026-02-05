@@ -62,11 +62,11 @@
         }
         .class-card:hover { transform: scale(1.05); z-index: 50; filter: brightness(1.1); }
         .class-card em { font-style: normal; font-size: 0.7rem; opacity: 0.8; margin-top: 4px; font-weight: 600; }
-        .class-day-tag { font-size: 0.7rem; background: rgba(0,0,0,0.15); padding: 2px 8px; border-radius: 10px; margin-bottom: 5px; font-weight: 900; }
+        .class-day-tag { font-size: 0.7rem; background: rgba(0,0,0,0.12); padding: 2px 8px; border-radius: 10px; margin-bottom: 5px; font-weight: 900; }
 
         .badge-blink {
             position: absolute; top: -10px; background: var(--adv-red); color: #fff; font-size: 0.65rem; padding: 3px 10px; border-radius: 50px;
-            font-weight: 900; border: 2px solid #fff; box-shadow: 0 5px 15px rgba(255,62,62,0.4);
+            font-weight: 900; border: 2.5px solid #fff; box-shadow: 0 5px 15px rgba(255,62,62,0.4);
             animation: blinker 1.2s linear infinite;
         }
         @keyframes blinker { 50% { opacity: 0.4; } }
@@ -137,92 +137,3 @@
 <script>
     const START_H = 8;
     const END_H = 22;
-    const days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
-    
-    // 강좌 데이터: groupDay 필드에 '월수금', '토일' 등을 정의
-    const teacherData = {
-        'kuk': [
-            { name: '공통수학1 (의치대반)', day: 6, start: 9, span: 2, cat: 'cat-med', adv: true, groupDay: '토일', desc: '■ 토/일 오전 9시~11시\n■ 최상위권 의치대 목표 반\n■ 고난도 문항 완벽 정복' },
-            { name: '공통수학1 (의치대반)', day: 7, start: 9, span: 2, cat: 'cat-med', adv: true, groupDay: '토일', desc: '■ 상동' },
-            { name: '대수 정규반 (심화)', day: 1, start: 19, span: 3, cat: 'cat-algebra', adv: true, groupDay: '월수금', desc: '■ 월/수/금 오후 7시~10시 (3월 4일 대개강)\n■ 완벽한 대수 이론 완성과 실전 문제 풀이' },
-            { name: '대수 정규반 (심화)', day: 3, start: 19, span: 3, cat: 'cat-algebra', adv: true, groupDay: '월수금', desc: '■ 상동' },
-            { name: '대수 정규반 (심화)', day: 5, start: 19, span: 3, cat: 'cat-algebra', adv: true, groupDay: '월수금', desc: '■ 상동' }
-        ],
-        'kim': [
-            { name: '대수 집중반', day: 6, start: 10, span: 3, cat: 'cat-practice', groupDay: '토일', desc: '■ 토/일 오전 10시~1시\n■ 대수 파트 핵심 개념 완성과 고난도 유형 반복 훈련' },
-            { name: '대수 집중반', day: 7, start: 10, span: 3, cat: 'cat-practice', groupDay: '토일', desc: '■ 상동' },
-            { name: '공수1 집중반', day: 6, start: 13, span: 3, cat: 'cat-clinic', groupDay: '토일', desc: '■ 토/일 오후 1시~4시\n■ 공통수학1의 핵심 테마별 집중 강화 수업' },
-            { name: '공수1 집중반', day: 7, start: 13, span: 3, cat: 'cat-clinic', groupDay: '토일', desc: '■ 상동' }
-        ],
-        'baek': [
-            { name: '수리논술 정규반(수완)', day: 3, start: 19, span: 3, cat: 'cat-nonsul', adv: true, groupDay: '수요일', desc: '■ 수요일 저녁 7시~10시\n■ 대학별 수리논술 최신 트렌드 분석 및 실전 첨삭' },
-            { name: '기하 / 확통', day: 6, start: 14, span: 2, cat: 'cat-algebra', groupDay: '토일', desc: '■ 토/일 오후 2시~4시\n■ 선택 과목의 전략적 완성' },
-            { name: '기하 / 확통', day: 7, start: 14, span: 2, cat: 'cat-algebra', groupDay: '토일', desc: '■ 상동' },
-            { name: '1:1 소수정예(개별진도)', day: 6, start: 10, span: 3, cat: 'cat-clinic', groupDay: '토일', desc: '■ 토/일 오전 10시~1시\n■ 개인별 취약점 진단 및 1:1 맞춤형 진도 관리' },
-            { name: '1:1 소수정예(개별진도)', day: 7, start: 10, span: 3, cat: 'cat-clinic', groupDay: '토일', desc: '■ 상동' },
-            { name: '1:1 소수정예(개별진도)', day: 6, start: 16, span: 3, cat: 'cat-clinic', groupDay: '토일', desc: '■ 토/일 오후 4시~7시\n■ 개인별 취약점 진단 및 1:1 맞춤형 진도 관리' },
-            { name: '1:1 소수정예(개별진도)', day: 7, start: 16, span: 3, cat: 'cat-clinic', groupDay: '토일', desc: '■ 상동' }
-        ]
-    };
-
-    function initLayout() {
-        const axis = document.getElementById('time-axis');
-        for (let i = START_H; i <= END_H; i++) {
-            const label = document.createElement('div');
-            label.className = 'axis-label'; label.innerText = `${i}:00`;
-            axis.appendChild(label);
-        }
-        const container = document.getElementById('days-container');
-        days.forEach((d, i) => {
-            const col = document.createElement('div');
-            col.className = 'day-column'; col.id = `day-col-${i + 1}`;
-            col.innerHTML = `<div class="day-header">${d}</div>`;
-            container.appendChild(col);
-        });
-    }
-
-    function selectTeacher(key) {
-        document.querySelectorAll('.day-column .class-card').forEach(c => c.remove());
-        const mList = document.getElementById('mobile-list');
-        mList.innerHTML = '';
-        document.querySelectorAll('.teacher-card').forEach(c => c.classList.remove('active'));
-        document.getElementById('card-' + key).classList.add('active');
-
-        teacherData[key].forEach(cls => {
-            const col = document.getElementById(`day-col-${cls.day}`);
-            if(col) {
-                const card = document.createElement('div');
-                card.className = `class-card ${cls.cat}`;
-                card.style.top = `${60 + (cls.start - START_H) * 65}px`;
-                card.style.height = `${(cls.span * 65) - 10}px`;
-                
-                // 요청사항: 요일 묶음 표기 (월수금, 토일 등)
-                const dayTag = `<div class="class-day-tag">${cls.groupDay}</div>`;
-                const badge = cls.adv ? `<span class="badge-blink">심화 Master</span>` : '';
-                card.innerHTML = `${badge}${dayTag}${cls.name}<em>${cls.start}:00-${cls.start + cls.span}:00</em>`;
-                
-                card.onclick = () => {
-                    document.getElementById('det-name').innerText = cls.name;
-                    document.getElementById('det-desc').innerText = cls.desc;
-                    document.getElementById('detail-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
-                };
-                col.appendChild(card);
-            }
-            
-            const mItem = document.createElement('div');
-            mItem.className = 'mobile-item';
-            mItem.innerHTML = `<h5>${cls.name}</h5><p>${cls.groupDay} | ${cls.start}:00 ~ ${cls.start+cls.span}:00</p>`;
-            mItem.onclick = () => {
-                document.getElementById('det-name').innerText = cls.name;
-                document.getElementById('det-desc').innerText = cls.desc;
-                document.getElementById('detail-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
-            };
-            mList.appendChild(mItem);
-        });
-    }
-
-    window.onload = () => { initLayout(); selectTeacher('kuk'); };
-</script>
-
-</body>
-</html>
