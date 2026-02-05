@@ -8,382 +8,145 @@
         :root {
             --navy: #1a2a44;
             --gold: #c5a059;
-            --light-gold: #e2cf8d;
             --white: #ffffff;
-            --gray: #f8f9fa;
+            --gray: #f4f4f4;
             --text: #333;
         }
 
-        body {
-            font-family: 'Pretendard', sans-serif;
-            background-color: var(--gray);
-            color: var(--text);
-            margin: 0;
-            padding: 20px;
-        }
+        body { font-family: 'Pretendard', sans-serif; background-color: #e9ecef; margin: 0; padding: 20px; color: var(--text); }
+        .container { max-width: 1200px; margin: 0 auto; background: var(--white); padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: var(--white);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
+        header { text-align: center; margin-bottom: 40px; }
+        .logo { height: 70px; margin-bottom: 15px; } /* 학원 로고 크기 조절 */
+        header h1 { color: var(--navy); font-size: 2.2rem; margin: 0; border-top: 2px solid var(--gold); display: inline-block; padding-top: 10px; }
 
-        header {
-            text-align: center;
-            margin-bottom: 50px;
-            border-bottom: 2px solid var(--gold);
-            padding-bottom: 20px;
-        }
+        /* Timetable Structure */
+        .timetable { display: grid; grid-template-columns: 120px repeat(7, 1fr); gap: 1px; background-color: #ddd; border: 2px solid var(--navy); }
+        .day-header, .time-col { background-color: var(--navy); color: var(--white); padding: 15px 5px; text-align: center; font-weight: bold; font-size: 0.9rem; }
+        .time-col { display: flex; align-items: center; justify-content: center; font-size: 0.8rem; background-color: #2c3e50; }
+        .slot { background-color: white; min-height: 110px; padding: 8px; }
 
-        header h1 {
-            color: var(--navy);
-            font-size: 2.5rem;
-            margin: 0;
-        }
-
-        header p {
-            color: var(--gold);
-            font-weight: 600;
-            letter-spacing: 2px;
-        }
-
-        /* Timetable Style */
-        .timetable {
-            display: grid;
-            grid-template-columns: 80px repeat(7, 1fr);
-            gap: 1px;
-            background-color: #ddd;
-            border: 1px solid var(--gold);
-        }
-
-        .day-header, .time-col {
-            background-color: var(--navy);
-            color: var(--white);
-            padding: 15px 5px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .slot {
-            background-color: white;
-            min-height: 100px;
-            padding: 5px;
-            transition: background 0.3s;
-        }
-
-        .class-card {
-            background-color: var(--gray);
-            border-left: 4px solid var(--gold);
-            padding: 10px;
-            margin-bottom: 5px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            border-radius: 4px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .class-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            background-color: #fff9ea;
-        }
-
-        .teacher-name {
-            font-weight: bold;
-            color: var(--navy);
-            display: block;
-        }
+        /* Class Card */
+        .class-card { background-color: var(--gray); border-left: 4px solid var(--gold); padding: 10px; margin-bottom: 8px; cursor: pointer; border-radius: 4px; transition: all 0.2s; font-size: 0.85rem; }
+        .class-card:hover { background-color: #fdf6e3; transform: scale(1.02); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .teacher-tag { font-weight: bold; color: var(--navy); display: block; margin-bottom: 3px; }
 
         /* Detail Section */
-        #detail-view {
-            margin-top: 50px;
-            padding: 30px;
-            border: 2px solid var(--gold);
-            border-radius: 10px;
-            display: none; /* Initially hidden */
-            animation: fadeIn 0.5s;
-        }
+        #detail-view { margin-top: 40px; padding: 30px; border: 1px solid var(--gold); border-radius: 10px; display: none; background: #fafafa; animation: slideUp 0.4s ease-out; }
+        .detail-grid { display: flex; gap: 40px; align-items: flex-start; }
+        .teacher-photo-box { width: 220px; height: 280px; overflow: hidden; border-radius: 8px; border: 3px solid var(--gold); flex-shrink: 0; }
+        .teacher-photo-box img { width: 100%; height: 100%; object-fit: cover; }
+        .detail-info { flex-grow: 1; }
+        .detail-info h2 { color: var(--navy); margin-top: 0; border-bottom: 2px solid var(--gold); padding-bottom: 10px; }
+        .info-item { margin: 12px 0; font-size: 1rem; line-height: 1.6; }
+        .info-label { font-weight: bold; color: var(--gold); width: 100px; display: inline-block; }
 
-        .detail-grid {
-            display: grid;
-            grid-template-columns: 200px 1fr;
-            gap: 30px;
-        }
-
-        .teacher-img {
-            width: 100%;
-            height: 250px;
-            background-color: #eee;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-            border: 1px solid #ddd;
-        }
-
-        .detail-content h3 {
-            color: var(--navy);
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-            margin-top: 0;
-        }
-
-        .info-row {
-            margin: 15px 0;
-            display: flex;
-        }
-
-        .label {
-            width: 100px;
-            font-weight: bold;
-            color: var(--gold);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @media (max-width: 768px) {
-            .timetable { grid-template-columns: 1fr; }
-            .detail-grid { grid-template-columns: 1fr; }
-        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <div class="container">
-<header>
-    <img src="logo.png" alt="학원로고" style="height:60px; margin-bottom:10px;">
-    <p>PREMIUM MATHEMATICS ACADEMY</p>
-    <h1>2026학년도 3월 정규반 시간표</h1>
-</header>
-<div class="teacher-img" id="t-photo-container">
-    <img id="t-photo-img" src="placeholder.jpg" style="width:100%; height:100%; object-fit:cover; border-radius:8px;">
-</div>
+    <header>
+        <img src="kook1.png" alt="Academy Logo" class="logo" onerror="this.style.display='none'">
+        <br>
+        <h1>2026학년도 1학기 정규반 타임테이블</h1>
+    </header>
+
     <div class="timetable">
-        <div class="day-header">시간</div>
-        <div class="day-header">월</div>
-        <div class="day-header">화</div>
-        <div class="day-header">수</div>
-        <div class="day-header">목</div>
-        <div class="day-header">금</div>
-        <div class="day-header">토</div>
-        <div class="day-header">일</div>
+        <div class="day-header">TIME</div>
+        <div class="day-header">월</div><div class="day-header">화</div><div class="day-header">수</div>
+        <div class="day-header">목</div><div class="day-header">금</div><div class="day-header">토</div><div class="day-header">일</div>
 
-        <div class="time-col">오전</div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
+        <div class="time-col">오전<br>(09:00 - 13:00)</div>
+        <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
         <div class="slot">
-            <div class="class-card" onclick="showDetail('kuk_1')">
-                <span class="teacher-name">국희재T</span>
-                공통수학1(의치대)
-            </div>
-            <div class="class-card" onclick="showDetail('kim_1')">
-                <span class="teacher-name">김충현T</span>
-                대수 집중반
-            </div>
-            <div class="class-card" onclick="showDetail('baek_2')">
-                <span class="teacher-name">백윤성T</span>
-                1:1 개별첨삭
-            </div>
+            <div class="class-card" onclick="showDetail('kuk_1')"><span class="teacher-tag">국희재T</span>공수1(의치대)</div>
+            <div class="class-card" onclick="showDetail('kim_1')"><span class="teacher-tag">김충현T</span>대수 집중반</div>
+            <div class="class-card" onclick="showDetail('baek_2')"><span class="teacher-tag">백윤성T</span>1:1 개별첨삭</div>
         </div>
         <div class="slot">
-            <div class="class-card" onclick="showDetail('kuk_1')">
-                <span class="teacher-name">국희재T</span>
-                공통수학1(의치대)
-            </div>
-            <div class="class-card" onclick="showDetail('kim_1')">
-                <span class="teacher-name">김충현T</span>
-                대수 집중반
-            </div>
-            <div class="class-card" onclick="showDetail('baek_2')">
-                <span class="teacher-name">백윤성T</span>
-                1:1 개별첨삭
-            </div>
+            <div class="class-card" onclick="showDetail('kuk_1')"><span class="teacher-tag">국희재T</span>공수1(의치대)</div>
+            <div class="class-card" onclick="showDetail('kim_1')"><span class="teacher-tag">김충현T</span>대수 집중반</div>
+            <div class="class-card" onclick="showDetail('baek_2')"><span class="teacher-tag">백윤성T</span>1:1 개별첨삭</div>
         </div>
 
-        <div class="time-col">오후</div>
+        <div class="time-col">오후<br>(13:00 - 18:00)</div>
         <div class="slot"></div>
         <div class="slot">
-             <div class="class-card" style="border-left-color: #999;">
-                <span class="teacher-name">김충현T</span>
-                온라인 첨삭
-            </div>
+            <div class="class-card" style="border-left-color:#ccc; opacity:0.8;">김충현T 온라인제출</div>
         </div>
         <div class="slot">
-            <div class="class-card" style="border-left-color: #999;">
-                <span class="teacher-name">김충현T</span>
-                온라인 첨삭
-            </div>
+            <div class="class-card" style="border-left-color:#ccc; opacity:0.8;">김충현T 온라인제출</div>
         </div>
-        <div class="slot"></div>
-        <div class="slot"></div>
+        <div class="slot"></div><div class="slot"></div>
         <div class="slot">
-            <div class="class-card" onclick="showDetail('kim_2')">
-                <span class="teacher-name">김충현T</span>
-                공수 집중반
-            </div>
-            <div class="class-card" onclick="showDetail('baek_3')">
-                <span class="teacher-name">백윤성T</span>
-                기하/확통 내신
-            </div>
-            <div class="class-card" onclick="showDetail('baek_4')">
-                <span class="teacher-name">백윤성T</span>
-                1:1 개별첨삭(4시)
-            </div>
+            <div class="class-card" onclick="showDetail('kim_2')"><span class="teacher-tag">김충현T</span>공수 집중반</div>
+            <div class="class-card" onclick="showDetail('baek_3')"><span class="teacher-tag">백윤성T</span>기하/확통 내신</div>
+            <div class="class-card" onclick="showDetail('baek_4')"><span class="teacher-tag">백윤성T</span>1:1 개별첨삭</div>
         </div>
         <div class="slot">
-            <div class="class-card" onclick="showDetail('kim_2')">
-                <span class="teacher-name">김충현T</span>
-                공수 집중반
-            </div>
-            <div class="class-card" onclick="showDetail('baek_3')">
-                <span class="teacher-name">백윤성T</span>
-                기하/확통 내신
-            </div>
-            <div class="class-card" onclick="showDetail('baek_4')">
-                <span class="teacher-name">백윤성T</span>
-                1:1 개별첨삭(4시)
-            </div>
+            <div class="class-card" onclick="showDetail('kim_2')"><span class="teacher-tag">김충현T</span>공수 집중반</div>
+            <div class="class-card" onclick="showDetail('baek_3')"><span class="teacher-tag">백윤성T</span>기하/확통 내신</div>
+            <div class="class-card" onclick="showDetail('baek_4')"><span class="teacher-tag">백윤성T</span>1:1 개별첨삭</div>
         </div>
 
-        <div class="time-col">저녁</div>
+        <div class="time-col">저녁<br>(18:00 - 22:00)</div>
         <div class="slot">
-            <div class="class-card" onclick="showDetail('kuk_2')">
-                <span class="teacher-name">국희재T</span>
-                대수 (7-10)
-            </div>
+            <div class="class-card" onclick="showDetail('kuk_2')"><span class="teacher-tag">국희재T</span>대수 (19-22)</div>
         </div>
         <div class="slot"></div>
         <div class="slot">
-            <div class="class-card" onclick="showDetail('kuk_2')">
-                <span class="teacher-name">국희재T</span>
-                대수 (7-10)
-            </div>
-            <div class="class-card" onclick="showDetail('baek_1')">
-                <span class="teacher-name">백윤성T</span>
-                논술정규반
-            </div>
+            <div class="class-card" onclick="showDetail('kuk_2')"><span class="teacher-tag">국희재T</span>대수 (19-22)</div>
+            <div class="class-card" onclick="showDetail('baek_1')"><span class="teacher-tag">백윤성T</span>논술정규반</div>
         </div>
         <div class="slot"></div>
         <div class="slot">
-            <div class="class-card" onclick="showDetail('kuk_2')">
-                <span class="teacher-name">국희재T</span>
-                대수 (7-10)
-            </div>
+            <div class="class-card" onclick="showDetail('kuk_2')"><span class="teacher-tag">국희재T</span>대수 (19-22)</div>
         </div>
-        <div class="slot"></div>
-        <div class="slot"></div>
+        <div class="slot"></div><div class="slot"></div>
     </div>
 
     <div id="detail-view">
         <div class="detail-grid">
-            <div class="teacher-photo" id="t-photo">
-                <div class="teacher-img">강사 사진</div>
+            <div class="teacher-photo-box">
+                <img id="detail-img" src="" alt="Teacher">
             </div>
-            <div class="detail-content">
-                <h3 id="c-title">수업 정보를 선택해주세요.</h3>
-                <div class="info-row">
-                    <span class="label">담당강사</span>
-                    <span id="c-teacher">-</span>
-                </div>
-                <div class="info-row">
-                    <span class="label">수업내용</span>
-                    <span id="c-desc">-</span>
-                </div>
-                <div class="info-row">
-                    <span class="label">사용교재</span>
-                    <span id="c-book">-</span>
-                </div>
-                <div class="info-row">
-                    <span class="label">기타사항</span>
-                    <span id="c-etc">-</span>
-                </div>
+            <div class="detail-info">
+                <h2 id="detail-title">수업 정보</h2>
+                <div class="info-item"><span class="info-label">담당강사</span><span id="detail-teacher"></span></div>
+                <div class="info-item"><span class="info-label">수업내용</span><span id="detail-desc"></span></div>
+                <div class="info-item"><span class="info-label">사용교재</span><span id="detail-book"></span></div>
+                <div class="info-item"><span class="info-label">비고</span><span id="detail-etc"></span></div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    const classData = {
-        'kuk_1': {
-            title: '공통수학1 (의치대반)',
-            teacher: '국희재 선생님',
-            desc: '의치대 진학을 목표로 하는 최상위권 대상 공통수학1 심화 수업',
-            book: '자체교재 + 플래티넘',
-            etc: '토/일 오전 9:00 ~ 11:00'
-        },
-        'kuk_2': {
-            title: '대수 정규반',
-            teacher: '국희재 선생님',
-            desc: '3월 4일 개강! 탄탄한 개념 정리와 실전 문제 풀이',
-            book: '자체교재 + 플래티넘',
-            etc: '월/수/금 저녁 7:00 ~ 10:00'
-        },
-        'kim_1': {
-            title: '대수 집중반',
-            teacher: '김충현 선생님',
-            desc: '대수 파트의 완벽한 이해와 집중 트레이닝',
-            book: '김충현T 전용 주간지 및 핵심 프린트',
-            etc: '화/수 온라인 주간지 제출 및 손풀이 영상 첨삭 포함'
-        },
-        'kim_2': {
-            title: '공통수학 집중반',
-            teacher: '김충현 선생님',
-            desc: '공통수학의 핵심 원리 파악 및 실전 적용력 강화',
-            book: '학원 자체 심화 교재',
-            etc: '토/일 오후 1:00 ~ 4:00'
-        },
-        'baek_1': {
-            title: '논술 정규반 (수완)',
-            teacher: '백윤성 선생님',
-            desc: '수능 완성 연계 및 수리 논술의 기초부터 실전까지',
-            book: '백윤성 논술 전략서',
-            etc: '수요일 저녁 7:00 ~ 10:00'
-        },
-        'baek_2': {
-            title: '1:1 소수정예 개별첨삭 (오전)',
-            teacher: '백윤성 선생님',
-            desc: '개인별 취약점 진단 및 1:1 맞춤형 질의응답',
-            book: '개인별 맞춤 부교재',
-            etc: '토/일 오전 10:00 ~ 오후 1:00'
-        },
-        'baek_3': {
-            title: '기하/확통 내신대비',
-            teacher: '백윤성 선생님',
-            desc: '선택과목 완벽 대비, 내신 고득점을 위한 전략 수업',
-            book: '내신 만점 대비 기출 모음',
-            etc: '토/일 오후 2:00 ~ 4:00'
-        },
-        'baek_4': {
-            title: '1:1 소수정예 개별첨삭 (오후)',
-            teacher: '백윤성 선생님',
-            desc: '개인별 맞춤 클리닉 및 심층 문제 해결',
-            book: '개인별 오답 노트 및 교재',
-            etc: '토/일 오후 4:00 ~ 7:00'
-        }
+    const data = {
+        'kuk_1': { title: '공통수학1 (의치대반)', teacher: '국희재T', img: 'teacher_kook.jpg', desc: '의치대 진학을 위한 심화 개념 및 고난도 문제 풀이', book: '자체교재 + 플래티넘', etc: '3/4 개강 전 사전 테스트 필수' },
+        'kuk_2': { title: '대수 정규반', teacher: '국희재T', img: 'teacher_kook.jpg', desc: '3월 4일 개강! 월/수/금 저녁 집중 케어', book: '자체교재 + 플래티넘', etc: '매주 주간 테스트 진행' },
+        'kim_1': { title: '대수 집중반', teacher: '김충현T', img: 'teacher_kim.jpg', desc: '대수 파트 완벽 정복을 위한 몰입 수업', book: '김충현T 전용 주간지', etc: '손풀이 영상 첨삭 지원' },
+        'kim_2': { title: '공수 집중반', teacher: '김충현T', img: 'teacher_kim.jpg', desc: '공통수학1 내신 만점 대비', book: '자체 심화 교재', etc: '화/수 온라인 주간지 과제 관리' },
+        'baek_1': { title: '논술 정규반 (수완)', teacher: '백윤성T', img: 'teacher_baek.jpg', desc: '수리 논술 기초 및 수능 완성 연계 분석', book: '백윤성 논술 전략서', etc: '1:1 대면 첨삭 포함' },
+        'baek_2': { title: '1:1 소수정예 개별첨삭', teacher: '백윤성T', img: 'teacher_baek.jpg', desc: '학생별 맞춤 진도 및 개별 질의응답', book: '개인별 맞춤 교재', etc: '토/일 오전 타임' },
+        'baek_3': { title: '기하/확통 내신대비', teacher: '백윤성T', img: 'teacher_baek.jpg', desc: '선택과목 고득점을 위한 내신 핵심 공략', book: '만점 대비 기출 모음', etc: '상담 후 화/목 저녁반 운영 가능' },
+        'baek_4': { title: '1:1 소수정예 개별첨삭', teacher: '백윤성T', img: 'teacher_baek.jpg', desc: '오후 집중 클리닉 및 오답 정밀 분석', book: '개인별 오답 노트', etc: '토/일 16:00 - 19:00' }
     };
 
     function showDetail(id) {
-        const data = classData[id];
-        const view = document.getElementById('detail-view');
+        const item = data[id];
+        document.getElementById('detail-title').innerText = item.title;
+        document.getElementById('detail-teacher').innerText = item.teacher;
+        document.getElementById('detail-img').src = item.img;
+        document.getElementById('detail-desc').innerText = item.desc;
+        document.getElementById('detail-book').innerText = item.book;
+        document.getElementById('detail-etc').innerText = item.etc;
         
-        document.getElementById('c-title').innerText = data.title;
-        document.getElementById('c-teacher').innerText = data.teacher;
-        document.getElementById('c-desc').innerText = data.desc;
-        document.getElementById('c-book').innerText = data.book;
-        document.getElementById('c-etc').innerText = data.etc;
-
+        const view = document.getElementById('detail-view');
         view.style.display = 'block';
-        window.scrollTo({ top: view.offsetTop - 50, behavior: 'smooth' });
+        window.scrollTo({ top: view.offsetTop - 40, behavior: 'smooth' });
     }
 </script>
 
