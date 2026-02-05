@@ -11,107 +11,210 @@
             --bg-deep: #0a0f1d; 
             --card-navy: #161e2e;
             --gold: #c5a059;
+            --gold-light: #eecd88;
             --white: #ffffff;
             --text-gray: #94a3b8;
-            --grid-line: rgba(197, 160, 89, 0.15); /* 그리드 선 색상 */
+            --grid-line: rgba(197, 160, 89, 0.1);
             
-            /* 과목별 색상 */
-            --color-math1: #1e3a8a; 
-            --color-algebra: #78350f; 
+            /* 과목별 프리미엄 컬러 */
+            --color-math1: #1e40af; 
+            --color-algebra: #92400e; 
             --color-nonsul: #334155; 
             --color-calc: #064e3b; 
         }
 
-        body { background-color: var(--bg-deep); margin: 0; font-family: 'Pretendard', sans-serif; color: var(--white); }
+        body { 
+            background-color: var(--bg-deep); 
+            margin: 0; 
+            font-family: 'Pretendard', sans-serif; 
+            color: var(--white);
+            -webkit-font-smoothing: antialiased;
+        }
 
-        header { background: var(--bg-deep); padding: 25px 0; text-align: center; border-bottom: 2px solid var(--gold); }
-        .main-logo { height: 70px; width: auto; }
+        header { 
+            background: linear-gradient(to bottom, #111827, var(--bg-deep));
+            padding: 40px 0; 
+            text-align: center; 
+            border-bottom: 2px solid var(--gold);
+        }
+        .main-logo { height: 80px; width: auto; filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.3)); }
 
         .container { 
-            max-width: 1400px; margin: 30px auto; padding: 0 20px;
-            display: grid; grid-template-columns: 300px 1fr; gap: 30px;
+            max-width: 1400px; 
+            margin: 40px auto; 
+            padding: 0 20px;
+            display: grid; 
+            grid-template-columns: 320px 1fr; 
+            gap: 40px;
         }
 
-        /* 강사 목록 */
+        /* 왼쪽 강사 목록 사이드바 */
+        .teacher-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .sidebar-title {
+            font-size: 0.9rem;
+            color: var(--gold);
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: 800;
+        }
         .teacher-card {
-            background: var(--card-navy); padding: 18px; border-radius: 12px;
-            display: flex; align-items: center; margin-bottom: 12px;
-            border: 1px solid var(--grid-line); cursor: pointer; transition: 0.3s;
+            background: var(--card-navy); 
+            padding: 20px; 
+            border-radius: 16px;
+            display: flex; 
+            align-items: center; 
+            border: 1px solid var(--grid-line); 
+            cursor: pointer; 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .teacher-card.active { border-color: var(--gold); background: rgba(197, 160, 89, 0.1); }
-        .profile-img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--gold); margin-right: 15px; object-fit: cover; }
+        .teacher-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+        .teacher-card.active { 
+            border-color: var(--gold); 
+            background: rgba(197, 160, 89, 0.15);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        .profile-img { 
+            width: 65px; height: 65px; 
+            border-radius: 50%; 
+            border: 2px solid var(--gold); 
+            margin-right: 18px; 
+            object-fit: cover; 
+            box-shadow: 0 0 15px rgba(197, 160, 89, 0.2);
+        }
+        .teacher-info h3 { margin: 0; font-size: 1.15rem; font-weight: 700; color: var(--white); }
+        .teacher-info p { margin: 5px 0 0; color: var(--gold); font-size: 0.85rem; opacity: 0.8; }
 
-        /* [수정] 시간표 박스 및 그리드 설정 */
-        .timetable-box {
-            background: var(--card-navy); padding: 20px; border-radius: 15px;
-            border: 1px solid var(--grid-line); overflow: hidden;
+        /* 오른쪽 시간표 대시보드 */
+        .timetable-container {
+            background: var(--card-navy); 
+            padding: 30px; 
+            border-radius: 24px;
+            border: 1px solid var(--grid-line);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
+        /* [핵심 수정] 그리드 밀림 방지 구조 */
         .timetable-grid {
             display: grid;
-            /* 시간열 70px 고정, 나머지 요일 7칸 동일 비율 */
-            grid-template-columns: 70px repeat(7, 1fr);
-            /* 헤더 40px, 8시~22시까지 각 50px 고정 */
-            grid-template-rows: 40px repeat(14, 50px);
-            background-color: var(--grid-line); /* 선 역할 */
-            gap: 1px; /* 칸 사이 간격 */
+            grid-template-columns: 80px repeat(7, 1fr);
+            grid-template-rows: 50px repeat(14, 65px); /* 높이 고정 */
+            background-color: var(--grid-line);
+            gap: 1px;
             border: 1px solid var(--grid-line);
+            position: relative; /* 카드 배치를 위한 기준점 */
         }
 
-        /* 그리드 공통 셀 스타일 */
         .grid-item {
-            background: var(--bg-deep); /* 칸 배경을 네이비로 통일 */
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.85rem; height: 100%; width: 100%;
+            background: var(--card-navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
         }
 
-        .header-cell { background: #1e293b; color: var(--gold); font-weight: 800; font-size: 0.9rem; }
-        .time-cell { background: #1e293b; color: var(--text-gray); font-weight: 700; font-size: 0.75rem; }
+        .header-cell { 
+            background: #1e293b; 
+            color: var(--gold); 
+            font-weight: 800; 
+            font-size: 0.95rem; 
+            letter-spacing: 1px;
+        }
+        .time-cell { 
+            background: #0f172a; 
+            color: var(--text-gray); 
+            font-weight: 700; 
+            font-size: 0.8rem;
+        }
 
-        /* [수정] 수업 카드 스타일 - 그리드 칸 안에 정확히 위치 */
+        /* 수업 카드 프리미엄 디자인 */
         .class-card {
-            margin: 2px; border-radius: 6px; padding: 5px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            font-size: 0.75rem; font-weight: 700; text-align: center;
-            z-index: 10; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            pointer-events: auto;
+            margin: 4px;
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-align: center;
+            z-index: 20;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.2s;
+            cursor: pointer;
         }
-        .class-card em { font-style: normal; font-size: 0.65rem; opacity: 0.8; margin-top: 3px; font-weight: 400; }
+        .class-card:hover { transform: scale(1.02); filter: brightness(1.1); }
+        .class-card em { 
+            font-style: normal; 
+            font-size: 0.7rem; 
+            opacity: 0.7; 
+            margin-top: 5px; 
+            font-weight: 400; 
+            background: rgba(0,0,0,0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
 
-        .cat-algebra { background: var(--color-algebra); color: #ffd8a8; }
-        .cat-math1 { background: var(--color-math1); color: #d0ebff; }
-        .cat-nonsul { background: var(--color-nonsul); color: #f1f5f9; }
-        .cat-calc { background: var(--color-calc); color: #b2f2bb; }
+        .cat-algebra { background: linear-gradient(135deg, var(--color-algebra), #78350f); color: #ffd8a8; border-bottom: 3px solid #78350f; }
+        .cat-math1 { background: linear-gradient(135deg, var(--color-math1), #1e3a8a); color: #d0ebff; border-bottom: 3px solid #1e3a8a; }
+        .cat-nonsul { background: linear-gradient(135deg, var(--color-nonsul), #1e293b); color: #f1f5f9; border-bottom: 3px solid #1e293b; }
+        .cat-calc { background: linear-gradient(135deg, var(--color-calc), #064e3b); color: #b2f2bb; border-bottom: 3px solid #064e3b; }
 
-        /* 하단 상세 뷰 */
+        /* 강사 상세 프로필 */
         .detail-view {
-            margin-top: 25px; background: var(--card-navy); border-radius: 15px;
-            padding: 25px; border: 1px solid var(--gold); display: none;
+            margin-top: 30px; 
+            background: linear-gradient(135deg, var(--card-navy), #1e293b); 
+            border-radius: 20px;
+            padding: 35px; 
+            border: 1px solid var(--gold); 
+            display: none;
+            animation: fadeInUp 0.6s ease;
         }
-        .detail-flex { display: flex; gap: 30px; align-items: center; }
-        .detail-photo { width: 110px; height: 140px; border-radius: 8px; border: 2px solid var(--gold); object-fit: cover; }
-        .info-row { margin-bottom: 10px; }
-        .info-row label { color: var(--gold); font-weight: 800; font-size: 0.75rem; display: block; }
-        .info-row p { margin: 2px 0; font-size: 0.95rem; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .detail-flex { display: flex; gap: 40px; align-items: center; }
+        .detail-photo { 
+            width: 140px; height: 180px; 
+            border-radius: 12px; 
+            border: 2px solid var(--gold); 
+            object-fit: cover;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        .det-info { flex: 1; }
+        .info-row { margin-bottom: 15px; }
+        .info-row label { color: var(--gold); font-weight: 800; font-size: 0.8rem; display: block; margin-bottom: 5px; text-transform: uppercase; }
+        .info-row p { margin: 0; font-size: 1.1rem; line-height: 1.6; color: #e2e8f0; }
 
-        @media (max-width: 1000px) { .container { grid-template-columns: 1fr; } }
+        @media (max-width: 1100px) { 
+            .container { grid-template-columns: 1fr; }
+            .teacher-sidebar { flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
+            .teacher-card { min-width: 280px; }
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <img src="koo_1.png" alt="KOOK MATH" class="main-logo" onerror="this.src='https://via.placeholder.com/200x70/0a0f1d/c5a059?text=KOOK+1'">
+    <img src="koo_1.png" alt="KOOK MATH" class="main-logo" onerror="this.src='https://via.placeholder.com/200x80/0a0f1d/c5a059?text=KOOK+1'">
 </header>
 
 <div class="container">
-    <div class="teacher-list">
-        <h2 style="font-size: 1rem; color: var(--gold); letter-spacing: 2px; margin-bottom: 20px; text-align: center;">FACULTY</h2>
+    <div class="teacher-sidebar">
+        <div class="sidebar-title">ACADEMY FACULTY</div>
         
         <div class="teacher-card" id="card-kuk" onclick="showTeacher('kuk')">
             <img src="teacher_kook.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/60?text=KUK'">
             <div class="teacher-info">
                 <h3>국희재 선생님</h3>
-                <p>의치대반 전문</p>
+                <p>의치대반 전문 책임</p>
             </div>
         </div>
 
@@ -119,7 +222,7 @@
             <img src="teacher_kim.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/60?text=KIM'">
             <div class="teacher-info">
                 <h3>김충현 선생님</h3>
-                <p>대수 / 공수 집중반</p>
+                <p>대수 / 공수 집중 케어</p>
             </div>
         </div>
 
@@ -127,13 +230,13 @@
             <img src="teacher_baek.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/60?text=BAEK'">
             <div class="teacher-info">
                 <h3>백윤성 선생님</h3>
-                <p>수리논술 / 기하확통</p>
+                <p>수리논술 / 기하확통 전략</p>
             </div>
         </div>
     </div>
 
     <div class="content-right">
-        <div class="timetable-box">
+        <div class="timetable-container">
             <div class="timetable-grid" id="grid-container">
                 </div>
         </div>
@@ -142,10 +245,19 @@
             <div class="detail-flex">
                 <img id="det-img" src="" class="detail-photo">
                 <div class="det-info">
-                    <h2 id="det-name" style="margin-top:0; color:var(--gold); font-size: 1.3rem;"></h2>
-                    <div class="info-row"><label>담당 과목</label><p id="det-subject"></p></div>
-                    <div class="info-row"><label>수업 시간</label><p id="det-time"></p></div>
-                    <div class="info-row"><label>강의 특징</label><p id="det-desc"></p></div>
+                    <h2 id="det-name" style="margin-top:0; color:var(--gold); font-size: 1.8rem; margin-bottom: 20px;"></h2>
+                    <div class="info-row">
+                        <label>담당 전문 과목</label>
+                        <p id="det-subject"></p>
+                    </div>
+                    <div class="info-row">
+                        <label>강의 스케줄 요약</label>
+                        <p id="det-time"></p>
+                    </div>
+                    <div class="info-row">
+                        <label>강의 핵심 포인트</label>
+                        <p id="det-desc"></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -155,9 +267,10 @@
 <script>
     const teacherData = {
         'kuk': {
-            name: '국희재 선생님', subject: '의치대반 / 공통수학1 / 대수',
-            time: '월수금 19:00-22:00, 토일 09:00-11:00',
-            desc: '자체교재 플래티넘 사용, 최상위권 킬러 문항 정복.',
+            name: '국희재 선생님', 
+            subject: '의치대 심화 / 공통수학1 전문 / 대수 정규',
+            time: '평일 저녁 19:00 - 22:00 / 주말 오전 09:00 - 11:00',
+            desc: '자체 제작 플래티넘 교재 시리즈를 통한 최상위권 킬러 문항 정복.',
             photo: 'teacher_kook.jpg',
             classes: [
                 { name: '대수 정규', day: 1, start: 19, span: 3, cat: 'cat-algebra' },
@@ -168,9 +281,10 @@
             ]
         },
         'kim': {
-            name: '김충현 선생님', subject: '대수 집중반 / 공수 집중반',
-            time: '토일 10:00 - 16:00',
-            desc: '주간지 & 손풀이 교재 제공, 철저한 과제 관리.',
+            name: '김충현 선생님', 
+            subject: '대수 / 공수 기초 및 심화 집중반',
+            time: '매주 주말 10:00 - 16:00 집중 강의',
+            desc: '주간지 및 손풀이 교재를 통한 완벽한 유형 숙달 및 1:1 과제 피드백.',
             photo: 'teacher_kim.jpg',
             classes: [
                 { name: '대수 집중', day: 6, start: 10, span: 3, cat: 'cat-algebra' },
@@ -180,25 +294,26 @@
             ]
         },
         'baek': {
-            name: '백윤성 선생님', subject: '수리논술 / 기하 / 확통',
-            time: '수 19:00, 토일 10:00 / 14:00',
-            desc: '1:1 대면 첨삭 진행, 논리적 사고력 강화.',
+            name: '백윤성 선생님', 
+            subject: '수리논술 전략 / 기하·확통 마스터',
+            time: '수요일 야간 / 주말 집중 첨삭 및 정규반',
+            desc: '대학별 기출 분석을 통한 논리적 사고력 증명 및 대면 첨삭 지도.',
             photo: 'teacher_baek.jpg',
             classes: [
                 { name: '수리논술', day: 3, start: 19, span: 3, cat: 'cat-nonsul' },
                 { name: '기하/확통', day: 6, start: 10, span: 3, cat: 'cat-calc' },
                 { name: '기하/확통', day: 7, start: 10, span: 3, cat: 'cat-calc' },
-                { name: '1:1첨삭', day: 6, start: 14, span: 2, cat: 'cat-nonsul' }
+                { name: '1:1 집중첨삭', day: 6, start: 14, span: 2, cat: 'cat-nonsul' }
             ]
         }
     };
 
-    function initGrid() {
+    function renderBaseGrid() {
         const container = document.getElementById('grid-container');
-        container.innerHTML = ''; // 초기화
+        container.innerHTML = ''; 
 
-        // 1. 헤더 생성 (TIME + 요일)
-        const days = ['TIME', '월', '화', '수', '목', '금', '토', '일'];
+        // 1. 헤더 (요일)
+        const days = ['TIME', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
         days.forEach(day => {
             const div = document.createElement('div');
             div.className = 'grid-item header-cell';
@@ -206,49 +321,52 @@
             container.appendChild(div);
         });
 
-        // 2. 시간행 생성 (8시 ~ 21시)
+        // 2. 시간표 셀 생성
         for (let h = 8; h <= 21; h++) {
-            // 시간 표시 셀
+            // 시간 열
             const timeDiv = document.createElement('div');
             timeDiv.className = 'grid-item time-cell';
             timeDiv.innerText = `${String(h).padStart(2, '0')}:00`;
             container.appendChild(timeDiv);
 
-            // 해당 시간의 월~일 빈 칸들
+            // 요일별 칸 (7칸)
             for (let d = 1; d <= 7; d++) {
                 const emptyDiv = document.createElement('div');
                 emptyDiv.className = 'grid-item';
+                // 각 칸에 고유한 위치 데이터 부여 (중첩 방지용)
+                emptyDiv.dataset.row = h;
+                emptyDiv.dataset.col = d;
                 container.appendChild(emptyDiv);
             }
         }
     }
 
     function showTeacher(key) {
-        initGrid(); // 배경 먼저 깨끗하게 그리기
+        renderBaseGrid(); // 배경 초기화
         const data = teacherData[key];
         const container = document.getElementById('grid-container');
 
+        // 사이드바 활성화 처리
         document.querySelectorAll('.teacher-card').forEach(c => c.classList.remove('active'));
         document.getElementById('card-' + key).classList.add('active');
 
-        // 수업 카드 배치
+        // 수업 카드 렌더링
         data.classes.forEach(cls => {
             const card = document.createElement('div');
             card.className = `class-card ${cls.cat}`;
             
-            // 그리드 위치 계산
-            // row: (시작시간 - 8시) + 헤더행(1) + 1 = 시작시간 - 6
+            // row 계산: 헤더(1) + (시작시간 - 8시) + 1 = 시작시간 - 6
             const rowStart = (cls.start - 8) + 2;
             const colStart = cls.day + 1;
 
             card.style.gridRow = `${rowStart} / span ${cls.span}`;
             card.style.gridColumn = colStart;
-            card.innerHTML = `${cls.name}<br><em>${cls.start}:00 - ${cls.start+cls.span}:00</em>`;
+            card.innerHTML = `<span>${cls.name}</span><em>${cls.start}:00 - ${cls.start+cls.span}:00</em>`;
             
             container.appendChild(card);
         });
 
-        // 상세 정보
+        // 강사 상세 정보 업데이트
         document.getElementById('det-name').innerText = data.name;
         document.getElementById('det-img').src = data.photo;
         document.getElementById('det-subject').innerText = data.subject;
