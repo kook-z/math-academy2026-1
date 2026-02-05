@@ -15,134 +15,93 @@
             --white: #ffffff;
             --grid-line: rgba(255, 255, 255, 0.05);
             
-            /* 세미 파스텔 컬러 체계 (글자 가독성을 위해 명도 조절) */
-            --pt-blue: #A2B5BB;    /* 의치대/공수 */
-            --pt-rose: #E8C4C4;    /* 대수 */
-            --pt-green: #C4D7B2;   /* 논술 */
-            --pt-purple: #D0BFFF;  /* 소수정예 */
+            /* 컬러 체계 */
+            --pt-yellow: #F2D388;    /* 국희재T 심화 (옐로우) */
+            --pt-rose: #E8C4C4;      /* 대수 */
+            --pt-green: #C4D7B2;     /* 논술 */
+            --pt-purple: #D0BFFF;    /* 소수정예 */
         }
 
         body { 
-            background-color: var(--bg-deep); 
-            margin: 0; 
-            font-family: 'Pretendard', sans-serif; 
-            color: var(--white); 
-            scroll-behavior: smooth; 
-            overflow-x: hidden;
+            background-color: var(--bg-deep); margin: 0; font-family: 'Pretendard', sans-serif; color: var(--white); scroll-behavior: smooth; overflow-x: hidden;
             background-image: radial-gradient(circle at 50% -20%, #1e293b 0%, transparent 50%);
         }
 
-        /* 인강 사이트 스타일 헤더 */
-        header { 
-            padding: 60px 0; 
-            text-align: center; 
-            position: relative;
-        }
+        header { padding: 60px 0; text-align: center; position: relative; }
         .logo-img { width: 220px; filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.3)); margin-bottom: 20px; }
-        
         .slogan { 
-            font-size: 2.2rem; 
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin: 0;
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; margin: 0;
+            background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             filter: drop-shadow(0 4px 4px rgba(0,0,0,0.5));
         }
 
-        .container { 
-            max-width: 1300px; margin: 0 auto 50px; padding: 0 20px;
-            display: grid; grid-template-columns: 280px 1fr; gap: 30px;
-        }
+        .container { max-width: 1300px; margin: 0 auto 50px; padding: 0 20px; display: grid; grid-template-columns: 280px 1fr; gap: 30px; }
 
-        /* 강사 선택 영역 */
         .teacher-list { position: sticky; top: 30px; height: fit-content; z-index: 100; }
         .teacher-card {
-            background: var(--card-navy); padding: 20px; border-radius: 20px;
-            display: flex; align-items: center; margin-bottom: 15px;
+            background: var(--card-navy); padding: 20px; border-radius: 20px; display: flex; align-items: center; margin-bottom: 15px;
             border: 1px solid rgba(255,255,255,0.05); cursor: pointer; transition: 0.4s;
         }
         .teacher-card:hover { transform: translateY(-5px); border-color: var(--gold); }
-        .teacher-card.active { 
-            background: rgba(197, 160, 89, 0.15); 
-            border: 1px solid var(--gold);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
+        .teacher-card.active { background: rgba(197, 160, 89, 0.15); border: 1px solid var(--gold); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
         .profile-img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--gold); margin-right: 15px; object-fit: cover; }
         .teacher-info h4 { margin: 0; font-size: 1.1rem; font-weight: 700; }
         .teacher-info p { margin: 4px 0 0; font-size: 0.8rem; color: #94a3b8; }
 
-        /* 시간표 본체 (인강 사이트 대시보드 스타일) */
+        /* 시간표 본체 */
         .timetable-wrapper {
             background: #0f172a; border-radius: 24px; border: 1px solid rgba(255,255,255,0.05);
-            position: relative; display: flex; overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            position: relative; display: flex; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
         }
         .time-axis { width: 70px; background: rgba(0,0,0,0.2); display: flex; flex-direction: column; padding-top: 60px; flex-shrink: 0; border-right: 1px solid var(--grid-line); }
         .axis-label { height: 65px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: #4b5563; }
-        
         .days-container { display: flex; flex: 1; }
         .day-column { flex: 1; position: relative; border-right: 1px solid var(--grid-line); background-image: linear-gradient(var(--grid-line) 1px, transparent 1px); background-size: 100% 65px; }
-        .day-header { 
-            height: 60px; display: flex; align-items: center; justify-content: center; 
-            background: rgba(0,0,0,0.3); color: #cbd5e1; font-weight: 800;
-        }
+        .day-header { height: 60px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); color: #cbd5e1; font-weight: 800; }
 
-        /* 수업 카드 (파스텔 + 유리질감) */
+        /* 수업 카드 + "심화" 배지 애니메이션 */
         .class-card {
-            position: absolute; left: 6px; right: 6px; border-radius: 12px; padding: 10px;
-            font-size: 0.85rem; font-weight: 800; color: #1e293b; 
-            cursor: pointer; z-index: 10; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: all 0.3s ease;
-            box-shadow: inset 0 0 10px rgba(255,255,255,0.2), 0 4px 10px rgba(0,0,0,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
+            position: absolute; left: 6px; right: 6px; border-radius: 12px; padding: 10px; font-size: 0.85rem; font-weight: 800; color: #1e293b; 
+            cursor: pointer; z-index: 10; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: all 0.3s ease; box-shadow: inset 0 0 10px rgba(255,255,255,0.2), 0 4px 10px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.3);
         }
         .class-card:hover { transform: scale(1.02); filter: brightness(1.1); z-index: 50; }
         .class-card em { font-style: normal; font-size: 0.7rem; opacity: 0.8; margin-top: 4px; font-weight: 500; }
 
-        .cat-main { background-color: var(--pt-blue) !important; }
+        /* 심화 깜빡이 배지 스타일 */
+        .badge-advanced {
+            position: absolute; top: -8px; background: #000; color: var(--pt-yellow); font-size: 0.65rem; padding: 2px 8px; border-radius: 20px;
+            border: 1px solid var(--pt-yellow); font-weight: 900; animation: blink 1.2s infinite ease-in-out;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; transform: scale(1); box-shadow: 0 0 0px var(--pt-yellow); }
+            50% { opacity: 0.7; transform: scale(0.95); box-shadow: 0 0 8px var(--pt-yellow); }
+            100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0px var(--pt-yellow); }
+        }
+
+        .cat-main { background-color: var(--pt-yellow) !important; }
         .cat-algebra { background-color: var(--pt-rose) !important; }
         .cat-nonsul { background-color: var(--pt-green) !important; }
         .cat-private { background-color: var(--pt-purple) !important; }
 
-        /* 모바일용 리스트 */
         #mobile-class-list { display: none; flex-direction: column; gap: 12px; }
-        .mobile-item {
-            background: #111827; padding: 20px; border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.05); cursor: pointer;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .mobile-item h5 { margin: 0; font-size: 1.1rem; color: var(--white); }
+        .mobile-item { background: #111827; padding: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .mobile-item .m-info h5 { margin: 0; font-size: 1.1rem; color: var(--white); display: flex; align-items: center; gap: 8px; }
         .mobile-item p { margin: 6px 0 0; font-size: 0.9rem; color: #94a3b8; }
+        
+        .m-badge { font-size: 0.7rem; color: var(--pt-yellow); border: 1px solid var(--pt-yellow); padding: 1px 5px; border-radius: 4px; animation: blink 1.2s infinite; }
 
-        /* 상세 설명 */
-        .detail-view { 
-            margin-top: 40px; background: #0f172a; border-radius: 24px; 
-            padding: 35px; border: 1px solid var(--gold);
-        }
+        .detail-view { margin-top: 40px; background: #0f172a; border-radius: 24px; padding: 35px; border: 1px solid var(--gold); }
         .detail-content h3 { margin: 0 0 15px 0; color: var(--gold); font-size: 1.6rem; border-left: 4px solid var(--gold); padding-left: 15px; }
         .detail-content p { margin: 0; font-size: 1.1rem; line-height: 1.9; color: #cbd5e1; white-space: pre-wrap; }
 
-        /* ★ 모바일: 선생님 한 줄 3명 최적화 ★ */
         @media (max-width: 768px) {
-            header { padding: 40px 0; }
-            .logo-img { width: 140px; }
-            .slogan { font-size: 1.2rem; }
-            .container { grid-template-columns: 1fr; margin-top: 10px; }
-            
-            .teacher-list { 
-                position: static; display: flex; flex-direction: row; gap: 8px; margin-bottom: 25px; 
-            }
-            .teacher-card { 
-                flex: 1; flex-direction: column; padding: 15px 5px; text-align: center; border-radius: 15px; 
-            }
+            .logo-img { width: 140px; } .slogan { font-size: 1.2rem; } .container { grid-template-columns: 1fr; margin-top: 10px; }
+            .teacher-list { position: static; display: flex; flex-direction: row; gap: 8px; margin-bottom: 25px; }
+            .teacher-card { flex: 1; flex-direction: column; padding: 15px 5px; text-align: center; border-radius: 15px; }
             .profile-img { width: 45px; height: 45px; margin-right: 0; margin-bottom: 8px; }
-            .teacher-info h4 { font-size: 0.85rem; letter-spacing: -0.5px; }
-            .teacher-info p { display: none; }
-
-            .timetable-wrapper { display: none; }
+            .teacher-info h4 { font-size: 0.85rem; letter-spacing: -0.5px; } .teacher-info p, .timetable-wrapper { display: none; }
             #mobile-class-list { display: flex; }
         }
     </style>
@@ -192,93 +151,18 @@
     
     const teacherData = {
         'kuk': [
-            { name: '공통수학1 (의치대반)', day: 6, start: 9, span: 2, cat: 'cat-main', desc: '■ 토/일 오전 9시~11시\n■ 의치대 진학을 열망하는 최상위권 대상\n■ 자체교재 [플래티넘] 시리즈 완벽 풀이' },
-            { name: '공통수학1 (의치대반)', day: 7, start: 9, span: 2, cat: 'cat-main', desc: '■ 토/일 오전 9시~11시\n■ 의치대 진학을 열망하는 최상위권 대상\n■ 자체교재 [플래티넘] 시리즈 완벽 풀이' },
-            { name: '대수 정규반 (3/4 개강)', day: 1, start: 19, span: 3, cat: 'cat-algebra', desc: '■ 월/수/금 오후 7시~10시\n■ 고등 대수 전체 범위를 아우르는 압도적 깊이\n■ 내신 1등급을 결정짓는 고난도 유형 반복 훈련' },
-            { name: '대수 정규반 (3/4 개강)', day: 3, start: 19, span: 3, cat: 'cat-algebra', desc: '■ 월/수/금 오후 7시~10시\n■ 고등 대수 전체 범위를 아우르는 압도적 깊이\n■ 내신 1등급을 결정짓는 고난도 유형 반복 훈련' },
-            { name: '대수 정규반 (3/4 개강)', day: 5, start: 19, span: 3, cat: 'cat-algebra', desc: '■ 월/수/금 오후 7시~10시\n■ 고등 대수 전체 범위를 아우르는 압도적 깊이\n■ 내신 1등급을 결정짓는 고난도 유형 반복 훈련' }
+            { name: '공통수학1 (의치대반)', day: 6, start: 9, span: 2, cat: 'cat-main', advanced: true, desc: '■ 토/일 오전 9시~11시\n■ 의치대 진학을 열망하는 최상위권 대상\n■ 자체교재 [플래티넘] 시리즈 완벽 풀이' },
+            { name: '공통수학1 (의치대반)', day: 7, start: 9, span: 2, cat: 'cat-main', advanced: true, desc: '■ 토/일 오전 9시~11시\n■ 의치대 진학을 열망하는 최상위권 대상\n■ 자체교재 [플래티넘] 시리즈 완벽 풀이' },
+            { name: '대수 정규반 (3/4 개강)', day: 1, start: 19, span: 3, cat: 'cat-main', advanced: true, desc: '■ 월/수/금 오후 7시~10시\n■ 고등 대수 전체 범위를 아우르는 압도적 깊이\n■ 내신 1등급을 결정짓는 고난도 유형 반복 훈련' },
+            { name: '대수 정규반 (3/4 개강)', day: 3, start: 19, span: 3, cat: 'cat-main', advanced: true, desc: '■ 월/수/금 오후 7시~10시\n■ 고등 대수 전체 범위를 아우르는 압도적 깊이\n■ 내신 1등급을 결정짓는 고난도 유형 반복 훈련' },
+            { name: '대수 정규반 (3/4 개강)', day: 5, start: 19, span: 3, cat: 'cat-main', advanced: true, desc: '■ 월/수/금 오후 7시~10시\n■ 고등 대수 전체 범위를 아우르는 압도적 깊이\n■ 내신 1등급을 결정짓는 고난도 유형 반복 훈련' }
         ],
         'kim': [
-            { name: '대수 집중 실전반', day: 6, start: 10, span: 3, cat: 'cat-algebra', desc: '■ 토/일 오전 10시~1시\n■ 실전에서 통하는 대수 논리 완벽 구축\n■ 모의고사 고난도 문항에 대한 논리적 접근' },
-            { name: '대수 집중 실전반', day: 7, start: 10, span: 3, cat: 'cat-algebra', desc: '■ 토/일 오전 10시~1시\n■ 실전에서 통하는 대수 논리 완벽 구축\n■ 모의고사 고난도 문항에 대한 논리적 접근' },
-            { name: '공수1 핵심 유형반', day: 6, start: 13, span: 3, cat: 'cat-main', desc: '■ 토/일 오후 1시~4시\n■ 공통수학1 필수 유형에 대한 빈틈없는 정복\n■ 학교별 내신 빈출 주제 집중 분석' },
-            { name: '공수1 핵심 유형반', day: 7, start: 13, span: 3, cat: 'cat-main', desc: '■ 토/일 오후 1시~4시\n■ 공통수학1 필수 유형에 대한 빈틈없는 정복\n■ 학교별 내신 빈출 주제 집중 분석' }
+            { name: '대수 집중 실전반', day: 6, start: 10, span: 3, cat: 'cat-algebra', desc: '■ 토/일 오전 10시~1시\n■ 실전에서 통하는 대수 논리 완벽 구축' },
+            { name: '대수 집중 실전반', day: 7, start: 10, span: 3, cat: 'cat-algebra', desc: '■ 토/일 오전 10시~1시\n■ 실전에서 통하는 대수 논리 완벽 구축' },
+            { name: '공수1 핵심 유형반', day: 6, start: 13, span: 3, cat: 'cat-algebra', desc: '■ 토/일 오후 1시~4시\n■ 공통수학1 필수 유형에 대한 빈틈없는 정복' },
+            { name: '공수1 핵심 유형반', day: 7, start: 13, span: 3, cat: 'cat-algebra', desc: '■ 토/일 오후 1시~4시\n■ 공통수학1 필수 유형에 대한 빈틈없는 정복' }
         ],
         'baek': [
-            { name: '수리논술 마스터', day: 3, start: 19, span: 3, cat: 'cat-nonsul', desc: '■ 수요일 오후 7시~10시\n■ 주요 대학 수리논술 합격을 위한 실전 첨삭\n■ 개인별 답안지 1:1 정밀 대면 첨삭 시스템' },
-            { name: '기하/확통 선택특강', day: 6, start: 14, span: 2, cat: 'cat-nonsul', desc: '■ 토/일 오후 2시~4시\n■ 선택과목 완벽 대비\n■ 기하와 확률과 통계의 핵심 개념 8주 완성' },
-            { name: '기하/확통 선택특강', day: 7, start: 14, span: 2, cat: 'cat-nonsul', desc: '■ 토/일 오후 2시~4시\n■ 선택과목 완벽 대비\n■ 기하와 확률과 통계의 핵심 개념 8주 완성' },
-            { name: '1:1 소수정예 클리닉', day: 6, start: 10, span: 3, cat: 'cat-private', desc: '■ 개인별 수준과 진도에 맞춘 완전 학습\n■ 질문 하나도 놓치지 않는 밀착 관리' },
-            { name: '1:1 소수정예 클리닉', day: 7, start: 16, span: 3, cat: 'cat-private', desc: '■ 개인별 수준과 진도에 맞춘 완전 학습\n■ 질문 하나도 놓치지 않는 밀착 관리' }
-        ]
-    };
-
-    function initLayout() {
-        const axis = document.getElementById('time-axis');
-        for (let i = START_H; i <= END_H; i++) {
-            const label = document.createElement('div');
-            label.className = 'axis-label';
-            label.innerText = `${i}:00`;
-            axis.appendChild(label);
-        }
-        const daysContainer = document.getElementById('days-container');
-        days.forEach((d, i) => {
-            const col = document.createElement('div');
-            col.className = 'day-column';
-            col.id = `day-col-${i + 1}`;
-            col.innerHTML = `<div class="day-header">${d}</div>`;
-            daysContainer.appendChild(col);
-        });
-    }
-
-    function showDetail(name, desc) {
-        const detailBox = document.getElementById('detail-box');
-        document.getElementById('det-name').innerText = name;
-        document.getElementById('det-desc').innerText = desc;
-        detailBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-
-    function selectTeacher(key) {
-        document.querySelectorAll('.day-column .class-card').forEach(c => c.remove());
-        const mList = document.getElementById('mobile-class-list');
-        mList.innerHTML = '';
-        document.querySelectorAll('.teacher-card').forEach(c => c.classList.remove('active'));
-        document.getElementById('card-' + key).classList.add('active');
-
-        const mobileGroups = {};
-        teacherData[key].forEach(cls => {
-            const col = document.getElementById(`day-col-${cls.day}`);
-            if(col) {
-                const card = document.createElement('div');
-                card.className = `class-card ${cls.cat}`;
-                card.style.top = `${(cls.start - START_H) * 65 + 60}px`;
-                card.style.height = `${(cls.span * 65) - 6}px`;
-                card.innerHTML = `${cls.name}<em>${cls.start}:00-${cls.start + cls.span}:00</em>`;
-                card.onclick = () => showDetail(cls.name, cls.desc);
-                col.appendChild(card);
-            }
-
-            const timeStr = `${cls.start}:00~${cls.start + cls.span}:00`;
-            const groupKey = `${cls.name}_${timeStr}`;
-            const dayKor = ['월','화','수','목','금','토','일'][cls.day-1];
-            if (!mobileGroups[groupKey]) {
-                mobileGroups[groupKey] = { name: cls.name, days: [dayKor], time: timeStr, desc: cls.desc };
-            } else {
-                mobileGroups[groupKey].days.push(dayKor);
-            }
-        });
-
-        Object.values(mobileGroups).forEach(group => {
-            const mItem = document.createElement('div');
-            mItem.className = 'mobile-item';
-            mItem.onclick = () => showDetail(group.name, group.desc);
-            mItem.innerHTML = `<div class="m-info"><h5>${group.name}</h5><p>${group.days.join('')} | ${group.time}</p></div><div style="color:var(--gold);">▶</div>`;
-            mList.appendChild(mItem);
-        });
-    }
-
-    window.onload = () => { initLayout(); selectTeacher('kuk'); };
-</script>
-
-</body>
-</html>
+            { name: '수리논술 마스터', day: 3, start: 19, span: 3, cat: 'cat-nonsul', desc: '■ 수요일 오후 7시~10시\n■ 주요 대학 수리논술 합격을 위한 실전 첨삭' },
+            { name: '기하/확통 선택특강', day: 6, start: 14, span: 2, cat: 'cat-nonsul', desc: '■ 토/일 오후
